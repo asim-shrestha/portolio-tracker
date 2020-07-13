@@ -1,0 +1,43 @@
+{
+	"name": "ssr",
+	"version": "1.0.0",
+	"private": true,
+	"dependencies": {
+		"@babel/core": "latest",
+		"@babel/node": "latest",
+		"@babel/plugin-proposal-class-properties": "latest",
+		"@babel/preset-env": "latest",
+		"@babel/preset-react": "latest",
+		"@material-ui/core": "latest",
+		"@material-ui/icons": "latest",
+		"axios": "latest",
+		"babel-loader": "latest",
+		"cross-env": "latest",
+		"dotenv": "latest",
+		"express": "latest",
+		"express-session": "latest",
+		"express-validator": "latest",
+		"knex": "latest",
+		"objection": "latest",
+		"pg": "latest",
+		"react": "latest",
+		"react-dom": "latest",
+		"react-router": "latest",
+		"react-router-dom": "latest",
+		"webpack-cli": "latest"
+	},
+	"scripts": {
+		"start": "npm-run-all -p build serve",
+		"devstart": "npm-run-all -p devbuild serve",
+		"build": "webpack",
+		"devbuild": "webpack -w",
+		"migrate": "knex migrate:rollback && knex migrate:latest && knex seed:run",
+		"serve": "nodemon --ignore ./build --exec babel-node -- server.js",
+		"post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+	},
+	"devDependencies": {
+		"nodemon": "latest",
+		"npm-run-all": "latest",
+		"webpack": "latest"
+	}
+}
