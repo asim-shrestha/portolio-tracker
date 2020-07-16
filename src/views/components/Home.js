@@ -6,7 +6,8 @@ import { withRouter } from "react-router-dom";
 import { render } from 'react-dom';
 import { TextField, Typography, Button, ButtonGroup } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Login from './Auth/Login';
+import Example from './Chart';
+import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -35,8 +36,9 @@ class Home extends Component {
                     <Button onClick={()=>{createHandler;}}> Create Account </Button>
                 </ButtonGroup>
 
-                {/* <Login /> */}
+                <Example />
             </Typography>
+
         );
     }
 
