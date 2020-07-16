@@ -21,7 +21,7 @@ const Home  = () => {
     return (
         <div className={classes.root}>
             <Typography variant="h1" color="secondary" align="center">Welcome to</Typography>
-            <Typography variant="h2" color="secondary" align="center">Portfolio Tracker!</Typography>
+            <Typography variant="h1" color="secondary" align="center">Portfolio Tracker!</Typography>
             <ButtonGroup color="secondary" className={classes.content}>
                 <Button onClick={()=>{loginHandler;}}> Login </Button>
                 <Button onClick={()=>{createHandler;}}> Create Account </Button>
