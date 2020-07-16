@@ -53,15 +53,22 @@ function handleRender(req, res) {
     res.send(renderFullPage(html, css));
 }
 
-
 // Express
 const app = express();
+
+// Passport
+import cors from 'cors'
+import passport from 'passport'
+import './src/passport_config'
+app.use(cors())
+app.use(passport.initialize())
 
 app.use('/build', express.static('build'));
 
 // Body Parser
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+//  don't think we need this
+// app.use(bodyParser.urlencoded({ extended: true })); 
 
 // auth route
 import auth from "./src/routes/auth"
