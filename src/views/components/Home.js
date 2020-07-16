@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Button, ButtonGroup } from '@material-ui/core';
-import Example from './Chart';
+import Chart from './Chart';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,7 +26,7 @@ const Home  = () => {
                 <Button onClick={()=>{loginHandler;}}> Login </Button>
                 <Button onClick={()=>{createHandler;}}> Create Account </Button>
             </ButtonGroup>
-            <Example className={classes.content}/>
+            <Chart className={classes.content}/>
         </div>
     );
 }
