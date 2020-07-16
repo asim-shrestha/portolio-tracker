@@ -4,6 +4,8 @@ import homeStyles from '../../../public/style/homeStyles';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
 import { render } from 'react-dom';
+import Test from './Activities/Buy';
+
 
 
 class Home extends Component {
@@ -18,6 +20,7 @@ class Home extends Component {
             <Typography className={classes.root} color="textSecondary">
                 App Skeleton:
                 Powered by React and Express.
+                <Test />
             </Typography>
         );
     }
