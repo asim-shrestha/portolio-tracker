@@ -3,6 +3,10 @@ exports.up = function(knex, Promise) {
         table.increments('user_id');
         table.string('username').unique();
         table.string('password');
+        table.string('first_name');
+        table.string('last_name');
+        table.string('email');
+        table.string('phone');
         table.boolean("admin");
     })
 };
@@ -10,3 +14,5 @@ exports.up = function(knex, Promise) {
 exports.down = function(knex, Promise) {
     return knex.schema.dropTable('users');
 };
+
+
