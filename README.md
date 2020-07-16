@@ -1,6 +1,6 @@
 ### Overview
 
-This is the Portflio Tracker app project. 
+Our app helps you track your investment portfolio. 
 
 ### Setup
 
@@ -11,7 +11,7 @@ Please install the following global dependencies, if not installed:
 
 setup postgres:
 
-    sudo -u postgres psql
+    sudo psql -U postgres
 
 setup database:
 
@@ -25,12 +25,10 @@ install packages:
 
 build database: 
 
-    sudo knex migrate:rollback
-    sudo knex migrate:latest
-    sudo knex seed:run
+    sudo npm run migrate
 
 run server:
 
     sudo npm start
-    http://localhost:3000/
+    Travel to http://localhost:3000/ in your web browser 
 
