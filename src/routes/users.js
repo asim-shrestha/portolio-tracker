@@ -22,7 +22,7 @@ router.post("/create", [
     controller.create(req, res)
 });
 
-router.post("/edit", [
+router.put("/edit", [
     body('username').trim().isAscii(),
     body('password').trim().isAscii(),
     body('first_name').trim().isAscii(),
@@ -38,7 +38,7 @@ router.post("/edit", [
     controller.create(req, res)
 });
 
-router.post("/delete", [
+router.delete("/delete", [
     body('username').trim().isAscii(),
     body('password').trim().isAscii(),
     body('first_name').trim().isAscii(),
