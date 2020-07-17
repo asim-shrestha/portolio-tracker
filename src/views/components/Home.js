@@ -1,34 +1,34 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+// import Typography from '@material-ui/core/Typography';
+import homeStyles from '../../../public/style/homeStyles';
+import { withStyles } from '@material-ui/core/styles';
+import { withRouter } from "react-router-dom";
 import { Typography, Button, ButtonGroup } from '@material-ui/core';
-import Chart from './Chart';
+import DrawLine from './Draw/DrawLine';
+import DrawPie from './Draw/DrawPie';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    content: {
-        margin: "3em"
+class Home extends Component {
+    constructor(props){
+        super(props);
+    }    
+    render(){
+        return (
+            <Typography variant="h1" color="secondary" align="center">
+                <br /><br />
+                <div>{"Welcome to "}</div>
+                <div>{"Portfolio Tracker"}</div>
+                <ButtonGroup color="secondary" aria-label="outlined primary button group">
+                    <Button onClick={()=>{loginHandler;}}> Login </Button>
+                    <Button onClick={()=>{createHandler;}}> Create Account </Button>
+                </ButtonGroup>
+                <div>
+                <DrawLine />
+                <DrawPie />
+                </div>
+            </Typography>
+        );
     }
-}));
 
-const Home  = () => {
-    const classes = useStyles();
-
-    return (
-        <div className={classes.root}>
-            <Typography variant="h1" color="secondary" align="center">Welcome to</Typography>
-            <Typography variant="h1" color="secondary" align="center">Portfolio Tracker!</Typography>
-            <ButtonGroup color="secondary" className={classes.content}>
-                <Button onClick={()=>{loginHandler;}}> Login </Button>
-                <Button onClick={()=>{createHandler;}}> Create Account </Button>
-            </ButtonGroup>
-            <Chart className={classes.content}/>
-        </div>
-    );
 }
 
-export default Home;
+export default withRouter(withStyles(homeStyles)(Home))

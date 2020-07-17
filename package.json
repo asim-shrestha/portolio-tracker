@@ -29,7 +29,9 @@
 	},
 	"scripts": {
 		"start": "npm-run-all -p build serve",
-		"build": "webpack -w",
+		"devstart": "npm-run-all -p devbuild serve",
+		"build": "webpack",
+		"devbuild": "webpack -w",
 		"migrate": "knex migrate:rollback && knex migrate:latest && knex seed:run",
 		"serve": "nodemon --ignore ./build --exec babel-node -- server.js",
 		"post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"

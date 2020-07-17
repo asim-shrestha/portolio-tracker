@@ -1,16 +1,23 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Home from './components/Home';
 import Login from './components/Auth/Login';
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter } from "react-router-dom";
 
 
-const App = () => {
-    return (
-        <Switch>
-            <Route exact path="/" render={() => <Home />}/>
-            <Route path="/login" render={() => <Login />}/>
-        </Switch>
-    );
+class App extends Component {
+    constructor(props){
+        super(props);
+    }    
+
+    render() {
+        return (
+            <Switch>
+                <Route exact path="/" render={() => <Home />}/>
+                <Route path="/login" render={() => <Login />}/>
+            </Switch>
+        );
+    }
 }
 
-export default App;
+export default withRouter(App);
+
