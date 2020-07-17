@@ -14,9 +14,9 @@ setup postgres:
 
     sudo psql -U postgres
 
-!! WARNING !! The TA should not have to setup the DB !!
-!! WARNING !! The TA should not have to setup the DB !!
-!! WARNING !! The TA should not have to setup the DB !!
+* !! WARNING !! The TA should not have to setup the DB !!
+* !! WARNING !! The TA should not have to setup the DB !!
+* !! WARNING !! The TA should not have to setup the DB !!
 
 setup database:
 
