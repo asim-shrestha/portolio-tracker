@@ -22,9 +22,9 @@ const Home = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Typography variant="h1" color="secondary">Welcome to</Typography>
-            <Typography variant="h1" color="secondary">Portfolio Tracker</Typography>
-            <ButtonGroup color="secondary" aria-label="outlined primary button group">
+            <Typography variant="h1" color="primary">Welcome to</Typography>
+            <Typography variant="h1" color="primary">Portfolio Tracker</Typography>
+            <ButtonGroup color="primary">
                 <Button onClick={()=>{loginHandler;}}> Login </Button>
                 <Button onClick={()=>{createHandler;}}> Create Account </Button>
             </ButtonGroup>

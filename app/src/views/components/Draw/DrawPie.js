@@ -13,7 +13,7 @@ const data01 = [
 export default class DrawPie extends Component {
   render() {
     return (
-      <Typography variant="caption" color="secondary">
+      <Typography variant="caption" color="primary">
         <PieChart width={500 } height={500}>
           <Pie data={data01} dataKey="value" cx={250} cy={250} outerRadius={150} fill="#A6192E" label />
         </PieChart>

@@ -16,7 +16,7 @@ const data = [
 export default class DrawLine extends Component {
   render() {
     return (
-      <Typography variant="caption" color="secondary">
+      <Typography variant="caption" color="primary">
         <LineChart width={800} height={300} data={data} >
           <Line type="monotone" dataKey="pv" stroke="#A6192E" />
         </LineChart>
