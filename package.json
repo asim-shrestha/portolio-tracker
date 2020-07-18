@@ -17,6 +17,7 @@
 		"express": "latest",
 		"express-session": "latest",
 		"express-validator": "latest",
+		"iexcloud_api_wrapper": "latest",
 		"knex": "latest",
 		"objection": "latest",
 		"pg": "latest",
