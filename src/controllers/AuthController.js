@@ -45,11 +45,9 @@ export default class AuthController {
                 const newUser = req.body
                 newUser.password = hashedPassword
 
-                // idk what admin is
-                newUser.admin = false
-
                 const newUserAdded = await User.query().insert(newUser)
-                res.status(200).send({
+                // 201 created
+                res.status(201).send({
                     userCreated: true,
                     message: "Success!"
                 })
@@ -80,17 +78,9 @@ export default class AuthController {
                 }
                 else {
                     // Found user, set values to return from db
-                    res.status(200).send({
-                        auth: true,
-                        id: user.id,
-                        first_name: user.first_name,
-                        last_name: user.last_name,
-                        location: user.location,
-                        phone: user.phone,
-                        email: user.email,
-                        // password: user.password,
-                        message: 'found in db'
-                    })
+                    user.auth = true
+                    delete user.password
+                    res.status(200).send(user)
                 }
             })(req, res)
         } catch (err) {

@@ -11,7 +11,6 @@ exports.seed = function (knex, Promise) {
           last_name: 'test',
           email: 'test@test.com',
           phone: '123456789',
-          admin: false
         }
       ]);
 });
