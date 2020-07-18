@@ -54,7 +54,7 @@ export default class AuthController {
             }
             else {
                 console.log("Email already registered")
-                res.status(200).send({
+                res.status(409).send({
                     userCreated: false,
                     message: "Email already registered"
                 })
