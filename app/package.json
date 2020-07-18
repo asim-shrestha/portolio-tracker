@@ -19,6 +19,7 @@
 		"express": "latest",
 		"express-session": "latest",
 		"express-validator": "latest",
+		"iexcloud_api_wrapper": "latest",
 		"jsonwebtoken": "^8.5.1",
 		"knex": "latest",
 		"objection": "latest",

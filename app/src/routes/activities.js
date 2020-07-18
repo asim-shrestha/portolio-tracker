@@ -102,4 +102,10 @@ router.post("/pie", [
     controller.pie(req, res)
 });
 
+// TODO: remove this router later
+// route for testing IEX API calls
+router.get("/iex", (req, res) => {
+    controller.iex(req, res)
+});
+
 export default router

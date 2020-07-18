@@ -70,7 +70,10 @@ app.use(bodyParser.json());
 
 // auth route
 import auth from "./src/routes/auth"
+import activities from "./src/routes/activities"
 app.use("/auth", auth)
+app.use("/api", activities)
+
 
 // This is fired every time the server-side receives a request.
 app.use(handleRender);
