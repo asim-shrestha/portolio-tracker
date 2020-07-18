@@ -15,13 +15,13 @@ const data = [
 
 const DrawLine = () => {
     return (
-        <Typography variant="caption" color="secondary" align='center'>
+        <>
             <LineChart width={800} height={300} data={data}>
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Line type="monotone" dataKey="pv" stroke="#A6192E" />
             </LineChart>
-        </Typography>
+        </>
     );
 }
 
