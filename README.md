@@ -4,6 +4,7 @@ Our app helps you track your investment portfolio.
 
 ### Setup
 
+
 Please install the following global dependencies, if not installed:
 
     sudo apt-get install postgresql
@@ -12,6 +13,10 @@ Please install the following global dependencies, if not installed:
 setup postgres:
 
     sudo psql -U postgres
+
+* !! WARNING !! The TA should not have to setup the DB !!
+* !! WARNING !! The TA should not have to setup the DB !!
+* !! WARNING !! The TA should not have to setup the DB !!
 
 setup database:
 

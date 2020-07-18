@@ -3,42 +3,34 @@ import React, { Component } from 'react';
 import homeStyles from '../../../public/style/homeStyles';
 import { withStyles } from '@material-ui/core/styles';
 import { withRouter } from "react-router-dom";
-import { render } from 'react-dom';
-import { TextField, Typography, Button, ButtonGroup } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import Example from './Chart';
-import { LineChart, Line, XAxis, YAxis, Label, ResponsiveContainer } from 'recharts';
-
-const useStyles = makeStyles((theme) => ({
-    paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    }
-}));
+import { Typography, Button, ButtonGroup } from '@material-ui/core';
+import DrawHome from './Draw/DrawHome';
+import DrawLine from './Draw/DrawLine';
+import DrawPie from './Draw/DrawPie';
+import DrawTable from './Draw/DrawTable';
 
 class Home extends Component {
     constructor(props){
         super(props);
     }    
-    
     render(){
-        const { classes } = this.props
-
         return (
-                <Typography variant="h1" color="secondary" align="center">
-                    <br /><br />
-                    <div>{"Welcome to "}</div>
-                    <div>{"Portfolio Tracker"}</div>
+            <Typography variant="h1" color="secondary" alignCenter>
+                <br /><br />
+                <div>{"Welcome to "}</div>
+                <div>{"Portfolio Tracker"}</div>
                 <ButtonGroup color="secondary" aria-label="outlined primary button group">
                     <Button onClick={()=>{loginHandler;}}> Login </Button>
                     <Button onClick={()=>{createHandler;}}> Create Account </Button>
                 </ButtonGroup>
 
-                <Example />
-            </Typography>
+                <DrawHome />
+                <DrawLine />
+                <DrawPie />
+                <DrawTable />
 
+
+            </Typography>
         );
     }
 
