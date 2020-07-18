@@ -15,7 +15,7 @@ class Home extends Component {
     }    
     render(){
         return (
-            <Typography variant="h1" color="secondary" alignCenter>
+            <Typography variant="h1" color="secondary">
                 <br /><br />
                 <div>{"Welcome to "}</div>
                 <div>{"Portfolio Tracker"}</div>
