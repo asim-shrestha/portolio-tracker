@@ -25,6 +25,7 @@ export default class AuthController {
                         res.send({
                             auth: true,
                             token: token,
+                            user: user,
                             message: 'User found and logged in'
                         }).status(200)
                     })
