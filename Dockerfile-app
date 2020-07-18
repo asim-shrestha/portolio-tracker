@@ -1,0 +1,19 @@
+FROM node:latest
+
+# Load wait.sh
+COPY wait.sh /wait.sh
+RUN chmod +x /wait.sh
+
+WORKDIR /app
+
+# Install dependencies
+COPY app/package.json .
+RUN npm install
+
+# Bundle app source
+COPY ./app /app
+
+# Migrate data and run app
+CMD /wait.sh db 5432 \
+  && npm run migrate \
+  && npm run devstart
