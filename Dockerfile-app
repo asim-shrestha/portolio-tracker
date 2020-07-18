@@ -14,6 +14,5 @@ RUN npm install
 COPY ./app /app
 
 # Migrate data and run app
-CMD /wait.sh db 5432 \
-  && npm run migrate \
+CMD npm run migrate \
   && npm run devstart

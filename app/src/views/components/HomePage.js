@@ -6,13 +6,15 @@ import DrawLine from './Draw/DrawLine';
 import DrawPie from './Draw/DrawPie';
 import DrawTable from './Draw/DrawTable';
 
-const useStyles = makeStyles({
+
+const useStyles = makeStyles((theme) => ({
     root: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     },
-});
+}));
 
 const Home = () => {
     const classes = useStyles();
@@ -24,7 +26,7 @@ const Home = () => {
                 <Button onClick={()=>{loginHandler;}}> Login </Button>
                 <Button onClick={()=>{createHandler;}}> Create Account </Button>
             </ButtonGroup>
-
+            
             <DrawHome />
             <DrawLine />
             <DrawPie />
