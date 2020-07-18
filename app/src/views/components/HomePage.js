@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {LoginContext} from '../context/LoginContext'
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Button, ButtonGroup } from '@material-ui/core';
 import DrawHome from './Draw/DrawHome';
@@ -17,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Home = () => {
+    const [loginContext, setLoginContext] = useContext(LoginContext);
     const classes = useStyles();
     return (
         <div className={classes.root}>
