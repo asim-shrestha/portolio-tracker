@@ -1,12 +1,12 @@
 import { quote, iexSymbols } from 'iexcloud_api_wrapper'
 
 export default class ActivitiesHelper { 
-    generateSymbols(array) {
+    generateSymbols(iexSymbols) {
         let symbols = [];
-        const length = array.length;
+        const length = iexSymbols.length;
         
         for (let i = 0; i < length; i++ ){
-            symbols[i] = array[i].symbol
+            symbols[i] = iexSymbols[i].symbol
         }
         return symbols
     }
