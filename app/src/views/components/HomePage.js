@@ -1,9 +1,7 @@
-import React, {useContext} from 'react';
-import {UserContext} from './Auth/UserStore'
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import LineGraphic from './Draw/LineGraphic';
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Home = () => {
-    const [user, setUser] = useContext(UserContext);
     const classes = useStyles();
     return (
         <div className={classes.root}>
