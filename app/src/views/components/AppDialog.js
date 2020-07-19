@@ -6,6 +6,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import theme from '../../../public/style/theme';
 
+// Generic dialog component.
+// Has 1 custom input button and a close button
 export default ({open, onClose, title, children, buttonClick, buttonText}) => {
     return (
         <Dialog open={open} onClose={onClose}>
