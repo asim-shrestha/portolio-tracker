@@ -1,31 +1,49 @@
-// just a placeholder for activities controller
-
-import User from '../models/UserModel'
-
-// import iex api wrapper
+import Activity from '../models/ActivityModel'
 import ActivitiesHelper from './helpers/ActivitiesHelper'
 import { quote, iexSymbols } from 'iexcloud_api_wrapper'
 const helper = new ActivitiesHelper()
 
-export default class AuthController {
-    // buy, sell, ytd, mtd, custom, pie
-    async buy(req, res) {
-        // try {
-        //     const username = req.body.username;
-        //     const password = req.body.password;
+export default class ActivitiesController {
+    // GET /activity/buy/:id
+    // GET /activity/sell/:id
+    // retrieve stock holding information by Id
+    async getHoldingInfoById(req, res) {
+        try {
+            res.send('NOT IMPLEMENTED: retrieve stock information by Id');
+        } catch(err) {
+            res.sendStatus(400)
+        }
+    }
 
-        //     const user = await User.query()
-        //                     .where('username', username)
-        //                     .where('password', password)
+    // POST /activity/buy/:id
+    // POST /activity/sell/:id
+    // update stock holding information by Id
+    async updateHoldingInfoById(req, res) {
+        try {
+            res.send('NOT IMPLEMENTED: update stock holding information by Id');
+        } catch(err) {
+            res.sendStatus(400)
+        }
+    }
 
-        //     if(user.length > 0) { 
-        //         res.json(user[0]) 
-        //     } else {
-        //         res.sendStatus(403)
-        //     }
-        // } catch(err) {
-        //     res.sendStatus(400)
-        // }
+    // POST /activity/buy
+    // insert stock holding info (after purchase)
+    async insertNewHoldingInfo(req, res) {
+        try {
+            res.send('NOT IMPLEMENTED: insert stock holding info (after purchase)');
+        } catch(err) {
+            res.sendStatus(400)
+        }
+    }
+
+    // POST /upload
+    // upload user's csv file
+    async uploadCSV(req, res) {
+        try {
+            res.send('NOT IMPLEMENTED: insert stock holding info (after purchase)');
+        } catch(err) {
+            res.sendStatus(400)
+        }
     }
 
     // TODO: delete this route in the future
@@ -46,5 +64,3 @@ export default class AuthController {
 
     }
 }
-
-

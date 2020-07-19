@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import knex from '../db/knex';
+import Activity from './ActivityModel'
 
 Model.knex(knex)
 
@@ -8,6 +9,19 @@ export default class User extends Model {
     static get tableName() {
         return 'users';
     }
+
+    static get relationMappings() {
+		return {
+			activity: {
+				relation: Model.BelongsToOneRelation,
+				modelClass: Activity,
+				join: {
+					from: 'activities.user_id',
+					to: 'users.id'
+				}
+			}
+		}
+	}
 
     static get jsonSchema() {
 		return {
