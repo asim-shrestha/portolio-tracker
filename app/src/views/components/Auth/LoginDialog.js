@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import {UserContext} from './UserStore';
 
-export default (props) => {
+export default ({open, onClose}) => {
     const [email, setEmail] = useState('');
     const [emailError, setEmailError] = useState(false);
     const [password, setPassword] = useState('');
@@ -37,12 +37,12 @@ export default (props) => {
             setPassword('');
             setEmailError(false);
             setPasswordError(false);
-            props.onClose();
+            onClose();
         })
     }
 
     return (
-        <Dialog open={props.open} onClose={props.onClose}>
+        <Dialog open={open} onClose={onClose}>
             <DialogTitle>Login</DialogTitle>
             <Divider/>
             <DialogContent>
@@ -51,7 +51,7 @@ export default (props) => {
             </DialogContent>
             <DialogActions>
                 <Button variant="contained" color="primary" onClick={handleLogin}>Login</Button>
-                <Button variant="contained" color="primary" onClick={props.onClose}>Close</Button>
+                <Button variant="contained" color="primary" onClick={onClose}>Close</Button>
             </DialogActions>
         </Dialog>
     )

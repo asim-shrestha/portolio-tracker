@@ -23,7 +23,7 @@ const Home = () => {
     return (
         <div className={classes.root}>
             <Typography variant="h1" color="primary">Welcome to Trendline 👋</Typography>
-            <Typography variant="h3" color="primary">A free investment portfolio management tool</Typography>
+            <Typography variant="h3" color="primary">A free investment-portfolio management tool</Typography>
             <div className={classes.diagram}>
                 <LineGraphic className={classes.diagram} />
             </div>
