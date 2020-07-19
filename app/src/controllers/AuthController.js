@@ -11,6 +11,7 @@ export default class AuthController {
         try {
             passport.authenticate('local', (error, user, info) => {
                 console.log(error, user, info);
+                console.log(req.body)
                 if (error) {
                     console.log(error)
                 }

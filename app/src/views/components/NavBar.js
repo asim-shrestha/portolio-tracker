@@ -5,6 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import LoginDialog from './Auth/LoginDialog';
+import RegisterDialog from './Auth/RegisterDialog';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,10 +31,11 @@ const Navbar = () => {
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>Trendline</Typography>
                     <Button color="inherit" onClick={() => setIsLoginDialogOpen(true)}>Login</Button>
-                    <Button color="inherit">Register</Button>
+                    <Button color="inherit" onClick={() => setIsRegisterDialogOpen(true)}>Register</Button>
                 </Toolbar>
             </AppBar>
             <LoginDialog open={isLoginDialogOpen} onClose={() => setIsLoginDialogOpen(false)}/>
+            <RegisterDialog open={isRegisterDialogOpen} onClose={() => setIsRegisterDialogOpen(false)}/>
         </>
     );
 }
