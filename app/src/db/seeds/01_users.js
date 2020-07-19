@@ -6,7 +6,7 @@ exports.seed = function (knex, Promise) {
             return knex('users').insert([
                 {
                     email: 'test@test.com',
-                    password: '123456',
+                    password: '$2b$10$XiEydWrYtvzBTW3Q.x7gNeYPGiL6m/Osh/BPOsdUX9EScFdKxMfcy',
                     first_name: 'test',
                     last_name: 'test',
                 }
