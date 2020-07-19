@@ -17,9 +17,13 @@ export default ({open, onClose}) => {
     const [user, setUser] = useContext(UserContext);
 
     const handleLogin = () => {
-        if(!email) {setEmailError(true); return;}
-        if(!password) {setPasswordError(true); return;}
-        Axios.post('/login', {
+        // Check for errors
+        if(!email) {setEmailError(true);}
+        if(!password) {setPasswordError(true);}
+        if(!email || !password) { return; }
+        
+        // Attempt login
+        Axios.post('/auth/login', {
             email: email,
             password: password
         }).then(res => {
@@ -29,8 +33,8 @@ export default ({open, onClose}) => {
                 token: res.data.token,
                 user: null
             });
-        }).catch(() => {
-            alert("Incorrect password!");
+        }).catch((err) => {
+            alert(err);
         }).then(() => {
             // Reset fields
             setEmail('');
@@ -44,7 +48,7 @@ export default ({open, onClose}) => {
     return (
         <Dialog open={open} onClose={onClose}>
             <DialogTitle style={{backgroundColor: theme.palette.primary.main, color: "white"}}>Login</DialogTitle>
-            <DialogContent>
+            <DialogContent style={{marginTop: "1em"}}>
                 <TextField variant="outlined" value={email} onChange={e => setEmail(e.target.value)} error={emailError} required label="Email"/>
                 <TextField variant="outlined" value={password} onChange={e => setPassword(e.target.value)} error={passwordError} required label="Password"/>
             </DialogContent>

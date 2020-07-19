@@ -7,12 +7,13 @@ const controller = new AuthController();
 import { body, validationResult } from 'express-validator';
 
 router.post("/login", [
-    body('username').trim().isAscii(),
+    body('email').trim().isAscii(),
     body('password').trim().isAscii(),
     body('*').escape()
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        console.log("Login form validation failed");
         return res.status(422).json({ errors: errors.array() });
     }
     controller.login(req, res)
