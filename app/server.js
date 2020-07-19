@@ -71,8 +71,12 @@ app.use(bodyParser.json());
 // auth route
 import auth from "./src/routes/auth"
 import activities from "./src/routes/activities"
+import dashboards from "./src/routes/dashboards"
+const endpoints_prefix = '/api'
+
 app.use("/auth", auth)
-app.use("/api", activities)
+app.use(`${endpoints_prefix}`, activities)
+app.use(`${endpoints_prefix}`, dashboards)
 
 
 // This is fired every time the server-side receives a request.
