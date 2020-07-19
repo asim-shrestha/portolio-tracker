@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
+import theme from '../../../../public/style/theme';
 import {UserContext} from './UserStore';
 
 export default ({open, onClose}) => {
@@ -43,8 +43,7 @@ export default ({open, onClose}) => {
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Login</DialogTitle>
-            <Divider/>
+            <DialogTitle style={{backgroundColor: theme.palette.primary.main, color: "white"}}>Login</DialogTitle>
             <DialogContent>
                 <TextField variant="outlined" value={email} onChange={e => setEmail(e.target.value)} error={emailError} required label="Email"/>
                 <TextField variant="outlined" value={password} onChange={e => setPassword(e.target.value)} error={passwordError} required label="Password"/>
