@@ -11,13 +11,13 @@ passport.use(
     'local',
     new LocalStrategy(
         {
-            usernameField: 'username',
+            usernameField: 'email',
             passwordField: 'password',
             session: false
         },
         // login callback
-        async (username, password, done) => {
-            const result = await User.query().where('username', username)
+        async (email, password, done) => {
+            const result = await User.query().where('email', email)
             if (result.length === 0) {
                 return done(null, false)
             }
