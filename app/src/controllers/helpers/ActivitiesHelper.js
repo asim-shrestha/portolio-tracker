@@ -1,5 +1,3 @@
-import { quote, iexSymbols } from 'iexcloud_api_wrapper'
-
 export default class ActivitiesHelper { 
     validateSymbol(symbol, iexSymbols) {
         return new Promise((resolve, reject) => {

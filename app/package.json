@@ -22,6 +22,7 @@
 		"iexcloud_api_wrapper": "^1.1.5",
 		"jsonwebtoken": "^8.5.1",
 		"knex": "latest",
+		"moment": "2.24.0",
 		"objection": "latest",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",
