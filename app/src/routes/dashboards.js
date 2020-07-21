@@ -5,7 +5,7 @@ import DashboardsController from '../controllers/DashboardsController';
 const controller = new DashboardsController();
 
 // GET display performance graph on dashboard
-router.get('/performance', controller.getReturnData);
+router.get('/performance', controller.getPerformanceData);
 
 // GET display table containing all stocks owned by user
 router.get('/holdings', controller.getHoldingsData);

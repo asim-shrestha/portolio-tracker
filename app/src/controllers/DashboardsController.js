@@ -5,10 +5,9 @@ const helper = new DashboardsHelper()
 
 export default class DashboardsController {
     // GET /performance
-    // display performance graph on dashboard
-    async getReturnData(req, res) {
+    async getPerformanceData(req, res) {
         try {
-            // TODO: extract user_id from JWT token
+            // TODO: extract user_id from findUser
             const user_id = 1;
             const activities = await Activity.query().select('symbol', 'date', 'price', 'quantity', 'action').where('user_id', user_id);
             const activitiesByDate = await helper.indexActivitiesByDate(activities)
@@ -31,10 +30,9 @@ export default class DashboardsController {
     }
 
     // GET /holdings
-    // display table containing all stocks owned by user
     async getHoldingsData(req, res) {
         try {
-            // TODO: extract user_id from JWT token
+            // TODO: extract user_id from findUser
             const user_id = 1;
             const activities = await Activity.query().select('symbol', 'date', 'price', 'quantity', 'action', 'commission').where('user_id', user_id);
             const symbols = await helper.findSymbols(activities)
