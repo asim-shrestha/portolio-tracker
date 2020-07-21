@@ -14,10 +14,8 @@ export default () => {
             console.log("No user token found");
             return;
         }
-
         // Token found, get user 
-        Axios.get('/findUser', () => {
-            console.log("User token found!");
+        Axios.get('/auth/findUser', {
             headers: { Authorization: `JWT ${token}` }
         }).then(res => {
             setUser(res.data);

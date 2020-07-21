@@ -71,10 +71,10 @@ export default class AuthController {
         try {
             passport.authenticate('jwt', { session: false }, (error, user, info) => {
                 if (error) {
-                    console.log(error)
+                    console.log("Error:", error)
                 }
                 if (info) {
-                    console.log(info.message)
+                    console.log("Info:", info.message)
                     res.status(401);
                     res.send(info.message)
                 }
