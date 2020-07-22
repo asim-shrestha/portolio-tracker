@@ -33,7 +33,8 @@ const LandingPage = () => {
                 />
                 <LandingPageContentBlock
                     image={"/landing_image_3.jpg"}
-                    text="View real-time preformance metrics through the IEX Cloud API."
+                    text="View real-time preformance metrics powered by IEX Cloud."
+                    textLink="https://iexcloud.io/"
                 />
             </Box>
         </div>

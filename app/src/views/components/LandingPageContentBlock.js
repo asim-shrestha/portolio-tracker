@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,14 +22,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Combination of image and text to be used in the LandingPage
-// Has optional textFirst prop that will make the text appear on the left if supplied
-const LandingPageContentBlock = ({image, text, textFirst}) => {
+// Optional textFirst prop that will make the text appear on the left if supplied
+// Optional textLink prop to add link to text
+const LandingPageContentBlock = ({image, text, textFirst, textLink}) => {
     const classes = useStyles();
 
     let content = [
         <img className={classes.image} src={image} key={1}/>,
         <Typography variant="h3" color="primary" align="left" className={classes.text} key={2}>{text}</Typography>
     ];
+
+    // Add link to text if textLink supplied
+    if(textLink) {
+        content[1] = <Link href={textLink} key={2}>{content[1]}</Link>;
+    }
 
     // Swap positions so that the text is first if the textFirst prop is supplied
     if(textFirst) {
