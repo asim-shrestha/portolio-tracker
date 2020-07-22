@@ -7,13 +7,17 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import LoginDialog from './Auth/LoginDialog';
 import RegisterDialog from './Auth/RegisterDialog';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        paddingLeft: theme.spacing(20),
+        paddingRight: theme.spacing(20),
     },
     title: {
         flexGrow: 1,
+        paddingLeft: "0.5em"
     },
 }));
 
@@ -42,6 +46,7 @@ const Navbar = () => {
         <>
             <AppBar position="static" className={classes.root}>
                 <Toolbar>
+                    <TrendingUpIcon/>
                     <Typography variant="h6" className={classes.title}>Trendline</Typography>
                     {buttons}
                 </Toolbar>

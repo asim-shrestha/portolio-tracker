@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: "center",/* Vertical */
         justifyContent: "center", /* Horizontal */
-        marginTop: theme.spacing(15)
+        marginTop: theme.spacing(13)
 
     },
     image: {
