@@ -47,7 +47,6 @@ const DashboardPage = () => {
         return;
     }
     
-    console.log(user);
     const classes = useStyles();
     return (
         <>
