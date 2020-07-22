@@ -12,6 +12,10 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: theme.spacing(2),
     },
+    text: {
+        fontWeight: "bold",
+        textTransform: "capitalize" // Capitalize first letter
+    }
 }));
 
 const DashboardPage = () => {
@@ -43,11 +47,12 @@ const DashboardPage = () => {
         return;
     }
     
-    console.log(holdings);
+    console.log(user);
     const classes = useStyles();
     return (
         <>
-            <Typography variant="h2" align="left">Holdings:</Typography>
+            <Typography variant="h1" align="left" className={classes.text}>{user.first_name}'s Dashboard</Typography>
+            <Typography variant="h3" align="left" className={classes.text}>Holdings:</Typography>
             <HoldingsTable data={holdings}/>
             <Button variant="contained" color="primary" className={classes.button} onClick={() => setIsAddHoldingsDialogOpen(true)}>Add individual</Button>
             <Button variant="contained" color="primary" className={classes.button} onClick={() => setIsImportCSVDialogOpen(true)}>Import from CSV</Button>
