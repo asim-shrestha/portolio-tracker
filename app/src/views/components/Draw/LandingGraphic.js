@@ -12,7 +12,8 @@ const data = [
     { name: 'Page G', uv: 3490, pv: 4300, amt: 2100, },
 ];
 
-const DrawLine = () => {
+// Animated graphic used in the LandingPage
+const LandingGraphic = () => {
     const strokeColour = theme.palette.primary.main;
     return (
         <>
@@ -23,4 +24,4 @@ const DrawLine = () => {
     );
 }
 
-export default DrawLine;
+export default LandingGraphic;

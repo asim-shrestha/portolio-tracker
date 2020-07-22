@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Home = () => {
+// Default page for the app
+const LandingPage = () => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
@@ -39,4 +40,4 @@ const Home = () => {
     );
 }
 
-export default Home
+export default LandingPage

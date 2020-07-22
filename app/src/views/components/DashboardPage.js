@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+// Page to display user's portfolio metrics
 const DashboardPage = () => {
     const [holdings, setHoldings] = useState([]);
     const [isAddHoldingsDialogOpen, setIsAddHoldingsDialogOpen] = useState(false);

@@ -16,10 +16,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+// Format currency related strings to include commas and only two decimal places
 const currencyFormat = (n) => {
     return n.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
+// Table to display user holdings data
 const HoldingsTable = ({data}) => {
     const classes = useStyles();
     

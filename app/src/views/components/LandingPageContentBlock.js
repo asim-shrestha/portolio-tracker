@@ -20,6 +20,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// Combination of image and text to be used in the LandingPage
+// Has optional textFirst prop that will make the text appear on the left if supplied
 const LandingPageContentBlock = ({image, text, textFirst}) => {
     const classes = useStyles();
 
