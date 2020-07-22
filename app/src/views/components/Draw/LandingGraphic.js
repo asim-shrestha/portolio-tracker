@@ -17,7 +17,7 @@ const DrawLine = () => {
     return (
         <>
             <LineChart width={800} height={400} data={data} >
-                <Line type="monotone" dataKey="pv" stroke={strokeColour} strokeWidth={5} dot={false}/>
+                <Line type="monotone" dataKey="pv" stroke={strokeColour} strokeWidth={10} dot={false}/>
             </LineChart>
         </>
     );
