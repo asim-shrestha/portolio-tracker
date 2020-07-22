@@ -32,6 +32,7 @@ const Navbar = () => {
         localStorage.removeItem('token');
     }
 
+    // Display different buttons based on whether or not the user is logged in
     let buttons = []
     if(!user) {
         buttons = [
