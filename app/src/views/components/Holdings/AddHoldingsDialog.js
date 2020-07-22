@@ -12,7 +12,7 @@ export default ({open, onClose}) => {
         quantity: '',
         date: '',
         commission: '',
-        action: 'Buy',
+        action: '',
     })
 
     const updateStock= (attribute, value) => {
@@ -23,12 +23,12 @@ export default ({open, onClose}) => {
 
     return (
         <AppDialog open={open} onClose={onClose} title={"Add Individual Holding"} buttonClick={onClose} buttonText={"Add (Not Implemented)"}>
-            <TextField variant="outlined" value={stock.symbol} onChange={e => updateStock('symbol', e.target.value)} fullWidth label="Symbol"/>
-            <TextField variant="outlined" value={stock.price} onChange={e => updateStock('price', e.target.value)} fullWidth label="Price"/>
-            <TextField variant="outlined" value={stock.quantity} onChange={e => updateStock('quantity', e.target.value)} fullWidth label="Quantity"/>
-            <TextField variant="outlined" value={stock.date} onChange={e => updateStock('date', e.target.value)} fullWidth label="Date"/>
-            <TextField variant="outlined" value={stock.commision} onChange={e => updateStock('commission', e.target.value)} fullWidth label="Commission"/>
-            <TextField variant="outlined" value={stock.action} onChange={e => updateStock('action', e.target.value)} fullWidth label="Action"/>
+            <TextField variant="outlined" value={stock.symbol} onChange={e => updateStock('symbol', e.target.value)} fullWidth placeholder="Symbol"/>
+            <TextField variant="outlined" value={stock.price} onChange={e => updateStock('price', e.target.value)} fullWidth placeholder="Price"/>
+            <TextField variant="outlined" value={stock.quantity} onChange={e => updateStock('quantity', e.target.value)} fullWidth placeholder="Quantity"/>
+            <TextField variant="outlined" value={stock.date} onChange={e => updateStock('date', e.target.value)} fullWidth placeholder="Date"/>
+            <TextField variant="outlined" value={stock.commision} onChange={e => updateStock('commission', e.target.value)} fullWidth placeholder="Commission"/>
+            <TextField variant="outlined" value={stock.action} onChange={e => updateStock('action', e.target.value)} fullWidth placeholder="Action"/>
         </AppDialog>
     )
 }
