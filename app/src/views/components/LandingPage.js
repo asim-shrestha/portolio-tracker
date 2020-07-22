@@ -23,11 +23,11 @@ const Home = () => {
                 <LandingGraphic className={classes.diagram} />
                 <LandingPageContentBlock
                     image={"https://images.unsplash.com/photo-1559589689-577aabd1db4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"}
-                    text="Say bye to spreadsheets by quickly setting up your portfolio and tracking your investments."
+                    text="Quickly set up your portfolio and start tracking investments."
                 />
                 <LandingPageContentBlock
                     image={"https://images.unsplash.com/photo-1529078155058-5d716f45d604?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80"}
-                    text="Quickly add data through CSV import functionality."
+                    text="Seamlessly import CSV data."
                     textFirst
                 />
                 <LandingPageContentBlock
