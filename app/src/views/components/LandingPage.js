@@ -22,8 +22,17 @@ const Home = () => {
             <Box className={classes.diagram} align="center">
                 <LandingGraphic className={classes.diagram} />
                 <LandingPageContentBlock
-                    image={"https://www.talkwalker.com/images/2020/blog-headers/image-analysis.png"}
-                    text="Quickly set-up your portfolio and start tracking your investments."
+                    image={"https://images.unsplash.com/photo-1559589689-577aabd1db4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"}
+                    text="Say bye to spreadsheets by quickly setting up your portfolio and tracking your investments."
+                />
+                <LandingPageContentBlock
+                    image={"https://images.unsplash.com/photo-1529078155058-5d716f45d604?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80"}
+                    text="Quickly add data through CSV import functionality."
+                    textFirst
+                />
+                <LandingPageContentBlock
+                    image={"https://images.unsplash.com/photo-1591696205602-2f950c417cb9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"}
+                    text="View real-time preformance metrics through the IEX Cloud API."
                 />
             </Box>
         </div>

@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: "center",/* Vertical */
         justifyContent: "center", /* Horizontal */
-        marginTop: theme.spacing(20)
+        marginTop: theme.spacing(15)
 
     },
     image: {
@@ -24,8 +24,8 @@ const LandingPageContentBlock = ({image, text, textFirst}) => {
     const classes = useStyles();
 
     let content = [
-        <img className={classes.image} src={image}/>,
-        <Typography variant="h3" color="primary" align="left" className={classes.text}>{text}</Typography>
+        <img className={classes.image} src={image} key={1}/>,
+        <Typography variant="h3" color="primary" align="left" className={classes.text} key={2}>{text}</Typography>
     ];
 
     // Swap positions so that the text is first if the textFirst prop is supplied
