@@ -49,7 +49,7 @@ const HoldingsTable = ({data}) => {
                     ))}
                     {
                         // Display a table row containing a spinner when data is being loaded
-                        (!data || !data.length) ? <SpinnerHoldingsTableRow/>: ''
+                        (!data || !data.length) ? <SpinnerHoldingsTableRow/>: <></>
                     }
                 </TableBody>
             </Table>

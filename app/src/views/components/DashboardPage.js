@@ -51,8 +51,8 @@ const DashboardPage = () => {
     const classes = useStyles();
     return (
         <>
-            <Typography variant="h1" align="left" className={classes.text}>{user.first_name}'s Dashboard</Typography>
-            <Typography variant="h3" align="left" className={classes.text}>Holdings:</Typography>
+            <Typography variant="h1" align="left" color="primary" className={classes.text}>{user.first_name}'s Dashboard</Typography>
+            <Typography variant="h3" align="left" color="primary" className={classes.text}>Holdings:</Typography>
             <HoldingsTable data={holdings}/>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsAddHoldingsDialogOpen(true)}>Add individual</Button>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsImportCSVDialogOpen(true)}>Import from CSV</Button>
