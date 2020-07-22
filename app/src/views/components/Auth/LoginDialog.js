@@ -24,10 +24,7 @@ export default ({open, onClose}) => {
         }).then(res => {
             // Save token
             localStorage.setItem('token', res.data.token)
-            setUser({
-                token: res.data.token,
-                user: null
-            });
+            setUser(res.data.user);
         }).catch((err) => {
             alert(err);
         }).then(() => {

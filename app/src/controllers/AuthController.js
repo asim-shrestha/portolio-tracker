@@ -10,15 +10,13 @@ export default class AuthController {
     async login(req, res) {
         try {
             passport.authenticate('local', (error, user, info) => {
-                console.log(error, user, info);
-                console.log(req.body)
                 if (error) {
-                    console.log(error)
+                    console.log("Error:", error)
+                    res.status(401).send(error)
                 }
                 if (info) {
-                    console.log(info.message)
-                    res.status(401)
-                    res.send(info.message)
+                    console.log("Info:", info.message)
+                    res.status(401).send(info.message)
                 }
                 if (user) {
                     req.logIn(user, (error) => {
@@ -71,12 +69,12 @@ export default class AuthController {
         try {
             passport.authenticate('jwt', { session: false }, (error, user, info) => {
                 if (error) {
-                    console.log(error)
+                    console.log("Error:", error)
+                    res.status(401).send(error)
                 }
                 if (info) {
-                    console.log(info.message)
-                    res.status(401);
-                    res.send(info.message)
+                    console.log("Info:", info.message)
+                    res.status(401).send(info.message)
                 }
                 else {
                     // Found user, set values to return from db

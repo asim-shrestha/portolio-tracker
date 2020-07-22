@@ -1,30 +1,15 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
-import LineGraphic from './Draw/LineGraphic';
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      marginTop: theme.spacing(10),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    diagram: {
-        marginTop: theme.spacing(12),
-    }
-}));
-
+import React, {useContext} from 'react';
+import { UserContext} from './Auth/UserStore';
+import LandingPage from './LandingPage'
+import DashboardPage from './DashboardPage'
 const Home = () => {
-    const classes = useStyles();
+    const [user, setUser] = useContext(UserContext);
+    const isLoggedIn = (user != null && user.id);
+
     return (
-        <div className={classes.root}>
-            <Typography variant="h1" color="primary">Welcome to Trendline 👋</Typography>
-            <Typography variant="h3" color="primary">A free investment-portfolio management tool</Typography>
-            <div className={classes.diagram}>
-                <LineGraphic className={classes.diagram} />
-            </div>
-        </div>
+            isLoggedIn ?
+            <DashboardPage/>:
+            <LandingPage/>
     );
 }
 
