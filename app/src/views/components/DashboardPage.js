@@ -2,7 +2,9 @@ import React, {useState, useContext, useEffect} from 'react';
 import Axios from 'axios';
 import {UserContext} from './Auth/UserStore';
 import Typography from '@material-ui/core/Typography';
-import HoldingsTable from './HoldingsTable';
+import HoldingsTable from './Holdings/HoldingsTable';
+import AddHoldingsDialog from './Holdings/AddHoldingsDialog';
+import ImportCSVDialog from './Holdings/ImportCSVDialog';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -14,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardPage = () => {
     const [holdings, setHoldings] = useState([]);
+    const [isAddHoldingsDialogOpen, setIsAddHoldingsDialogOpen] = useState(false);
+    const [isImportCSVDialogOpen, setIsImportCSVDialogOpen] = useState(false);
     const [user, setUser] = useContext(UserContext);
 
     // Format holding data into an array of objects
@@ -45,8 +49,10 @@ const DashboardPage = () => {
         <>
             <Typography variant="h2" align="left">Holdings:</Typography>
             <HoldingsTable data={holdings}/>
-            <Button variant="contained" color="primary" className={classes.button}>Add individual</Button>
-            <Button variant="contained" color="primary" className={classes.button}>Add from CSV</Button>
+            <Button variant="contained" color="primary" className={classes.button} onClick={() => setIsAddHoldingsDialogOpen(true)}>Add individual</Button>
+            <Button variant="contained" color="primary" className={classes.button} onClick={() => setIsImportCSVDialogOpen(true)}>Import from CSV</Button>
+            <AddHoldingsDialog open={isAddHoldingsDialogOpen} onClose={() => setIsAddHoldingsDialogOpen(false)}/>
+            <ImportCSVDialog open={isImportCSVDialogOpen} onClose={() => setIsImportCSVDialogOpen(false)}/>
         </>
     );
 }
