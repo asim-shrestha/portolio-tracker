@@ -8,15 +8,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     tableHeader: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: theme.palette.primary.main,
         color: theme.palette.common.white,
     }
 }));
 
-const HoldingsTable = (props) => {
-    const classes = useStyles(props);
+const HoldingsTable = ({data}) => {
+    const classes = useStyles();
 
     return (
         <TableContainer component={Paper}>
@@ -32,7 +32,7 @@ const HoldingsTable = (props) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.data.map((stock) => (
+                    {data.map((stock) => (
                         <TableRow key={stock.symbol}>
                             <TableCell component="th" scope="row"><b>{stock.symbol}</b></TableCell>
                             <TableCell align="right">{stock.quantity}</TableCell>

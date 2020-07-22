@@ -3,6 +3,14 @@ import Axios from 'axios';
 import {UserContext} from './Auth/UserStore';
 import Typography from '@material-ui/core/Typography';
 import HoldingsTable from './HoldingsTable';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+        marginTop: theme.spacing(2),
+    },
+}));
 
 const DashboardPage = () => {
     const [holdings, setHoldings] = useState([]);
@@ -27,11 +35,18 @@ const DashboardPage = () => {
         })
     }, [])
 
+    const handleAddHolding = () => {
+        return;
+    }
+    
     console.log(holdings);
+    const classes = useStyles();
     return (
         <>
             <Typography variant="h2" align="left">Holdings:</Typography>
             <HoldingsTable data={holdings}/>
+            <Button variant="contained" color="primary" className={classes.button}>Add individual</Button>
+            <Button variant="contained" color="primary" className={classes.button}>Add from CSV</Button>
         </>
     );
 }
