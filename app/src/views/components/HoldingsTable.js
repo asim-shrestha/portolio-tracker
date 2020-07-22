@@ -25,17 +25,21 @@ const HoldingsTable = (props) => {
                     <TableRow>
                         <TableCell className={classes.tableHeader} >Symbol</TableCell>
                         <TableCell className={classes.tableHeader} align="right">Quantity</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Book Value</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Market Value</TableCell>
+                        <TableCell className={classes.tableHeader} align="right">Book Value ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="right">Market Value ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="right">Unrealized Gain ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="right">Unrealized Percentage (%)</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.data.map((row) => (
-                        <TableRow key={row.symbol}>
-                            <TableCell component="th" scope="row"><b>{row.symbol}</b></TableCell>
-                            <TableCell align="right">{row.quantity}</TableCell>
-                            <TableCell align="right">{row.bookValue}</TableCell>
-                            <TableCell align="right">{row.marketValue}</TableCell>
+                    {props.data.map((stock) => (
+                        <TableRow key={stock.symbol}>
+                            <TableCell component="th" scope="row"><b>{stock.symbol}</b></TableCell>
+                            <TableCell align="right">{stock.quantity}</TableCell>
+                            <TableCell align="right">{parseFloat(stock.bookValue).toFixed(2)}</TableCell>
+                            <TableCell align="right">{parseFloat(stock.marketValue).toFixed(2)}</TableCell>
+                            <TableCell align="right">{parseFloat(stock.unrealizedGain).toFixed(2)}</TableCell>
+                            <TableCell align="right">{parseFloat(stock.unrealizedPercentage).toFixed(2)}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
