@@ -22,16 +22,16 @@ const Home = () => {
             <Box className={classes.diagram} align="center">
                 <LandingGraphic className={classes.diagram} />
                 <LandingPageContentBlock
-                    image={"https://images.unsplash.com/photo-1559589689-577aabd1db4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"}
+                    image={"/landing_image_1.jpg"}
                     text="Quickly set up your portfolio and start tracking investments."
                 />
                 <LandingPageContentBlock
-                    image={"https://images.unsplash.com/photo-1529078155058-5d716f45d604?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1949&q=80"}
+                    image={"/landing_image_2.jpg"}
                     text="Seamlessly import CSV data."
                     textFirst
                 />
                 <LandingPageContentBlock
-                    image={"https://images.unsplash.com/photo-1591696205602-2f950c417cb9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"}
+                    image={"/landing_image_3.jpg"}
                     text="View real-time preformance metrics through the IEX Cloud API."
                 />
             </Box>
