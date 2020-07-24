@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 // Page to display user's portfolio metrics
 const DashboardPage = () => {
     const [user, setUser] = useContext(UserContext);
-    const [holdings, setHoldings] = useState('');
+    const [holdings, setHoldings] = useState(null);
     const [preformance, setPreformance] = useState([]);
     const [isAddHoldingsDialogOpen, setIsAddHoldingsDialogOpen] = useState(false);
     const [isImportCSVDialogOpen, setIsImportCSVDialogOpen] = useState(false);
@@ -57,7 +57,7 @@ const DashboardPage = () => {
         if(user != null) {
             loadData();
         }
-    }, []);
+    }, [user]);
 
     const classes = useStyles();
 

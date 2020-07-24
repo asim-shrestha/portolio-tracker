@@ -41,7 +41,7 @@ const HoldingsTable = ({data}) => {
         tableRows = <SpinnerHoldingsTableRow/>;
     }
 
-    const noHoldingsMessage = <Paper><Typography variant="h4" align="center">You currently have no holdings</Typography></Paper>;
+    const noHoldingsMessage = <Paper><Typography variant="h5" align="center">You currently have no holdings.</Typography></Paper>;
 
     return (
         <TableContainer component={Paper}>
