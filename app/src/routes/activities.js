@@ -24,7 +24,6 @@ router.post('/activity/order', [
         controller.insertNewActivity(req, res);
     }
 });
-// cannot do a (req, res) => thing otherwise it wont post..
 
 
 // POST upload user CSV file
