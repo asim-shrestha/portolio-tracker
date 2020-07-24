@@ -68,7 +68,8 @@ const DashboardPage = () => {
             <HoldingsTable data={holdings}/>
             <Button variant="contained" color="primary" className={classes.button} onClick={() => {setIsAddHoldingsDialogOpen(true);}}>Add individual</Button>
             <Button variant="contained" color="primary" className={classes.button} onClick={() => setIsImportCSVDialogOpen(true)}>Import from CSV</Button>
-            <AddHoldingsDialog open={isAddHoldingsDialogOpen} onClose={() => {setIsAddHoldingsDialogOpen(false); handleAddHolding();} }/>
+            <AddHoldingsDialog open={isAddHoldingsDialogOpen} onClose={() => setIsAddHoldingsDialogOpen(false)} 
+ resetHoldings={loadData}/>
             <ImportCSVDialog open={isImportCSVDialogOpen} onClose={() => setIsImportCSVDialogOpen(false)}/>
         </>
     );
