@@ -29,7 +29,8 @@ export default ({open, onClose, title, children, buttonClick, buttonText}) => {
     
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle style={{backgroundColor: theme.palette.primary.main, color: "white"}}> {title}
+            <DialogTitle style={{backgroundColor: theme.palette.primary.main, color: "white"}}>
+                {title}
                 <IconButton color="secondary" onClick={onClose} style={closeButtonStyle}>x</IconButton>
             </DialogTitle>
                 
