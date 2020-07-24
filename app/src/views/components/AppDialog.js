@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,12 +11,26 @@ import {IconButton} from "@material-ui/core";
 // Always contains a close button
 // Has one additional button which you can provide the text and action for
 export default ({open, onClose, title, children, buttonClick, buttonText}) => {
-    let closeButton = {color:'white', cursor:'pointer', float:'right', margin: '0px', padding: '0px', width: '20px'};
+    const closeButtonStyle = {color:'white', cursor:'pointer', float:'right', margin: '0px', padding: '0px', width: '20px'};
 
+    // Add event listener that will check for enter presses and preform action if so
+    useEffect(() => {
+        const enterPressListener = (e) => {
+            if ((e.code === "Enter" || e.code === "NumpadEnter") && open) {
+                buttonClick();
+            }
+        };
+        document.addEventListener("keydown", enterPressListener);
+        return () => {
+            document.removeEventListener("keydown", enterPressListener);
+        };
+    }, [open, buttonClick]);
+
+    
     return (
         <Dialog open={open} onClose={onClose}>
             <DialogTitle style={{backgroundColor: theme.palette.primary.main, color: "white"}}> {title}
-                <IconButton color="secondary" onClick={onClose} style={closeButton}>x</IconButton>
+                <IconButton color="secondary" onClick={onClose} style={closeButtonStyle}>x</IconButton>
             </DialogTitle>
                 
             <DialogContent style={{marginTop: "1em"}}>
