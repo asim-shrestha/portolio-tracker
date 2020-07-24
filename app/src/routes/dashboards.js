@@ -8,6 +8,6 @@ const controller = new DashboardsController();
 router.get('/performance', controller.getPerformanceData);
 
 // GET display table containing all stocks owned by user
-router.get('/holdings', controller.getHoldingsData);
+router.get('/holdings/:user_id', controller.getHoldingsData);
 
 export default router
