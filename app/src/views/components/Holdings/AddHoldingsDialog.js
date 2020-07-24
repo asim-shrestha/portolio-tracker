@@ -9,6 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
 export default ({open, onClose, resetHoldings}) => {
+
     const [user, setUser] = useContext(UserContext);
     const [symbol, setSymbol] = useState();
     const [price, setPrice] = useState();
@@ -24,7 +25,7 @@ export default ({open, onClose, resetHoldings}) => {
             action:action,
             symbol:symbol,
             price:parseFloat(price),
-            date:date,
+            date:String(date),
             commission: parseFloat(commission)
         }).then((res) => {
             console.log(res);
@@ -42,10 +43,10 @@ export default ({open, onClose, resetHoldings}) => {
             <TextField variant="outlined" onChange={e => setSymbol(e.target.value)} fullWidth placeholder="Symbol"/>
             <TextField variant="outlined" onChange={e => setPrice(e.target.value)} fullWidth placeholder="Price"/>
             <TextField variant="outlined" onChange={e => setQuantity(e.target.value)} fullWidth placeholder="Quantity"/>
-            <TextField variant="outlined" onChange={e => setDate(e.target.value)} fullWidth placeholder="Date"/>
+            <TextField variant="outlined" fullWidth onChange={e => setDate(e.target.value)} label="Date" type="date" defaultValue="2020-07-24" InputLabelProps={{shrink: true}} />
             <TextField variant="outlined" onChange={e => setCommission(e.target.value)} fullWidth placeholder="Commission"/>
             <FormControl variant="outlined" fullWidth>
-                <InputLabel >Action</InputLabel>
+                <InputLabel>Action</InputLabel>
                 <Select onChange={e => setAction(e.target.value)} >
                     <MenuItem value={'buy'}>Buy</MenuItem>
                     <MenuItem value={'sell'}>Sell</MenuItem>
