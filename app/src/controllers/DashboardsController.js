@@ -32,8 +32,7 @@ export default class DashboardsController {
     // GET /holdings
     async getHoldingsData(req, res) {
         try {
-            // TODO: extract user_id from findUser
-            const user_id = 1;
+            const user_id = req.params.user_id;
             const activities = await Activity.query().select('symbol', 'date', 'price', 'quantity', 'action', 'commission').where('user_id', user_id);
             const symbols = await helper.findSymbols(activities)
 
