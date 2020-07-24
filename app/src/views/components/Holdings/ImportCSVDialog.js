@@ -7,7 +7,7 @@ import AppDialog from '../AppDialog';
 export default ({open, onClose}) => {
     return (
         <AppDialog open={open} onClose={onClose} title={"Import Holdings From CSV"} buttonClick={onClose} buttonText={"Import"}>
-            Not Implemented
+            Yes
         </AppDialog>
     )
 }

@@ -21,12 +21,18 @@ export default class AuthController {
                 if (user) {
                     req.logIn(user, (error) => {
                         const token = jwt.sign({ id: user.email }, process.env.JWT_SECRET)
-                        res.send({
+                        res.status(200).send({
                             auth: true,
                             token: token,
                             user: user,
                             message: 'User found and logged in'
-                        }).status(200)
+                        })
+                    })
+                }
+                else {
+                    res.status(403).send({
+                        auth: false,
+                        message: "Invalid credentials"
                     })
                 }
             })(req, res)
@@ -35,7 +41,7 @@ export default class AuthController {
             res.sendStatus(400)
         }
     }
-    
+
     async register(req, res) {
         try {
             const checkEmail = await User.query().where('email', req.body.email)
@@ -43,7 +49,7 @@ export default class AuthController {
                 const hashedPassword = await bcrypt.hash(req.body.password, BCRYPT_SALT_ROUNDS)
                 const newUser = req.body
                 newUser.password = hashedPassword
-                
+
                 const newUserAdded = await User.query().insert(newUser)
                 // 201 created
                 res.status(201).send({
@@ -60,7 +66,7 @@ export default class AuthController {
             res.sendStatus(400)
         }
     }
-    
+
     async findUser(req, res) {
         try {
             passport.authenticate('jwt', { session: false }, (error, user, info) => {
