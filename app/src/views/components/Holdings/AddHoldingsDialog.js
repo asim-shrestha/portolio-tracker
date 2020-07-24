@@ -36,8 +36,7 @@ export default ({open, onClose}) => {
         }).then((res) => {
             console.log(res);
         }).catch((err) => {
-            console.log(err);
-            // alert(err);
+            alert(err);
         })
     }
 
