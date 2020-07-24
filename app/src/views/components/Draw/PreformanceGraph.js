@@ -14,7 +14,7 @@ const currencyFormat = (n) => {
 // Returns the graph if data is given and a message saying "the portfolio is currently empty" otherwise
 const PreformanceGraph = ({ data }) => {
     const [width, setWidth] = useState(0);
-    const color = theme.palette.primary.main;
+    const colour = theme.palette.graph.main;
 
     const updateWidth = () => {
         // Subtract magic number to get proper right margins
@@ -39,11 +39,17 @@ const PreformanceGraph = ({ data }) => {
         <>
             <Typography variant="h5" color="primary">Your portfolio currently has ${currencyFormat(totalPortfolioCash)}</Typography>
             <AreaChart width={width} height={400} data={data}>
+                <defs>
+                    <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="10%" stopColor={colour} stopOpacity={1} />
+                    <stop offset="95%" stopColor={colour} stopOpacity={0.0} />
+                    </linearGradient>
+                </defs>
                 <CartesianGrid strokeDasharray="1 1 " />
                 <XAxis dataKey="x" dy={7} angle={15}/> 
                 <YAxis />
                 <Tooltip />
-                <Area type="monotone" dataKey="y" stroke={color} fill={color} />
+                <Area type="monotone" dataKey="y" stroke={colour} fill="url(#colorValue)" />
             </AreaChart>
         </>
     ); else return <Typography variant="h4" color="primary">Your portfolio is currently empty.</Typography>
