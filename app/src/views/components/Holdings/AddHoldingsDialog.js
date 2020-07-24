@@ -30,6 +30,7 @@ export default ({open, onClose, resetHoldings}) => {
         }).then((res) => {
             console.log(res);
             onClose();
+            resetHoldings();
         }).catch((err) => {
             alert(err);
         })
