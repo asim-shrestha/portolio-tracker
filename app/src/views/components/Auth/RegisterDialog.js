@@ -15,7 +15,6 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
     const [show, setShow] = useState(false);
     const [user, setUser] = useContext(UserContext);
 
-
     const handleRegister = () => {
         Axios.post('/auth/register', {
             email: email,
@@ -29,26 +28,6 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
             alert(err);
         })
         onClose();
-    }
-
-    const handleLogin = () => {
-        Axios.post('/auth/login', {
-            email: email,
-            password: password
-        }).then(res => {
-            // Save token
-            localStorage.setItem('token', res.data.token)
-            setUser(res.data.user);
-        }).catch((err) => {
-            alert(err);
-        }).then(() => {
-            // Reset fields
-            setEmail('');
-            setPassword('');
-            setEmailError(false);
-            setPasswordError(false);
-            onClose();
-        })
     }
 
     return (
