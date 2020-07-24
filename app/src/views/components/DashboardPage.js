@@ -54,9 +54,15 @@ const DashboardPage = () => {
         })
     }
     
-    useEffect(() => loadData(), []);
+    useEffect(() => {
+        if(user != null) {
+            loadData();
+        }
+    }, []);
 
     const classes = useStyles();
+
+    if(user === null) {return <Typography variant="h1" align="center" color="primary" className={classes.text}>Error loading user</Typography>}
     return (
         <>
             <Typography variant="h1" align="left" color="primary" className={classes.text}>{user.first_name}'s Dashboard</Typography>

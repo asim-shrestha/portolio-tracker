@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react';
+import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import {UserContext} from './Auth/UserStore';
 import AppBar from '@material-ui/core/AppBar';
@@ -25,11 +26,13 @@ const Navbar = () => {
     const [user, setUser] = useContext(UserContext);
     const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
     const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
+    const history = useHistory();
     const classes = useStyles();
 
     const handleLogout = () => {
         setUser(null);
         localStorage.removeItem('token');
+        history.push('/')
     }
 
     // Display different buttons based on whether or not the user is logged in
