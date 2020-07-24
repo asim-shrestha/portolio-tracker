@@ -4,7 +4,6 @@ import {
 } from 'recharts';
 import theme from '../../../../public/style/theme';
 import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 
 // TODO share method with HoldingsTable
 // Format currency related strings to include commas and only two decimal places
@@ -20,8 +19,9 @@ const PreformanceGraph = ({ data }) => {
     const [width, setWidth] = useState(0);
     const color = theme.palette.primary.main;
 
-    // Update with on window size change
+    // Update width so that the graph is centered with margin on the right
     const updateWidth = () => {
+        // Subtract magic number to get proper right margins
         setWidth(window.innerWidth - theme.spacing(28) * 2);
     }
 
@@ -38,22 +38,13 @@ const PreformanceGraph = ({ data }) => {
     // Calculate total cash in portfolio
     let totalCash = 0;
     if(data.length > 0) {totalCash = data[data.length - 1].y;}
-    console.log("data", data)
+
     // Only render if data is available and width !- 0
     // This ensures that the graph will be animated when loaded
     if (data.length > 0 && width != 0) return (
         <>
-            <Box >
-                <Typography variant="h5" color="primary">Your portfolio currently has ${currencyFormat(totalCash)}</Typography>
-            </Box>
-            <AreaChart
-                width={width}
-                height={400}
-                data={data}
-                margin={{
-                    top: 10, right: 0, left: 0, bottom: 0,
-                }}
-            >
+            <Typography variant="h5" color="primary">Your portfolio currently has ${currencyFormat(totalCash)}</Typography>
+            <AreaChart width={width} height={400} data={data}>
                 <CartesianGrid strokeDasharray="1 1 " />
                 <XAxis dataKey="x" />
                 <YAxis />
