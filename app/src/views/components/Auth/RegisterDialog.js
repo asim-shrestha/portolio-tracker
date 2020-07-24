@@ -22,9 +22,10 @@ const RegisterDialog = ({open, onClose}) => {
             first_name: firstName,
             last_name: lastName,
         }).then(res => {
-            alert(res.data.message);
             onClose();
-            handleLogin();
+            if(confirm("success! would you like to login?")){
+                handleLogin();
+            }
         }).catch((err) => {
             alert(err);
         })
@@ -57,7 +58,7 @@ const RegisterDialog = ({open, onClose}) => {
             handleRegister();
         }
     }
-    
+
     return (
         <AppDialog open={open} onClose={onClose} title={"Register"} buttonClick={handleRegister} buttonText={"Register"}>
             <TextField variant="outlined" fullWidth placeholder="First name" onChange={e => setFirstName(e.target.value)} onKeyDown={e=>handleKey(e.keyCode)}/>
