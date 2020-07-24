@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-export default ({open, onClose}) => {
+export default ({open, onClose, resetHoldings}) => {
     const [user, setUser] = useContext(UserContext);
     const [symbol, setSymbol] = useState();
     const [price, setPrice] = useState();
