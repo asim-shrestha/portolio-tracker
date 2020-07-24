@@ -1,4 +1,8 @@
 import Activity from '../models/ActivityModel'
+import ActivitiesHelper from './helpers/ActivitiesHelper'
+import { iexSymbols } from 'iexcloud_api_wrapper'
+const helper = new ActivitiesHelper()
+
 
 export default class ActivitiesController {
     // POST /activity/buy
@@ -6,9 +10,17 @@ export default class ActivitiesController {
     // POST /activity/sell/:id
     // insert stock holding info (after purchase)
     async insertNewActivity(req, res) {
-        try {           
-            const newActivity = await Activity.query().insert(req.body)
-            res.json(newActivity);
+        try {
+            const symbols = await iexSymbols()
+            if (await helper.validateSymbol(req.body.symbol, symbols)) {
+                const newActivity = await Activity.query().insert(req.body)
+                res.json(newActivity);
+            } else {
+                res.status(422).send({
+                    message: 'The symbol you entered is invalid. Please check the symbol, and try again.' 
+                })
+            }
+            
         } catch(err) {
             res.sendStatus(400)
         }
