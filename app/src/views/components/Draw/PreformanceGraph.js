@@ -31,6 +31,7 @@ const PreformanceGraph = ({ data }) => {
         }
     }, [])
 
+    // TODO fix calculation
     let totalPortfolioCash = 0;
     if (data.length > 0) { totalPortfolioCash = data[data.length - 1].y; } // Ammount at today's date
 
@@ -49,7 +50,7 @@ const PreformanceGraph = ({ data }) => {
                 <XAxis dataKey="x" dy={7} angle={15}/> 
                 <YAxis />
                 <Tooltip />
-                <Area type="monotone" dataKey="y" stroke={colour} fill="url(#colorValue)" />
+                <Area type="monotone" dataKey="y" stroke={colour} strokeWidth="2.5" fill="url(#colorValue)" />
             </AreaChart>
         </>
     ); else return <Typography variant="h4" color="primary">Your portfolio is currently empty.</Typography>

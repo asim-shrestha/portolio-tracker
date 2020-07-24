@@ -11,7 +11,7 @@ const theme = createMuiTheme({
             main: '#4CBB17',
         },
         graph: {
-            main: '#4CBB17', // Green used in graphs
+            main: '#39ab74', // Green from Google's graphs
         },
         error: {
             main: red.A400,
