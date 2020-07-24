@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useState, useContext } from 'react'
+import Axios from 'axios'
+import {UserContext} from './UserStore';
+
 import AppDialog from '../AppDialog';
 import {TextField,IconButton} from "@material-ui/core";
 import Visibility from '@material-ui/icons/Visibility';
@@ -11,20 +13,43 @@ const RegisterDialog = ({open, onClose}) => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [show, setShow] = useState(false);
+    const [user, setUser] = useContext(UserContext);
 
     const handleRegister = () => {
-        axios.post('/auth/register', {
+        Axios.post('/auth/register', {
             email: email,
             password: password,
             first_name: firstName,
             last_name: lastName,
         }).then(res => {
             alert(res.data.message);
+            handleLogin();
         }).catch((err) => {
             alert(err);
         })
         onClose();
     }
+
+    const handleLogin = () => {
+        Axios.post('/auth/login', {
+            email: email,
+            password: password
+        }).then(res => {
+            // Save token
+            localStorage.setItem('token', res.data.token)
+            setUser(res.data.user);
+        }).catch((err) => {
+            alert(err);
+        }).then(() => {
+            // Reset fields
+            setEmail('');
+            setPassword('');
+            setEmailError(false);
+            setPasswordError(false);
+            onClose();
+        })
+    }
+
     const handleKey = (keycode) => {
         console.log(keycode);
         if (keycode==13) {
