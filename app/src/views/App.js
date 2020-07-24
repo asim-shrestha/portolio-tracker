@@ -5,6 +5,7 @@ import HomePage from './components/HomePage';
 import { Switch, Route } from "react-router-dom";
 import { UserProvider } from './components/Auth/UserStore';
 import { makeStyles } from '@material-ui/core/styles';
+import DashboardPage from './components/DashboardPage';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,6 +24,7 @@ const App = () => {
             <Navbar />
             <div className={classes.root}>
                 <Switch>
+                    <Route exact path="/dashboard" render={() => <DashboardPage />} />
                     <Route exact path="/" render={() => <HomePage />} />
                 </Switch>
             </div>
