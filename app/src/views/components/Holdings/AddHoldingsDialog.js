@@ -20,7 +20,6 @@ export default ({open, onClose, resetHoldings}) => {
     const onAdd = () => {
         Axios.post('/api/activity/order', {
             user_id:user.id,
-            // user_id:1,
             quantity:parseInt(quantity),
             action:action,
             symbol:symbol,
