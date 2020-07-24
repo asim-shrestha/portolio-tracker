@@ -7,13 +7,14 @@ import {TextField,IconButton} from "@material-ui/core";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-const RegisterDialog = ({open, onClose}) => {
+const RegisterDialog = ({open, onClose, openLogin}) => {
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [show, setShow] = useState(false);
     const [user, setUser] = useContext(UserContext);
+
 
     const handleRegister = () => {
         Axios.post('/auth/register', {
@@ -23,9 +24,7 @@ const RegisterDialog = ({open, onClose}) => {
             last_name: lastName,
         }).then(res => {
             onClose();
-            if(confirm("success! would you like to login?")){
-                handleLogin();
-            }
+            openLogin();
         }).catch((err) => {
             alert(err);
         })
