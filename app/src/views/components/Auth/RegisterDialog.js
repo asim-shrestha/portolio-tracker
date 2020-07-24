@@ -23,6 +23,7 @@ const RegisterDialog = ({open, onClose}) => {
             last_name: lastName,
         }).then(res => {
             alert(res.data.message);
+            onClose();
             handleLogin();
         }).catch((err) => {
             alert(err);
@@ -55,8 +56,8 @@ const RegisterDialog = ({open, onClose}) => {
         if (keycode==13) {
             handleRegister();
         }
-
     }
+    
     return (
         <AppDialog open={open} onClose={onClose} title={"Register"} buttonClick={handleRegister} buttonText={"Register"}>
             <TextField variant="outlined" fullWidth placeholder="First name" onChange={e => setFirstName(e.target.value)} onKeyDown={e=>handleKey(e.keyCode)}/>

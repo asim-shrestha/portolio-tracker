@@ -44,7 +44,6 @@ export default ({open, onClose}) => {
         if (keycode==13) {
             handleLogin();
         }
-
     }
 
     return (
