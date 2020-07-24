@@ -8,7 +8,7 @@ import AddHoldingsDialog from './Holdings/AddHoldingsDialog';
 import ImportCSVDialog from './Holdings/ImportCSVDialog';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import PreformanceGraph from './Draw/PreformanceGraph';
+import PreformanceGraph from './Charts/PreformanceGraph';
 
 const useStyles = makeStyles((theme) => ({
     button: {

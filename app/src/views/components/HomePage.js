@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Box } from '@material-ui/core';
-import HomePageGraphic from './Draw/HomePageGraphic';
+import HomePageGraphic from './Charts/HomePageGraphic';
 import HomePageContentblock from './HomePageContentBlock';
 
 const useStyles = makeStyles((theme) => ({
