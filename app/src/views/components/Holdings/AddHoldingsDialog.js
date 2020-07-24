@@ -34,7 +34,7 @@ export default ({open, onClose, resetHoldings}) => {
             date:date,
             commission: parseFloat(commission)
         }).then((res) => {
-            console.log(res);
+            resetHoldings();
         }).catch((err) => {
             alert(err);
         })
