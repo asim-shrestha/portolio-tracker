@@ -36,18 +36,16 @@ const DashboardPage = () => {
     }
 
     // Retrieve user holding data
-    useEffect(() => {
+    const loadData = () => {
         Axios.get(`/api/holdings/${user.id}`).then((res) => {
             console.log(res.data);
             setHoldings(formatData(res.data));
         }).catch((err) => {
             alert(err);
         })
-    }, [])
-
-    const handleAddHolding = () => {
-        return;
     }
+    
+    useEffect(() => loadData(), []);
 
     const classes = useStyles();
     return (
@@ -57,7 +55,7 @@ const DashboardPage = () => {
             <HoldingsTable data={holdings}/>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsAddHoldingsDialogOpen(true)}>Add individual</Button>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsImportCSVDialogOpen(true)}>Import from CSV</Button>
-            <AddHoldingsDialog open={isAddHoldingsDialogOpen} onClose={() => setIsAddHoldingsDialogOpen(false)}/>
+            <AddHoldingsDialog open={isAddHoldingsDialogOpen} onClose={() => setIsAddHoldingsDialogOpen(false)} resetHoldings={loadData}/>
             <ImportCSVDialog open={isImportCSVDialogOpen} onClose={() => setIsImportCSVDialogOpen(false)}/>
         </>
     );
