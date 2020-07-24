@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-// Default page for the app
 const HomePage = () => {
     const classes = useStyles();
     return (
