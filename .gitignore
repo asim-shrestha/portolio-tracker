@@ -2,9 +2,11 @@
 
 # dependencies
 /node_modules
+app/node_modules
 
 # production
 /build
+app/build
 
 # misc
 .DS_Store
