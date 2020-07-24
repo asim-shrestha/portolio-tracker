@@ -6,6 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import SpinnerHoldingsTableRow from './SpinnerHoldingsTableRow';
 import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
@@ -15,13 +16,15 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+// Format currency related strings to include commas and only two decimal places
 const currencyFormat = (n) => {
     return n.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
+// Table to display user holdings data
 const HoldingsTable = ({data}) => {
     const classes = useStyles();
-
+    
     return (
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="customized table">
@@ -44,6 +47,10 @@ const HoldingsTable = ({data}) => {
                             <TableCell align="right">{currencyFormat(parseFloat(stock.unrealizedGain)) + " (" + parseFloat(stock.unrealizedPercentage).toFixed(2) + "%)"}</TableCell>
                         </TableRow>
                     ))}
+                    {
+                        // Display a table row containing a spinner when data is being loaded
+                        (!data || !data.length) ? <SpinnerHoldingsTableRow/>: <></>
+                    }
                 </TableBody>
             </Table>
         </TableContainer>
