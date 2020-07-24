@@ -39,11 +39,20 @@ export default ({open, onClose}) => {
         })
     }
 
+    const handleKey = (keycode) => {
+        console.log(keycode);
+        if (keycode==13) {
+            handleLogin();
+        }
+
+    }
+
     return (
-        <AppDialog open={open} onClose={onClose} title={"Login"} buttonClick={handleLogin} buttonText={"Login"}>
-            <TextField variant="outlined" value={email} onChange={e => setEmail(e.target.value)} error={emailError} required label="Email"/>
+        <AppDialog open={open} onClose={onClose} title={"Login"} buttonClick={handleLogin} buttonText={"Login"} >
+            <TextField variant="outlined" value={email} onChange={e => setEmail(e.target.value)} error={emailError} required label="Email" onKeyDown={e=>handleKey(e.keyCode)} />
             <TextField variant="outlined" value={password} onChange={e => setPassword(e.target.value)} error={passwordError} required label="Password" 
-                type={show?'text':'password'} InputProps={{endAdornment:<IconButton onClick={()=>setShow(!show)}>{show?<Visibility />:<VisibilityOff />}</IconButton>}}/>
+                type={show?'text':'password'} InputProps={{endAdornment:<IconButton onClick={()=>setShow(!show)}>{show?<Visibility />:<VisibilityOff />}</IconButton>}}
+                onKeyDown={e=>handleKey(e.keyCode)} />
         </AppDialog>
     )
 }

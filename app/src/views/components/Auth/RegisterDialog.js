@@ -25,14 +25,21 @@ const RegisterDialog = ({open, onClose}) => {
         })
         onClose();
     }
+    const handleKey = (keycode) => {
+        console.log(keycode);
+        if (keycode==13) {
+            handleRegister();
+        }
 
+    }
     return (
         <AppDialog open={open} onClose={onClose} title={"Register"} buttonClick={handleRegister} buttonText={"Register"}>
-            <TextField variant="outlined" fullWidth placeholder="First name" onChange={e => setFirstName(e.target.value)} />
-            <TextField variant="outlined" fullWidth placeholder="Last name" onChange={e => setLastName(e.target.value)} />
-            <TextField variant="outlined" fullWidth placeholder="Email" onChange={e => setEmail(e.target.value)} />
+            <TextField variant="outlined" fullWidth placeholder="First name" onChange={e => setFirstName(e.target.value)} onKeyDown={e=>handleKey(e.keyCode)}/>
+            <TextField variant="outlined" fullWidth placeholder="Last name" onChange={e => setLastName(e.target.value)} onKeyDown={e=>handleKey(e.keyCode)}/>
+            <TextField variant="outlined" fullWidth placeholder="Email" onChange={e => setEmail(e.target.value)} onKeyDown={e=>handleKey(e.keyCode)}/>
             <TextField variant="outlined" fullWidth placeholder="Password" onChange={e => setPassword(e.target.value)} 
-                type={show?'text':'password'} InputProps={{endAdornment:<IconButton onClick={()=>setShow(!show)}>{show?<Visibility />:<VisibilityOff />}</IconButton>}}/>
+                type={show?'text':'password'} InputProps={{endAdornment:<IconButton onClick={()=>setShow(!show)}>{show?<Visibility />:<VisibilityOff />}</IconButton>}}
+                onKeyDown={e=>handleKey(e.keyCode)}/>
         </AppDialog>
     );
 }
