@@ -3,12 +3,11 @@ import Axios from 'axios'
 import TextField from '@material-ui/core/TextField';
 import {UserContext} from '../Auth/UserStore';
 import AppDialog from '../AppDialog';
-import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import DashboardPage from '../DashboardPage';
 
 export default ({open, onClose}) => {
     const [user, setUser] = useContext(UserContext);
@@ -42,6 +41,7 @@ export default ({open, onClose}) => {
             alert(err);
         })
     }
+
 
     return (
         <AppDialog open={open} onClose={onClose} title={"Add Individual Holding"} buttonClick={onAdd} buttonText={"Add (Somewhat Implemented)"}>
