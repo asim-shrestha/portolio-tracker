@@ -7,7 +7,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import DashboardPage from '../DashboardPage';
 
 export default ({open, onClose}) => {
     const [user, setUser] = useContext(UserContext);
@@ -25,7 +24,6 @@ export default ({open, onClose}) => {
     // }
 
     const onAdd = () => {
-        console.log(user.id);
         Axios.post('/api/activity/order', {
             user_id:user.id,
             // user_id:1,
@@ -38,7 +36,8 @@ export default ({open, onClose}) => {
         }).then((res) => {
             console.log(res);
         }).catch((err) => {
-            alert(err);
+            console.log(err);
+            // alert(err);
         })
     }
 
