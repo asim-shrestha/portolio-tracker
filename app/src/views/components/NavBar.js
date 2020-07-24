@@ -53,7 +53,7 @@ const Navbar = () => {
                 </Toolbar>
             </AppBar>
             <LoginDialog open={isLoginDialogOpen} onClose={() => setIsLoginDialogOpen(false)}/>
-            <RegisterDialog open={isRegisterDialogOpen} onClose={() => setIsRegisterDialogOpen(false)}/>
+            <RegisterDialog open={isRegisterDialogOpen} openLogin={() => setIsLoginDialogOpen(true)}  onClose={() => setIsRegisterDialogOpen(false)} />
         </>
     );
 }
