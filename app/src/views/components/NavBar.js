@@ -32,10 +32,6 @@ const Navbar = () => {
         localStorage.removeItem('token');
     }
 
-    const handleOpenLogin = () => {
-        setIsLoginDialogOpen(true);
-    }
-
     // Display different buttons based on whether or not the user is logged in
     let buttons = []
     if(!user) {
