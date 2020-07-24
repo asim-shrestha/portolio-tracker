@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react'
 import Axios from 'axios'
-import TextField from '@material-ui/core/TextField';
+import {TextField,IconButton} from "@material-ui/core";
 import {UserContext} from './UserStore';
 import AppDialog from '../AppDialog';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 export default ({open, onClose}) => {
     const [email, setEmail] = useState('');
@@ -10,7 +12,7 @@ export default ({open, onClose}) => {
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
     const [user, setUser] = useContext(UserContext);
-
+    const [show, setShow] = useState(false);
     const handleLogin = () => {
         // Check for errors
         if(!email) {setEmailError(true);}
@@ -40,7 +42,8 @@ export default ({open, onClose}) => {
     return (
         <AppDialog open={open} onClose={onClose} title={"Login"} buttonClick={handleLogin} buttonText={"Login"}>
             <TextField variant="outlined" value={email} onChange={e => setEmail(e.target.value)} error={emailError} required label="Email"/>
-            <TextField variant="outlined" value={password} onChange={e => setPassword(e.target.value)} error={passwordError} required label="Password"/>
+            <TextField variant="outlined" value={password} onChange={e => setPassword(e.target.value)} error={passwordError} required label="Password" 
+                type={show?'text':'password'} InputProps={{endAdornment:<IconButton onClick={()=>setShow(!show)}>{show?<Visibility />:<VisibilityOff />}</IconButton>}}/>
         </AppDialog>
     )
 }
