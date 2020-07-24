@@ -36,7 +36,8 @@ const DashboardPage = () => {
 
     // Retrieve user holding data
     useEffect(() => {
-        Axios.get('/api/holdings', {id: user.id}).then((res) => {
+        Axios.get(`/api/holdings/${user.id}`).then((res) => {
+            console.log(res.data);
             setHoldings(formatData(res.data));
         }).catch((err) => {
             alert(err);
@@ -46,7 +47,7 @@ const DashboardPage = () => {
     const handleAddHolding = () => {
         return;
     }
-    
+
     const classes = useStyles();
     return (
         <>
