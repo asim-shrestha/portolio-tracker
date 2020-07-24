@@ -40,7 +40,7 @@ const PreformanceGraph = ({ data }) => {
             <Typography variant="h5" color="primary">Your portfolio currently has ${currencyFormat(totalPortfolioCash)}</Typography>
             <AreaChart width={width} height={400} data={data}>
                 <CartesianGrid strokeDasharray="1 1 " />
-                <XAxis dataKey="x" />
+                <XAxis dataKey="x" dy={7} angle={15}/> 
                 <YAxis />
                 <Tooltip />
                 <Area type="monotone" dataKey="y" stroke={color} fill={color} />

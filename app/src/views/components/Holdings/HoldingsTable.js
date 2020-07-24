@@ -34,7 +34,7 @@ const HoldingsTable = ({data}) => {
                         <TableCell className={classes.tableHeader} align="right">Quantity</TableCell>
                         <TableCell className={classes.tableHeader} align="right">Book Value ($)</TableCell>
                         <TableCell className={classes.tableHeader} align="right">Market Value ($)</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Unrealized Gain (%)</TableCell>
+                        <TableCell className={classes.tableHeader} align="right">Unrealized Gain ($)</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
