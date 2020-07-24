@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
-export default ({open, onClose}) => {
+export default ({open, onClose, resetHoldings}) => {
     const [user, setUser] = useContext(UserContext);
     const [symbol, setSymbol] = useState();
     const [price, setPrice] = useState();
@@ -16,12 +16,6 @@ export default ({open, onClose}) => {
     const [date, setDate] = useState();
     const [commission, setCommission] = useState();
     const [action, setAction] = useState();
-
-    // const updateStock= (attribute, value) => {
-    //     updatedStock = {...stock};
-    //     updateStock[attribute] = value;
-    //     setStock(updateStock);
-    // }
 
     const onAdd = () => {
         Axios.post('/api/activity/order', {
@@ -35,14 +29,16 @@ export default ({open, onClose}) => {
             commission: parseFloat(commission)
         }).then((res) => {
             console.log(res);
+            onClose();
         }).catch((err) => {
             alert(err);
         })
+        
     }
 
 
     return (
-        <AppDialog open={open} onClose={onClose} title={"Add Individual Holding"} buttonClick={onAdd} buttonText={"Add (Somewhat Implemented)"}>
+        <AppDialog open={open} onClose={onClose} title={"Add Individual Holding"} buttonClick={onAdd} buttonText={"Add"}>
             <TextField variant="outlined" onChange={e => setSymbol(e.target.value)} fullWidth placeholder="Symbol"/>
             <TextField variant="outlined" onChange={e => setPrice(e.target.value)} fullWidth placeholder="Price"/>
             <TextField variant="outlined" onChange={e => setQuantity(e.target.value)} fullWidth placeholder="Quantity"/>

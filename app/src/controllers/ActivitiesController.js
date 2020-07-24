@@ -6,19 +6,7 @@ export default class ActivitiesController {
     // POST /activity/sell/:id
     // insert stock holding info (after purchase)
     async insertNewActivity(req, res) {
-        // console.log("insertNewActivity");
-        try {
-            // TODO: remove req.body after form is correctly setup
-            // req.body = {
-            //     user_id: 1,
-            //     quantity: 120,
-            //     action:'buy',
-            //     symbol:'AMZN',
-            //     price: 3150.23,
-            //     date:'2020-07-17',
-            //     commission: 9.95
-            // }
-            
+        try {           
             const newActivity = await Activity.query().insert(req.body)
             res.json(newActivity);
         } catch(err) {

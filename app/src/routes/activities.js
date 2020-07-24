@@ -5,7 +5,7 @@ const router = express.Router();
 import ActivitiesController from '../controllers/ActivitiesController';
 const controller = new ActivitiesController();
 
-const { body, validationResult } = require('express-validator');
+import { body, validationResult } from 'express-validator';
 
 // POST after submitting changes to add quantity to stock, update user's holding information by Id
 router.post('/activity/order', [
@@ -18,8 +18,7 @@ router.post('/activity/order', [
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(error.array());
-        // return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() });
     }
     else{
         controller.insertNewActivity(req, res);
