@@ -26,6 +26,7 @@ add all of the investments they have made to their portfolio. It is here that th
 - Other undecided features
 
 ## Notes
+- If you ever get a "Error: Request failed with status code 400" in the dashboard page, this is beacuse our IEX account is getting too many requests. You probably just need to wait a couple of seconds before hitting refresh.
 - It is hard to see initially but the homepage scrolls down to reveal information about the app
 
 ## Technology Stack:
