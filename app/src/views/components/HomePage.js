@@ -1,15 +1,16 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Box } from '@material-ui/core';
+import { Typography, Box, TextField } from '@material-ui/core';
 import HomePageGraphic from './Charts/HomePageGraphic';
 import HomePageContentblock from './HomePageContentBlock';
+import SymbolSearchBar from './Symbols/SymbolSearchBar';
 
 const useStyles = makeStyles((theme) => ({
     title: {
         fontWeight: "Bold"
     },
     diagram: {
-        marginTop: theme.spacing(12),
+        marginTop: theme.spacing(10),
     }
 }));
 
@@ -19,6 +20,7 @@ const HomePage = () => {
         <div className={classes.root}>
             <Typography variant="h1" color="primary" align="center" className={classes.title}>Welcome to Trendline. 👋</Typography>
             <Typography variant="h3" color="primary" align="center">A free investment-portfolio management tool</Typography>
+            <SymbolSearchBar/>
             <Box className={classes.diagram} align="center">
                 <HomePageGraphic className={classes.diagram} />
                 <HomePageContentblock
