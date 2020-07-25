@@ -22,6 +22,7 @@ const getObjectFromQueryString = (string) => {
     return JSON.parse('{"' + decodeURI(string).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
 }
 
+// Page that searches for symbol preformance data based on a url query string
 const SymbolPage = () => {
     const [querySymbol, setQuerySymbol] = useState('');
     const [symbolData, setSymbolData] = useState([]);
@@ -32,19 +33,20 @@ const SymbolPage = () => {
     // Get search query when route changes
     useEffect(() => {
         let query = getObjectFromQueryString(location.search);
+        setSymbolData([]);
         setQuerySymbol(query.search.toUpperCase());
     }, [location]);
 
     // Load symbolData for given symbol
     useEffect(() => {
-        if(querySymbol == '') {return;}
+        if(querySymbol == '' || symbolData.length > 0) {return;}
         Axios.get(`/api/symbol/${querySymbol}`).then((res) => {
             closeSnackbar();
             setSymbolData(res.data);
         }).catch((err) => {
             enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
         })
-    }, [querySymbol])
+    }, [querySymbol, symbolData])
 
     return (
         <div className={classes.root}>
@@ -53,7 +55,10 @@ const SymbolPage = () => {
             {
                 // Show preformance graph if we have data, show nothing otherwise
                 symbolData.length > 0 ?
-                <Box marginTop="5em"><PreformanceGraph data={symbolData}/></Box> :
+                <Box marginTop="5em">
+                    <Typography variant="h4" align="center">{querySymbol} Preformance:</Typography>
+                    <PreformanceGraph data={symbolData}/>
+                </Box> :
                 <></>
             }
         </div>
