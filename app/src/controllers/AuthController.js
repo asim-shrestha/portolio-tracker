@@ -28,11 +28,6 @@ export default class AuthController {
                     })
                 }
                 else {
-                    res.status(403).send({
-                        auth: false,
-                        message: "Invalid credentials"
-                    })
-                } else {
                     res.status(403).send('Invalid credentials')
                 }
             })(req, res)
@@ -93,7 +88,7 @@ export default class AuthController {
             res.sendStatus(400)
         }
     }
-    
+
     capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
