@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react';
+import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import {UserContext} from './Auth/UserStore';
 import AppBar from '@material-ui/core/AppBar';
@@ -25,11 +26,14 @@ const Navbar = () => {
     const [user, setUser] = useContext(UserContext);
     const [isLoginDialogOpen, setIsLoginDialogOpen] = useState(false);
     const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
+    const history = useHistory();
+    const location = useLocation();
     const classes = useStyles();
 
     const handleLogout = () => {
         setUser(null);
         localStorage.removeItem('token');
+        history.push('/')
     }
 
     // Display different buttons based on whether or not the user is logged in
@@ -40,7 +44,17 @@ const Navbar = () => {
             <Button color="inherit" onClick={() => setIsRegisterDialogOpen(true)} key={2}>Register</Button>
         ]
     } else {
-        buttons = [<Button color="inherit" onClick={handleLogout} key={1}>Logout</Button>]
+        buttons = [<Button color="inherit" onClick={handleLogout} key={2}>Logout</Button>]
+    }
+
+    // Display different buttons for navigation if user is logged in
+    if(user) {
+        const path = location.pathname
+        if(path == '/') {
+            buttons.unshift(<Button color="inherit" onClick={() => history.push("/dashboard")} key={1}>Dashboard</Button>)
+        } else {
+            buttons.unshift(<Button color="inherit" onClick={() => history.push("/")} key={1}>Home</Button>)
+        }
     }
 
     return (

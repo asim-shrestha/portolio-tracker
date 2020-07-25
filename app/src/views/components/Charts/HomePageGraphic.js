@@ -1,8 +1,7 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis } from 'recharts';
-import { Typography } from '@material-ui/core';
+import { LineChart, Line } from 'recharts';
+import theme from '../../../../theme';
 
-// TODO: this data needs to be replaced
 const data = [
     { name: 'Page A', uv: 4000, pv: 2400, amt: 2400, },
     { name: 'Page B', uv: 3000, pv: 1398, amt: 2210, },
@@ -13,16 +12,15 @@ const data = [
     { name: 'Page G', uv: 3490, pv: 4300, amt: 2100, },
 ];
 
-const DrawLine = () => {
+const HomePageGraphic = () => {
+    const strokeColour = theme.palette.primary.main;
     return (
         <>
-            <LineChart width={800} height={300} data={data}>
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Line type="monotone" dataKey="pv" stroke="#A6192E" />
+            <LineChart width={800} height={400} data={data} >
+                <Line type="monotone" dataKey="pv" stroke={strokeColour} strokeWidth={10} dot={false}/>
             </LineChart>
         </>
     );
 }
 
-export default DrawLine;
+export default HomePageGraphic;

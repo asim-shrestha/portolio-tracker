@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import { useHistory } from "react-router-dom";
 import Axios from 'axios'
 import { TextField, IconButton } from "@material-ui/core";
 import { UserContext } from './UserStore';
@@ -13,6 +14,7 @@ export default ({ open, onClose }) => {
     const [passwordError, setPasswordError] = useState(false);
     const [user, setUser] = useContext(UserContext);
     const [show, setShow] = useState(false);
+    const history = useHistory();
 
     const handleLogin = () => {
         // Check for errors
@@ -28,6 +30,7 @@ export default ({ open, onClose }) => {
             // Save token
             localStorage.setItem('token', res.data.token)
             setUser(res.data.user);
+            history.push('/dashboard');
         }).catch((err) => {
             alert(err);
         }).then(() => {

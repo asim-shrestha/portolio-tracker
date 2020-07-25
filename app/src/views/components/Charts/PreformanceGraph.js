@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-import theme from '../../../../public/style/theme';
+import theme from '../../../../theme';
 import Typography from '@material-ui/core/Typography';
 
 // TODO share method with HoldingsTable
