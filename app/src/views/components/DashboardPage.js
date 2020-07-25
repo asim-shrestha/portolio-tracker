@@ -67,7 +67,7 @@ const DashboardPage = () => {
             <Typography variant="h1" align="left" color="primary" className={classes.text}>{user.first_name}'s Dashboard</Typography>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Preformance:</Typography>
             <Box align="center">
-                <PreformanceGraph data={preformance}/>
+                <PreformanceGraph data={preformance} holdings={holdings}/>
             </Box>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Holdings:</Typography>
             <HoldingsTable data={holdings}/>
