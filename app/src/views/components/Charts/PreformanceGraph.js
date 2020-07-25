@@ -32,8 +32,8 @@ const PreformanceGraph = ({ data }) => {
     }, [])
 
     // TODO fix calculation
-    let totalPortfolioCash = 0;
-    if (data.length > 0) { totalPortfolioCash = data[data.length - 1].y; } // Ammount at today's date
+    let portfolioPercentage = 0;
+    if (data.length > 0) { portfolioPercentage = data[data.length - 1].y; } // Percentage at today's date
 
     // Set colour based on preformance
     if(data.length > 0 && data[data.length - 1].y < 0) { colour = theme.palette.negative.main; }
@@ -41,7 +41,9 @@ const PreformanceGraph = ({ data }) => {
     // This loading ensures that the graph will be animated when loaded
     if (data.length > 0 && width != 0) return (
         <>
-            <Typography variant="h5" color="primary">Your portfolio currently has ${currencyFormat(totalPortfolioCash)}</Typography>
+            <Typography variant="h5" color="primary">
+                Your portfolio is currently {data[data.length - 1].y > 0 ? "up" : "down"} {currencyFormat(portfolioPercentage)}%
+            </Typography>
             <AreaChart width={width} height={400} data={data}>
                 <defs>
                     <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
