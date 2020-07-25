@@ -17,6 +17,7 @@ export default ({open, onClose, resetHoldings}) => {
     const [date, setDate] = useState();
     const [commission, setCommission] = useState();
     const [action, setAction] = useState();
+    const actions = ['buy','sell'];
 
     const onAdd = () => {
         Axios.post('/api/activity/order', {
@@ -37,21 +38,17 @@ export default ({open, onClose, resetHoldings}) => {
         
     }
 
-
     return (
         <AppDialog open={open} onClose={onClose} title={"Add Individual Holding"} buttonClick={onAdd} buttonText={"Add"}>
-            <TextField variant="outlined" onChange={e => setSymbol(e.target.value)} fullWidth placeholder="Symbol"/>
-            <TextField variant="outlined" onChange={e => setPrice(e.target.value)} fullWidth placeholder="Price"/>
-            <TextField variant="outlined" onChange={e => setQuantity(e.target.value)} fullWidth placeholder="Quantity"/>
-            <TextField variant="outlined" fullWidth onChange={e => setDate(e.target.value)} label="Date" type="date" defaultValue="2020-07-24" InputLabelProps={{shrink: true}} />
-            <TextField variant="outlined" onChange={e => setCommission(e.target.value)} fullWidth placeholder="Commission"/>
-            <FormControl variant="outlined" fullWidth>
-                <InputLabel>Action</InputLabel>
-                <Select onChange={e => setAction(e.target.value)} >
-                    <MenuItem value={'buy'}>Buy</MenuItem>
-                    <MenuItem value={'sell'}>Sell</MenuItem>
-                </Select>
-            </FormControl>
+            <TextField variant="outlined" margin="dense" fullWidth onChange={e => setSymbol(e.target.value)} label="Symbol"/>
+            <TextField variant="outlined" margin="dense" fullWidth onChange={e => setPrice(e.target.value)} label="Price"/>
+            <TextField variant="outlined" margin="dense" fullWidth onChange={e => setQuantity(e.target.value)} label="Quantity"/>
+            <TextField variant="outlined" margin="dense" fullWidth onChange={e => setDate(e.target.value)} label="Date" type="date" defaultValue="" InputLabelProps={{shrink: true}} />
+            <TextField variant="outlined" margin="dense" fullWidth onChange={e => setCommission(e.target.value)} label="Commission"/>
+            <TextField variant="outlined" margin="dense" fullWidth onChange={e => setAction(e.target.value)} label="Action" select>
+                <MenuItem value={'buy'}>Buy</MenuItem>
+                <MenuItem value={'sell'}>Sell</MenuItem>
+            </TextField>
         </AppDialog>
     )
 }

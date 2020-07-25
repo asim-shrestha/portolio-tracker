@@ -45,9 +45,9 @@ export default ({ open, onClose }) => {
 
     return (
         <AppDialog open={open} onClose={onClose} title={"Login"} buttonClick={handleLogin} buttonText={"Login"} >
-            <TextField variant="outlined" value={email} onChange={e => setEmail(e.target.value)} error={emailError} required label="Email"/>
-            <TextField variant="outlined" value={password} onChange={e => setPassword(e.target.value)} error={passwordError} required label="Password"
-                type={show ? 'text' : 'password'} InputProps={{ endAdornment: <IconButton onClick={() => setShow(!show)}>{show ? <Visibility /> : <VisibilityOff />}</IconButton>}}
+            <TextField variant="outlined" fullWidth margin="dense" value={email} onChange={e => setEmail(e.target.value)} error={emailError} required label="Email"/>
+            <TextField variant="outlined" fullWidth margin="dense" value={password} onChange={e => setPassword(e.target.value)} error={passwordError} required label="Password"
+                type={show ? 'text' : 'password'} InputProps={{ endAdornment: <IconButton onClick={() => setShow(!show)}>{show ? <Visibility fontSize="small" /> : <VisibilityOff fontSize="small"/>}</IconButton>}}
             />
         </AppDialog>
     )
