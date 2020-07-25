@@ -119,7 +119,7 @@ export default ({ open, onClose }) => {
                             <Typography align="left" color="primary"></Typography>
                         </Grid>
                         <Grid item xs={9}>
-                            <Typography align="center" color="primary">Colum found in CSV file</Typography>
+                            <Typography align="center" color="primary">Columns found in CSV file</Typography>
                         </Grid>
 
                         <Grid item xs={3}>
