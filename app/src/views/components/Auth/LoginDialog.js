@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import { useHistory } from "react-router-dom";
 import Axios from 'axios'
 import { TextField, IconButton } from "@material-ui/core";
 import { UserContext } from './UserStore';
@@ -13,6 +14,7 @@ export default ({ open, onClose }) => {
     const [password, setPassword] = useState('');
     const [user, setUser] = useContext(UserContext);
     const [showPassword, setShowPassword] = useState(false);
+    const history = useHistory();
 
     const enqueueErrorToSnackbar = (err) => {
         const status = err.response.status;
@@ -39,6 +41,7 @@ export default ({ open, onClose }) => {
             setUser(res.data.user);
             onClose();
             closeSnackbar(); // Close errors on successful login
+            history.push('/dashboard');
         }).catch((err) => {
             console.log(err.response);
             enqueueErrorToSnackbar(err);

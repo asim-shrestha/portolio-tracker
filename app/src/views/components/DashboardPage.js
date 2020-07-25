@@ -8,7 +8,7 @@ import AddHoldingsDialog from './Holdings/AddHoldingsDialog';
 import ImportCSVDialog from './Holdings/ImportCSVDialog';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import PreformanceGraph from './Draw/PreformanceGraph';
+import PreformanceGraph from './Charts/PreformanceGraph';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 // Page to display user's portfolio metrics
 const DashboardPage = () => {
     const [user, setUser] = useContext(UserContext);
-    const [holdings, setHoldings] = useState('');
+    const [holdings, setHoldings] = useState(null);
     const [preformance, setPreformance] = useState([]);
     const [isAddHoldingsDialogOpen, setIsAddHoldingsDialogOpen] = useState(false);
     const [isImportCSVDialogOpen, setIsImportCSVDialogOpen] = useState(false);
@@ -41,7 +41,6 @@ const DashboardPage = () => {
     const loadData = () => {
         // Retrieve user preformance data
         Axios.get(`/api/performance/${user.id}`).then((res) => {
-            console.log(res.data);
             setPreformance((res.data));
         }).catch((err) => {
             alert(err);
@@ -54,9 +53,15 @@ const DashboardPage = () => {
         })
     }
     
-    useEffect(() => loadData(), []);
+    useEffect(() => {
+        if(user != null) {
+            loadData();
+        }
+    }, [user]);
 
     const classes = useStyles();
+
+    if(user === null) {return <Typography variant="h1" align="center" color="primary" className={classes.text}>Error loading user</Typography>}
     return (
         <>
             <Typography variant="h1" align="left" color="primary" className={classes.text}>{user.first_name}'s Dashboard</Typography>
