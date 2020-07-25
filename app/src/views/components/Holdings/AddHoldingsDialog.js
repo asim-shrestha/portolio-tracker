@@ -1,12 +1,11 @@
 import React, { useState, useContext } from 'react'
+import { useSnackbar } from 'notistack';
+import getResErrorMessage from '../../helpers/ErrorHelper';
 import Axios from 'axios'
 import TextField from '@material-ui/core/TextField';
 import {UserContext} from '../Auth/UserStore';
 import AppDialog from '../AppDialog';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 
 export default ({open, onClose, resetHoldings}) => {
 
@@ -17,7 +16,7 @@ export default ({open, onClose, resetHoldings}) => {
     const [date, setDate] = useState();
     const [commission, setCommission] = useState();
     const [action, setAction] = useState();
-    const actions = ['buy','sell'];
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const onAdd = () => {
         Axios.post('/api/activity/order', {
@@ -29,11 +28,12 @@ export default ({open, onClose, resetHoldings}) => {
             date:String(date),
             commission: parseFloat(commission)
         }).then((res) => {
-            console.log(res);
             onClose();
             resetHoldings();
+            closeSnackbar(); // Close on success
+            enqueueSnackbar('Holding successfully added!', {variant: 'success'});
         }).catch((err) => {
-            alert(err);
+            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
         })
         
     }

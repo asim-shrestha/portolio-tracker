@@ -23,6 +23,7 @@
 		"jsonwebtoken": "^8.5.1",
 		"knex": "latest",
 		"moment": "2.24.0",
+		"notistack": "^0.9.17",
 		"objection": "latest",
 		"passport": "^0.4.1",
 		"passport-jwt": "^4.0.0",

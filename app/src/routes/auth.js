@@ -20,10 +20,10 @@ router.post("/login", [
 });
 
 router.post('/register', [
-    body('email').trim().isAscii(),
-    body('password').trim().isAscii(),
     body('first_name').trim().isAscii(),
     body('last_name').trim().isAscii(),
+    body('email').trim().isAscii(),
+    body('password').trim().isAscii(),
     body('*').escape()
 ], (req, res) => {
     const errors = validationResult(req);

@@ -8,10 +8,13 @@ const theme = createMuiTheme({
             main: '#000000', // Black
         },
         secondary: {
-            main: '#4CBB17',
+            main: '#ffffff',
         },
         graph: {
             main: '#39ab74', // Green from Google's graphs
+        },
+        negative: {
+            main: '#e74f1f', // Red from Google's graphs
         },
         error: {
             main: red.A400,
