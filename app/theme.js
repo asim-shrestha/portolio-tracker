@@ -10,7 +10,7 @@ const theme = createMuiTheme({
         secondary: {
             main: '#ffffff',
         },
-        graph: {
+        positive: {
             main: '#39ab74', // Green from Google's graphs
         },
         negative: {

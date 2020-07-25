@@ -14,7 +14,7 @@ const currencyFormat = (n) => {
 // Returns the graph if data is given and a message saying "the portfolio is currently empty" otherwise
 const PreformanceGraph = ({ data }) => {
     const [width, setWidth] = useState(0);
-    const colour = theme.palette.graph.main;
+    let colour = theme.palette.positive.main;
 
     const updateWidth = () => {
         // Subtract magic number to get proper right margins
@@ -34,6 +34,9 @@ const PreformanceGraph = ({ data }) => {
     // TODO fix calculation
     let totalPortfolioCash = 0;
     if (data.length > 0) { totalPortfolioCash = data[data.length - 1].y; } // Ammount at today's date
+
+    // Set colour based on preformance
+    if(data.length > 0 && data[data.length - 1].y < 0) { colour = theme.palette.negative.main; }
 
     // This loading ensures that the graph will be animated when loaded
     if (data.length > 0 && width != 0) return (
