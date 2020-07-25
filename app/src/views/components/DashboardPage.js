@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     },
     text: {
         fontWeight: "bold",
-        textTransform: "capitalize" // Capitalize first letter
     }
 }));
 
