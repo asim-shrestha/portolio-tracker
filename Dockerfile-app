@@ -7,8 +7,11 @@ RUN chmod +x /wait.sh
 WORKDIR /app
 
 # Install dependencies
-COPY app/package.json .
+COPY ./app/package.json .
 RUN npm install
+
+# My hacky solution to docker doing docker things. Comment out if not needed
+RUN npm install -g knex npm-run-all nodemon webpack webpack-cli @babel/node @babel/core
 
 # Bundle app source
 COPY ./app /app
