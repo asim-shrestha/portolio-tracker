@@ -1,8 +1,6 @@
 import Activity from '../models/ActivityModel'
 import ActivitiesHelper from './helpers/ActivitiesHelper'
 import { iexSymbols } from 'iexcloud_api_wrapper'
-import csv from 'csv-parser'
-import fs from 'fs'
 import { header } from 'express-validator'
 
 const helper = new ActivitiesHelper()
@@ -33,19 +31,50 @@ export default class ActivitiesController {
     // POST /upload
     // upload user's csv file
     async uploadCSV(req, res) {
-        console.log("uploadCSV", req.file);
-        const rows = []
+        try {
+            const { data, map } = req.body
+            const user = req.user
+            const { symbol, price, quantity, date } = map
 
-        fs.createReadStream(req.file.path)
-            .pipe(csv())
-            .on('headers', (headers) => { console.log(headers) })
-            .on('data', (data) => { rows.push(data) })
-            .on('end', () => {
-                // console.log(rows)
-                fs.unlink(req.file.path, () => {
-                    console.log('file deleted')
-                })
-                res.send({ data: rows });
-            })
+            // check symbols
+            let safeToInsert = false
+            const symbolsList = await iexSymbols()
+            for (let i = 1; i < data.length; i++) {
+                const validSymbol = await helper.validateSymbol(data[i][symbol], symbolsList)
+                if (!validSymbol) {
+                    console.log('bad symbol:', data[i][symbol])
+                    res.status(422).send({
+                        message: 'CSV contained invalid symbols. Please check the symbols, and try again.'
+                    })
+                    return
+                }
+                else {
+                    safeToInsert = true
+                }
+            }
+
+            if (safeToInsert) {
+                for (let i = 1; i < data.length; i++) {
+                    const insertRow = {
+                        user_id: user.id,
+                        quantity: parseInt(data[i][quantity]),
+                        symbol: data[i][symbol],
+                        price: parseFloat(data[i][price]),
+                        date: data[i][date],
+                        // not sure about this below
+                        action: 'buy',
+                        commission: 0
+                    }
+                    // console.log(insertRow)
+                    const newActivity = await Activity.query().insert(insertRow)
+                    // console.log(newActivity)
+                }
+                res.send({ message: 'Successful upload' })
+            }
+        }
+        catch (error) {
+            console.log(error)
+            res.sendStatus(400)
+        }
     }
 }

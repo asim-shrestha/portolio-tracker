@@ -67,6 +67,7 @@ app.use('/build', express.static('build'));
 
 // Body Parser
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // auth route
 import auth from "./src/routes/auth"

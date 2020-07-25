@@ -1,4 +1,5 @@
 import express from 'express';
+import passport from 'passport'
 
 const router = express.Router(); 
 
@@ -27,17 +28,7 @@ router.post('/activity/order', [
 
 
 // POST upload user CSV file
-import multer from 'multer';
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads')
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + '-' + file.originalname)
-    }
-})
-const upload = multer({storage: storage}).single('file')
-router.post('/upload', upload, controller.uploadCSV);
+router.post('/upload', passport.authenticate('jwt', { session: false }), controller.uploadCSV);
 
 // TODO: remove this router later
 // route for testing IEX API calls
