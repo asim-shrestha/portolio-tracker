@@ -37,7 +37,7 @@ export default class DashboardsController {
         }
     }
     
-    // Get the preformance of a symbol for the 30 days
+    // Get the 30 day preformance data of an individual symbol
     async getSymbolData(req, res) {
         try{
             const symbol = req.params.symbol;
@@ -52,7 +52,7 @@ export default class DashboardsController {
                 let symbolPreformanceData = await helper.generateSymbolPreformanceData(indexedPriceData);
                 res.send(symbolPreformanceData);
             } else {
-                res.status(422).send('The symbol you entered is invalid. Please check the symbol, and try again.')
+                res.status(422).send(activitiesHelper.getInvalidSymbolMessage())
             }
         } catch(err) {
             res.status(400).send(err.message);
