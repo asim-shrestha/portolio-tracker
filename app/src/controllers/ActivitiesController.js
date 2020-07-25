@@ -18,9 +18,13 @@ export default class ActivitiesController {
                 const newActivity = await Activity.query().insert(req.body)
                 res.json(newActivity);
             } else {
+<<<<<<< HEAD
                 res.status(422).send({
                     message: 'The symbol you entered is invalid. Please check the symbol, and try again.'
                 })
+=======
+                res.status(422).send('The symbol you entered is invalid. Please check the symbol, and try again.')
+>>>>>>> master
             }
 
         } catch (err) {

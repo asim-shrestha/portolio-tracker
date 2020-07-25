@@ -7,9 +7,16 @@ export default class DashboardsController {
     // GET /performance
     async getPerformanceData(req, res) {
         try {
-            // TODO: extract user_id from findUser
-            const user_id = 1;
+            const user_id = req.params.user_id;
             const activities = await Activity.query().select('symbol', 'date', 'price', 'quantity', 'action').where('user_id', user_id);
+
+            // Avoid additional logic if no activities found
+            if(activities.length === 0) {
+                console.error("No activities found for user");
+                res.json([]);
+                return;
+            }
+
             const activitiesByDate = await helper.indexActivitiesByDate(activities)
             const symbols = await helper.findSymbols(activities)
             const priceDataList = []
@@ -19,9 +26,9 @@ export default class DashboardsController {
                 let indexedPriceData = await helper.indexHistoricalPricesByDate(priceData)
                 priceDataList.push(indexedPriceData)
             }
-            
-            const returnData = await helper.generateReturnData(priceDataList, activitiesByDate)
-            res.json(returnData);
+
+            const performanceData = await helper.generatePerformanceData(priceDataList, activitiesByDate)
+            res.json(performanceData);
 
         } catch(err) {
             console.error(err)
@@ -34,6 +41,14 @@ export default class DashboardsController {
         try {
             const user_id = req.params.user_id;
             const activities = await Activity.query().select('symbol', 'date', 'price', 'quantity', 'action', 'commission').where('user_id', user_id);
+            
+            // Avoid additional logic if no activities found
+            if(activities.length === 0) {
+                console.error("No activities found for user");
+                res.json([]);
+                return;
+            }
+
             const symbols = await helper.findSymbols(activities)
 
             let priceData = {}

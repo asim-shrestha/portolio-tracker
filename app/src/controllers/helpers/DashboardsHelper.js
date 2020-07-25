@@ -40,9 +40,9 @@ export default class ActivitiesHelper {
         })
     }
 
-    generateReturnData(priceDataList, activitiesData) {
+    generatePerformanceData(priceDataList, activitiesData) {
         return new Promise((resolve, reject) => { 
-            let startDate = Object.keys(activitiesData)[0];
+            const startDate = moment.min(Object.keys(activitiesData).map(d => moment(d))).format('YYYY-MM-DD');
             const endDate = moment().format('YYYY-MM-DD');
 
             let quantity = {};
@@ -50,7 +50,12 @@ export default class ActivitiesHelper {
             let cumulative_return = 1;
             let prev_value = 0;
             let curr_value = 0;
-            let returnData = [];
+            let book_value = 0;
+            let gain = 0
+            // TODO: implement cash feature
+            // current simplification assumes cash position = stocks sold by users
+            let cash = 0
+            let performanceData = [];
             let d = startDate
 
             while(!(moment(d).isSame(moment(endDate)))){
@@ -58,7 +63,6 @@ export default class ActivitiesHelper {
                     d = this.incrementDate(d)
                     continue;
                 }
-
                 // extract all symbols required for calculation
                 let symbols = Object.keys(quantity)
 
@@ -68,50 +72,58 @@ export default class ActivitiesHelper {
                         let data = p[d]
                         if (quantity[data.symbol]){
                             curr_value += quantity[data.symbol] * data.price
-                            symbols = this.removeElement(symbols, data.symbol)
+                            this.removeElement(symbols, data.symbol)
                             latest_price[data.symbol] = data.price
                         }
                     }  
                 }
+
                 // calculate market value for all investment not traded on the day of
                 // calculate using latest known closing price
                 for (let s of symbols) {
-                    curr_value +=  quantity[s] * latest_price[s]
+                    // skip update if latest price is unknown
+                    if (latest_price[s]){
+                        curr_value +=  quantity[s] * latest_price[s]
+                    }
                 }
 
                 // calculate return compared to yesterday's price
                 if (prev_value == 0){
-                    cumulative_return = activitiesData[d]  ? 1 : 0
+                    cumulative_return = 0
                 } else {
-                    cumulative_return = cumulative_return * curr_value / parseFloat(prev_value)
+                    gain += (parseFloat(curr_value) - prev_value)
+                    cumulative_return = gain / (book_value + cash) * 100
                 }
 
-                returnData.push({
+                performanceData.push({
                     x: d,
                     y: cumulative_return
-                })                
+                })
 
                 if (activitiesData[d]){
                     for (let a of activitiesData[d]){
                         if (!quantity[a.symbol]){
                             quantity[a.symbol] = 0  
                         }
+                        if (a.quantity < 0) {
+                            cash += a.quantity * a.price
+                        }
                         quantity[a.symbol] += a.quantity
                         // remove symbol, quantity if <= 0
                         if (quantity[a.symbol] <= 0){
                             delete quantity[a.symbol]
                         }
-
-                        curr_value += a.quantity * a.price
+                        let new_activity = parseFloat(a.quantity) * a.price
+                        book_value += new_activity
+                        curr_value += new_activity
                     }
                 }
-
                 prev_value = curr_value
                 curr_value = 0
                 d = this.incrementDate(d)
             }
 
-            resolve(returnData);
+            resolve(performanceData);
         })
     }
 
@@ -143,7 +155,7 @@ export default class ActivitiesHelper {
                 marketValue = indexedData[symbol].marketValue
                 bookValue = indexedData[symbol].bookValue
                 indexedData[symbol].unrealizedGain = `${marketValue - bookValue}`
-                indexedData[symbol].unrealizedPercentage = `${((marketValue - bookValue) / bookValue)}%`
+                indexedData[symbol].unrealizedPercentage = `${((marketValue - bookValue) / bookValue) * 100}%`
             }
             resolve(indexedData)
         })
@@ -163,13 +175,12 @@ export default class ActivitiesHelper {
 
     removeElement(array, element) {
         const index = array.indexOf(element);
-
-        return (index > - 1 ? array.splice(index, 1) : array)
+        index > - 1 ? array.splice(index, 1) : array
     }
 
     isWeekend(d) {
         const date = new Date(d)
-        return ((date.getDay() >= 5) ? true : false)
+        return ((date.getDay() >= 6) || (date.getDay() <= 0) ? true : false)
     }
 
     incrementDate(d) {
