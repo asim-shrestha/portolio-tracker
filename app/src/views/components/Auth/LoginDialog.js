@@ -18,6 +18,7 @@ export default ({ open, onClose }) => {
 
     const enqueueErrorToSnackbar = (err) => {
         const status = err.response.status;
+        console.log(err);
         if (status == 422) {
             // Loop through response and concatenate all the problematic values
             const badValues = err.response.data.errors.map((errValue) => {
