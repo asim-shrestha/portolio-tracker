@@ -5,6 +5,9 @@ import HomePage from './components/HomePage';
 import { Switch, Route } from "react-router-dom";
 import { UserProvider } from './components/Auth/UserStore';
 import { makeStyles } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
+import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,16 +20,35 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
     const classes = useStyles();
+    const notistackRef = React.createRef();
+
+    // add action to all snackbars
+    const onClickDismiss = key => () => {
+        notistackRef.current.closeSnackbar(key);
+    }
     return (
-        <UserProvider>
-            <Authenticator />
-            <Navbar />
-            <div className={classes.root}>
-                <Switch>
-                    <Route exact path="/" render={() => <HomePage />} />
-                </Switch>
-            </div>
-        </UserProvider>
+        <SnackbarProvider 
+            maxSnack={3}
+            anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+            }}
+            ref={notistackRef}
+            action={(key) => (
+                <Button onClick={onClickDismiss(key)}>
+                    <CloseIcon color="secondary"/>
+                </Button>
+        )}>
+            <UserProvider>
+                <Authenticator />
+                <Navbar />
+                <div className={classes.root}>
+                    <Switch>
+                        <Route exact path="/" render={() => <HomePage />} />
+                    </Switch>
+                </div>
+            </UserProvider>
+        </SnackbarProvider>
     );
 }
 

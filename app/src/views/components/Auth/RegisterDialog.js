@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import Axios from 'axios'
 import {UserContext} from './UserStore';
-
+import { useSnackbar } from 'notistack';
 import AppDialog from '../AppDialog';
 import {TextField,IconButton} from "@material-ui/core";
 import Visibility from '@material-ui/icons/Visibility';
@@ -14,6 +14,7 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
     const [password, setPassword] = React.useState('');
     const [show, setShow] = useState(false);
     const [user, setUser] = useContext(UserContext);
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const handleRegister = () => {
         Axios.post('/auth/register', {
@@ -24,8 +25,8 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
         }).then(res => {
             onClose();
             openLogin();
+            enqueueSnackbar('User successfully registered!', {variant: 'success'});
         }).catch((err) => {
-            alert(err);
         })
         onClose();
     }
