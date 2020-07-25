@@ -8,7 +8,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
 import {StaticRouter} from 'react-router-dom'
 import App from './src/views/App';
-import theme from './public/style/theme';
+import theme from './theme';
 import bodyParser from "body-parser";
 
 function renderFullPage(html, css) {

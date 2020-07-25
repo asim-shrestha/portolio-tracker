@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import Axios from 'axios'
 import {UserContext} from './UserStore';
 import AppDialog from '../AppDialog';
@@ -13,7 +13,6 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [show, setShow] = useState(false);
-    const [user, setUser] = useContext(UserContext);
 
     const handleRegister = () => {
         Axios.post('/auth/register', {
@@ -21,9 +20,10 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
             password: password,
             first_name: firstName,
             last_name: lastName,
-        }).then(res => {
+        }).then(() => {
             onClose();
             openLogin();
+            alert("Account successfully registered!");
         }).catch((err) => {
             alert(err);
         })
