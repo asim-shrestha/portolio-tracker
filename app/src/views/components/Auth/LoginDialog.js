@@ -5,21 +5,30 @@ import { UserContext } from './UserStore';
 import AppDialog from '../AppDialog';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { useSnackbar } from 'notistack';
 
 export default ({ open, onClose }) => {
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const [email, setEmail] = useState('');
-    const [emailError, setEmailError] = useState(false);
     const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState(false);
     const [user, setUser] = useContext(UserContext);
-    const [show, setShow] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const enqueueErrorToSnackbar = (err) => {
+        const status = err.response.status;
+        if (status == 422) {
+            // Loop through response and concatenate all the problematic values
+            const badValues = err.response.data.errors.map((errValue) => {
+                return errValue.param;
+            }).join(", ");
+    
+            enqueueSnackbar("Invalid values: " + badValues, {variant: 'error'});
+        } else {
+            enqueueSnackbar(err.response.data, {variant: 'error'});
+        }
+    }
 
     const handleLogin = () => {
-        // Check for errors
-        if (!email) { setEmailError(true); }
-        if (!password) { setPasswordError(true); }
-        if (!email || !password) { return; }
-
         // Attempt login
         Axios.post('/auth/login', {
             email: email,
@@ -28,23 +37,23 @@ export default ({ open, onClose }) => {
             // Save token
             localStorage.setItem('token', res.data.token)
             setUser(res.data.user);
+            onClose();
+            closeSnackbar(); // Close errors on successful login
         }).catch((err) => {
-            alert(err);
+            console.log(err.response);
+            enqueueErrorToSnackbar(err);
         }).then(() => {
             // Reset fields
             setEmail('');
             setPassword('');
-            setEmailError(false);
-            setPasswordError(false);
-            onClose();
         })
     }
 
     return (
         <AppDialog open={open} onClose={onClose} title={"Login"} buttonClick={handleLogin} buttonText={"Login"} >
-            <TextField variant="outlined" value={email} onChange={e => setEmail(e.target.value)} error={emailError} required label="Email"/>
-            <TextField variant="outlined" value={password} onChange={e => setPassword(e.target.value)} error={passwordError} required label="Password"
-                type={show ? 'text' : 'password'} InputProps={{ endAdornment: <IconButton onClick={() => setShow(!show)}>{show ? <Visibility /> : <VisibilityOff />}</IconButton>}}
+            <TextField variant="outlined" value={email} onChange={e => setEmail(e.target.value)} label="Email"/>
+            <TextField variant="outlined" value={password} onChange={e => setPassword(e.target.value)} label="Password"
+                type={showPassword ? 'text' : 'password'} InputProps={{ endAdornment: <IconButton onClick={() => setShowPassword(!showPassword)}>{showPassword ? <Visibility /> : <VisibilityOff />}</IconButton>}}
             />
         </AppDialog>
     )

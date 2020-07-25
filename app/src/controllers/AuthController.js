@@ -13,12 +13,10 @@ export default class AuthController {
                 if (error) {
                     console.error(error)
                     res.status(401).send(error)
-                }
-                if (info) {
+                } else if (info) {
                     console.info(info.message)
                     res.status(401).send(info.message)
-                }
-                if (user) {
+                } else if (user) {
                     req.logIn(user, (error) => {
                         const token = jwt.sign({ id: user.email }, process.env.JWT_SECRET)
                         res.send({
@@ -27,6 +25,11 @@ export default class AuthController {
                             user: user,
                             message: 'User found and logged in'
                         }).status(200)
+                    })
+                } else {
+                    res.status(403).send({
+                        auth: false,
+                        message: "Invalid credentials"
                     })
                 }
             })(req, res)
