@@ -13,6 +13,9 @@ const theme = createMuiTheme({
         graph: {
             main: '#39ab74', // Green from Google's graphs
         },
+        negative: {
+            main: '#e74f1f', // Red from Google's graphs
+        },
         error: {
             main: red.A400,
         },

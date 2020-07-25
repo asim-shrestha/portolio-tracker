@@ -7,6 +7,7 @@ import AppDialog from '../AppDialog';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { useSnackbar } from 'notistack';
+import getResErrorMessage from '../../helpers/ErrorHelper';
 
 export default ({ open, onClose }) => {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -15,21 +16,6 @@ export default ({ open, onClose }) => {
     const [user, setUser] = useContext(UserContext);
     const [showPassword, setShowPassword] = useState(false);
     const history = useHistory();
-
-    const enqueueErrorToSnackbar = (err) => {
-        const status = err.response.status;
-        console.log(err);
-        if (status == 422) {
-            // Loop through response and concatenate all the problematic values
-            const badValues = err.response.data.errors.map((errValue) => {
-                return errValue.param;
-            }).join(", ");
-    
-            enqueueSnackbar("Invalid values: " + badValues, {variant: 'error'});
-        } else {
-            enqueueSnackbar(err.response.data, {variant: 'error'});
-        }
-    }
 
     const handleLogin = () => {
         // Attempt login
@@ -44,8 +30,7 @@ export default ({ open, onClose }) => {
             closeSnackbar(); // Close errors on successful login
             history.push('/dashboard');
         }).catch((err) => {
-            console.log(err.response);
-            enqueueErrorToSnackbar(err);
+            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
         }).then(() => {
             // Reset fields
             setEmail('');

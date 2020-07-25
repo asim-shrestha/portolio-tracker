@@ -5,6 +5,7 @@ import AppDialog from '../AppDialog';
 import {TextField,IconButton} from "@material-ui/core";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import getResErrorMessage from '../../helpers/ErrorHelper';
 
 const RegisterDialog = ({open, onClose, openLogin}) => {
 
@@ -12,7 +13,7 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
     const [lastName, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const [show, setShow] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
 
@@ -27,7 +28,7 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
             openLogin();
             enqueueSnackbar('User successfully registered!', {variant: 'success'});
         }).catch((err) => {
-            enqueueSnackbar(err.response.data, {variant: 'error'});
+            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
         })
     }
 
@@ -37,7 +38,7 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
             <TextField variant="outlined" fullWidth margin="dense" label="Last name" onChange={e => setLastName(e.target.value)}/>
             <TextField variant="outlined" fullWidth margin="dense" label="Email" onChange={e => setEmail(e.target.value)}/>
             <TextField variant="outlined" fullWidth margin="dense" label="Password" onChange={e => setPassword(e.target.value)} 
-                type={show?'text':'password'} InputProps={{endAdornment:<IconButton onClick={()=>setShow(!show)}>{show?<Visibility fontSize="small" />:<VisibilityOff fontSize="small" />}</IconButton>}}
+                type={showPassword?'text':'password'} InputProps={{endAdornment:<IconButton onClick={()=>setShowPassword(!showPassword)}>{showPassword?<Visibility fontSize="small" />:<VisibilityOff fontSize="small" />}</IconButton>}}
                />
         </AppDialog>
     );
