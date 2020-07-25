@@ -7,8 +7,9 @@ const SymbolSearchBar = () => {
 
     const handleSearch = (e) => {
         if(e.keyCode == 13) {
-            console.log('value', e.target.value);
-            history.push('/search?symbol=' + e.target.value);
+            const value = e.target.value;
+            if(value == '') { return; }
+            history.push('/symbol?search=' + e.target.value);
         }
     }
 
