@@ -27,8 +27,8 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
             openLogin();
             enqueueSnackbar('User successfully registered!', {variant: 'success'});
         }).catch((err) => {
+            enqueueSnackbar(err.response.data, {variant: 'error'});
         })
-        onClose();
     }
 
     return (
