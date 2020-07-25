@@ -1,7 +1,9 @@
 import Activity from '../models/ActivityModel'
 import DashboardsHelper from './helpers/DashboardsHelper'
-import { history, quote } from 'iexcloud_api_wrapper'
+import ActivitiesHelper from './helpers/ActivitiesHelper'
+import { history, quote, iexSymbols } from 'iexcloud_api_wrapper'
 const helper = new DashboardsHelper()
+const activitiesHelper = new ActivitiesHelper()
 
 export default class DashboardsController {
     // GET /performance
@@ -26,7 +28,6 @@ export default class DashboardsController {
                 let indexedPriceData = await helper.indexHistoricalPricesByDate(priceData)
                 priceDataList.push(indexedPriceData)
             }
-
             const performanceData = await helper.generatePerformanceData(priceDataList, activitiesByDate)
             res.json(performanceData);
 
@@ -35,6 +36,28 @@ export default class DashboardsController {
             res.sendStatus(400)
         }
     }
+    
+    // Get the preformance of a symbol for the 30 days
+    async getSymbolData(req, res) {
+        try{
+            const symbol = req.params.symbol;
+            const allSymbols = await iexSymbols()
+
+            // If symbol is valid, return performance data for it
+            if (await activitiesHelper.validateSymbol(symbol, allSymbols)) {
+                // Get data for symbol
+                let priceData = await history(symbol, {chartByDay: true, period:'1m', closeOnly: true})
+                let indexedPriceData = await helper.indexHistoricalPricesByDate(priceData)
+                // Extract datapoints for front end
+                let symbolPreformanceData = await helper.generateSymbolPreformanceData(indexedPriceData);
+                res.send(symbolPreformanceData);
+            } else {
+                res.status(422).send('The symbol you entered is invalid. Please check the symbol, and try again.')
+            }
+        } catch(err) {
+            res.status(400).send(err.message);
+        }
+    } 
 
     // GET /holdings
     async getHoldingsData(req, res) {
