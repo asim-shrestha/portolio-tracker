@@ -26,9 +26,9 @@ export default class DashboardsController {
                 let indexedPriceData = await helper.indexHistoricalPricesByDate(priceData)
                 priceDataList.push(indexedPriceData)
             }
-            
-            const returnData = await helper.generateReturnData(priceDataList, activitiesByDate)
-            res.json(returnData);
+
+            const performanceData = await helper.generatePerformanceData(priceDataList, activitiesByDate)
+            res.json(performanceData);
 
         } catch(err) {
             console.error(err)
