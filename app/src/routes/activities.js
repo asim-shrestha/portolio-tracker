@@ -1,6 +1,6 @@
 import express from 'express';
 
-const router = express.Router();
+const router = express.Router(); 
 
 import ActivitiesController from '../controllers/ActivitiesController';
 const controller = new ActivitiesController();
@@ -27,7 +27,17 @@ router.post('/activity/order', [
 
 
 // POST upload user CSV file
-router.post('/upload', controller.uploadCSV);
+import multer from 'multer';
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname)
+    }
+})
+const upload = multer({storage: storage}).single('file')
+router.post('/upload', upload, controller.uploadCSV);
 
 // TODO: remove this router later
 // route for testing IEX API calls

@@ -1,6 +1,10 @@
 import Activity from '../models/ActivityModel'
 import ActivitiesHelper from './helpers/ActivitiesHelper'
 import { iexSymbols } from 'iexcloud_api_wrapper'
+import csv from 'csv-parser'
+import fs from 'fs'
+import { header } from 'express-validator'
+
 const helper = new ActivitiesHelper()
 
 
@@ -17,11 +21,11 @@ export default class ActivitiesController {
                 res.json(newActivity);
             } else {
                 res.status(422).send({
-                    message: 'The symbol you entered is invalid. Please check the symbol, and try again.' 
+                    message: 'The symbol you entered is invalid. Please check the symbol, and try again.'
                 })
             }
-            
-        } catch(err) {
+
+        } catch (err) {
             res.sendStatus(400)
         }
     }
@@ -29,12 +33,19 @@ export default class ActivitiesController {
     // POST /upload
     // upload user's csv file
     async uploadCSV(req, res) {
-        console.log("uploadCSV");
+        console.log("uploadCSV", req.file);
+        const rows = []
 
-        try {
-            res.send('NOT IMPLEMENTED: insert stock holding info (after purchase)');
-        } catch(err) {
-            res.sendStatus(400)
-        }
+        fs.createReadStream(req.file.path)
+            .pipe(csv())
+            .on('headers', (headers) => { console.log(headers) })
+            .on('data', (data) => { rows.push(data) })
+            .on('end', () => {
+                // console.log(rows)
+                fs.unlink(req.file.path, () => {
+                    console.log('file deleted')
+                })
+                res.send({ data: rows });
+            })
     }
 }
