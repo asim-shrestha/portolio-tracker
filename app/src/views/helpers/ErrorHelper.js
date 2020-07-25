@@ -1,8 +1,13 @@
 const getResErrorMessage = (err) => {
     const status = err.response.status;
+    const data = err.response.data;
 
-    // Case where request failed with Express Validator
-    if (status == 422) {
+    // Check if message is already contained in response data
+    console.log(data);
+    if(typeof data === 'string' || data instanceof String) {
+        return data
+    } else if(status === 422) {
+        // Case where request failed with Express Validator
         // Loop through response and concatenate all the problematic values
         const badValues = err.response.data.errors.map((errValue) => {
             return errValue.param;
@@ -10,7 +15,8 @@ const getResErrorMessage = (err) => {
 
         return ("Invalid values: " + badValues);
     } else {
-        return err.response.data;
+        // Unknown error, log out the response to evaluate how to handle
+        return "An error has a occured: Error code 476"
     }
 }
 

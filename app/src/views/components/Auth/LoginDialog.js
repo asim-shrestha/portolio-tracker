@@ -27,7 +27,7 @@ export default ({ open, onClose }) => {
             localStorage.setItem('token', res.data.token)
             setUser(res.data.user);
             onClose();
-            closeSnackbar(); // Close errors on successful login
+            closeSnackbar(); // Close on success
             history.push('/dashboard');
         }).catch((err) => {
             enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
