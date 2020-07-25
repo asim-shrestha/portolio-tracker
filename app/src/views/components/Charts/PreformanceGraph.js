@@ -12,9 +12,9 @@ const currencyFormat = (n) => {
 
 // Graph of preformance data that resizes alongside the window
 // Returns the graph if data is given and a message saying "the portfolio is currently empty" otherwise
-const PreformanceGraph = ({ data }) => {
+const PreformanceGraph = ({ data, holdings }) => {
     const [width, setWidth] = useState(0);
-    const colour = theme.palette.graph.main;
+    let colour = theme.palette.positive.main;
 
     const updateWidth = () => {
         // Subtract magic number to get proper right margins
@@ -31,23 +31,35 @@ const PreformanceGraph = ({ data }) => {
         }
     }, [])
 
-    // TODO fix calculation
-    let totalPortfolioCash = 0;
-    if (data.length > 0) { totalPortfolioCash = data[data.length - 1].y; } // Ammount at today's date
+    let totalValue = 0;
+    if (holdings) {
+        totalValue = holdings.reduce((total, stock) => total + stock.marketValue, 0);
+    }
+
+    let portfolioPercentage = 0;
+    if (data.length > 0) { portfolioPercentage = data[data.length - 1].y; } // Percentage at today's date
+
+    // Set colour based on preformance
+    if (data.length > 0 && data[data.length - 1].y < 0) { colour = theme.palette.negative.main; }
 
     // This loading ensures that the graph will be animated when loaded
     if (data.length > 0 && width != 0) return (
         <>
-            <Typography variant="h5" color="primary">Your portfolio currently has ${currencyFormat(totalPortfolioCash)}</Typography>
+            <Typography variant="h5" color="primary">
+                Your portfolio is currently worth ${currencyFormat(totalValue)}
+            </Typography>
+            <Typography variant="h6" color="primary">
+                {data[data.length - 1].y > 0 ? "Up" : "Down"} {currencyFormat(portfolioPercentage)}% all time
+            </Typography>
             <AreaChart width={width} height={400} data={data}>
                 <defs>
                     <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="10%" stopColor={colour} stopOpacity={1} />
-                    <stop offset="95%" stopColor={colour} stopOpacity={0.0} />
+                        <stop offset="10%" stopColor={colour} stopOpacity={1} />
+                        <stop offset="95%" stopColor={colour} stopOpacity={0.0} />
                     </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="1 1 " />
-                <XAxis dataKey="x" dy={7} angle={15}/> 
+                <XAxis dataKey="x" dy={7} angle={15} />
                 <YAxis />
                 <Tooltip />
                 <Area type="monotone" dataKey="y" stroke={colour} strokeWidth="2.5" fill="url(#colorValue)" />

@@ -40,10 +40,13 @@ export default class AuthController {
         try {
             const checkEmail = await User.query().where('email', req.body.email)
             if (checkEmail.length === 0) {
-                const hashedPassword = await bcrypt.hash(req.body.password, BCRYPT_SALT_ROUNDS)
                 const newUser = req.body
+                const hashedPassword = await bcrypt.hash(newUser.password, BCRYPT_SALT_ROUNDS)
                 newUser.password = hashedPassword
-                
+                // Capitalize fields
+                newUser.first_name = this.capitalizeFirstLetter(newUser.first_name);
+                newUser.last_name = this.capitalizeFirstLetter(newUser.last_name);
+
                 const newUserAdded = await User.query().insert(newUser)
                 // 201 created
                 res.status(201).send({
@@ -83,6 +86,10 @@ export default class AuthController {
             console.error(err)
             res.sendStatus(400)
         }
+    }
+    
+    capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 }
 
