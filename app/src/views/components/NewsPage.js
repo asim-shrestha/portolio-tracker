@@ -20,28 +20,46 @@ const NewsPage = () => {
     const [author, setAuthor] = useState('');
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [content, setContent] = useState('');
     const [url, setUrl] = useState('');
     const [urlImg, setUrlImg] = useState('');
     const [count, setCount] = useState(0);
+    const [authors, setAuthors] = useState([]);
+    const [titles, setTitles] = useState([]);
+    const [descriptions, setDescriptions] = useState([]);
+    const [urls, setUrls] = useState([]);
+    const [imgs, setUrlImgs] = useState([]);
 
     useEffect(() => {
-        loadNews();
+        getnews();
     }, []);
 
-    const loadNews = () => {
+    const getnews = () => {
         Axios.get(`http://newsapi.org/v2/everything?domains=wsj.com&apiKey=b620f7387d5744a0b08b0d5585040a40`).then((res) => {
-            console.log(count)
-            setAuthor(res.data.articles[count].author);
-            setTitle(res.data.articles[count].title);
-            setDescription(res.data.articles[count].description);
-            setContent(res.data.articles[count].content);
-            setUrl(res.data.articles[count].url);
-            setUrlImg(res.data.articles[count].urlToImage);
-            setCount(count+1);
+            for (var i=0; i<20; i++){
+                authors.push(res.data.articles[i].author)
+                titles.push(res.data.articles[i].title)
+                descriptions.push(res.data.articles[i].description)
+                urls.push(res.data.articles[i].url)
+                imgs.push(res.data.articles[i].urlToImage)
+            }
+            nextnews();
         }).catch((err) => {
             alert(err);
         })
+    }
+
+    const nextnews = () => {
+        setAuthor(authors[count]);
+        setTitle(titles[count]);
+        setDescription(descriptions[count]);
+        setUrl(urls[count]);
+        setUrlImg(imgs[count]);
+        if(count<19){
+            setCount(count+1);
+        }
+        else{
+            setCount(0);
+        }
     }
 
     return (
@@ -57,7 +75,7 @@ const NewsPage = () => {
                     <br />
                     <Typography color="textSecondary"> {url} </Typography>
                     <Typography align="right">
-                        <Button onClick={loadNews}> Next Article </Button>
+                        <Button onClick={nextnews}> Next Article </Button>
                     </Typography>
                 </CardContent>
             </Card>
