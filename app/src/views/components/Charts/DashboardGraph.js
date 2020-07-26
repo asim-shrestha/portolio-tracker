@@ -1,6 +1,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import PerformanceGraph from './PerformanceGraph';
+import PreformanceGraph from './PreformanceGraph';
 
 // TODO share method with HoldingsTable
 // Format currency related strings to include commas and only two decimal places
@@ -9,7 +9,7 @@ const currencyFormat = (n) => {
     return n.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
-// Returns the performance graph if data is given and a message saying "the portfolio is currently empty" otherwise
+// Returns the preformance graph if data is given and a message saying "the portfolio is currently empty" otherwise
 const DashboardGraph = ({ data, holdings }) => {
     let totalValue = 0;
     if (holdings) {
@@ -28,7 +28,7 @@ const DashboardGraph = ({ data, holdings }) => {
             <Typography variant="h6" color="primary">
                 {data[data.length - 1].y > 0 ? "Up" : "Down"} {currencyFormat(portfolioPercentage)}% all time
             </Typography>
-            <PerformanceGraph data={data}/>
+            <PreformanceGraph data={data}/>
         </>
     ); else return <Typography variant="h4" color="primary">Your portfolio is currently empty.</Typography>
 }

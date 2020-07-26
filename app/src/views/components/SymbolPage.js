@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 import Axios from 'axios';
 import { useSnackbar } from 'notistack';
 import getResErrorMessage from '../helpers/ErrorHelper';
-import PerformanceGraph from './Charts/PerformanceGraph';
+import PreformanceGraph from './Charts/PreformanceGraph';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -22,7 +22,7 @@ const getObjectFromQueryString = (string) => {
     return JSON.parse('{"' + decodeURI(string).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
 }
 
-// Page that searches for symbol performance data based on a url query string
+// Page that searches for symbol preformance data based on a url query string
 const SymbolPage = () => {
     const [querySymbol, setQuerySymbol] = useState('');
     const [symbolData, setSymbolData] = useState([]);
@@ -53,11 +53,11 @@ const SymbolPage = () => {
             <Typography variant="h1" color="primary" align="center" className={classes.title}>Search Symbols 🔍</Typography>
             <SymbolSearchBar />
             {
-                // Show performance graph if we have data, show nothing otherwise
+                // Show preformance graph if we have data, show nothing otherwise
                 symbolData.length > 0 ?
                 <Box marginTop="5em">
                     <Typography variant="h4" align="center">{querySymbol} Performance:</Typography>
-                    <PerformanceGraph data={symbolData}/>
+                    <PreformanceGraph data={symbolData}/>
                 </Box> :
                 <></>
             }

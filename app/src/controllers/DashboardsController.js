@@ -37,7 +37,7 @@ export default class DashboardsController {
         }
     }
     
-    // Get the 30 day performance data of an individual symbol
+    // Get the 30 day preformance data of an individual symbol
     async getSymbolData(req, res) {
         try{
             const symbol = req.params.symbol;
@@ -49,8 +49,8 @@ export default class DashboardsController {
                 let priceData = await history(symbol, {chartByDay: true, period:'1m', closeOnly: true})
                 let indexedPriceData = await helper.indexHistoricalPricesByDate(priceData)
                 // Extract datapoints for front end
-                let symbolPerformanceData = await helper.generateSymbolPerformanceData(indexedPriceData);
-                res.send(symbolPerformanceData);
+                let symbolPreformanceData = await helper.generateSymbolPreformanceData(indexedPriceData);
+                res.send(symbolPreformanceData);
             } else {
                 res.status(422).send(activitiesHelper.getInvalidSymbolMessage())
             }

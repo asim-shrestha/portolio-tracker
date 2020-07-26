@@ -34,7 +34,7 @@ const HomePage = () => {
                 />
                 <HomePageContentblock
                     image={"/home_image_3.jpg"}
-                    text="View real-time performance metrics powered by IEX Cloud."
+                    text="View real-time preformance metrics powered by IEX Cloud."
                     textLink="https://iexcloud.io/"
                 />
             </Box>

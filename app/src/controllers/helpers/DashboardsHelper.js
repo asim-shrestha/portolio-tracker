@@ -127,20 +127,20 @@ export default class ActivitiesHelper {
         })
     }
 
-    async generateSymbolPerformanceData(indexedPriceData) {
+    async generateSymbolPreformanceData(indexedPriceData) {
         return new Promise((resolve, reject) => {
             // Get all date keys from data
             let dates = Object.keys(indexedPriceData).map(d => moment(d).format('YYYY-MM-DD'));
 
             // For each date, create a datapoint consisting of date and price
-            let performanceData = dates.map(date => {
+            let preformanceData = dates.map(date => {
                 return {
                     x: date,
                     y: indexedPriceData[date].price
                 }
             }) 
 
-            resolve(performanceData);
+            resolve(preformanceData);
         })
     }
 

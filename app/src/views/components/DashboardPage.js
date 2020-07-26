@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const DashboardPage = () => {
     const [user, setUser] = useContext(UserContext);
     const [holdings, setHoldings] = useState(null);
-    const [performance, setPerformance] = useState([]);
+    const [preformance, setPreformance] = useState([]);
     const [isAddHoldingsDialogOpen, setIsAddHoldingsDialogOpen] = useState(false);
     const [isImportCSVDialogOpen, setIsImportCSVDialogOpen] = useState(false);
 
@@ -38,9 +38,9 @@ const DashboardPage = () => {
     }
 
     const loadData = () => {
-        // Retrieve user performance data
+        // Retrieve user preformance data
         Axios.get(`/api/performance/${user.id}`).then((res) => {
-            setPerformance((res.data));
+            setPreformance((res.data));
         }).catch((err) => {
             alert(err);
         })
@@ -64,9 +64,9 @@ const DashboardPage = () => {
     return (
         <>
             <Typography variant="h1" align="left" color="primary" className={classes.text}>{user.first_name}'s Dashboard</Typography>
-            <Typography variant="h3" align="left" color="primary" className={classes.text}>Performance:</Typography>
+            <Typography variant="h3" align="left" color="primary" className={classes.text}>Preformance:</Typography>
             <Box align="center">
-                <DashboardGraph data={performance} holdings={holdings}/>
+                <DashboardGraph data={preformance} holdings={holdings}/>
             </Box>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Holdings:</Typography>
             <HoldingsTable data={holdings}/>
