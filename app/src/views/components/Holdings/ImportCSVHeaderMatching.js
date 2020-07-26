@@ -5,12 +5,10 @@ import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography';
 
-
 export default ({ headers, symbol, price, quantity, date, setSymbol, setPrice, setQuantity, setDate }) => {
 
     return (
         <div>
-
             <Typography variant="h5" align="center" color="primary">Please match the following:</Typography>
             <br />
             <Grid container spacing={3}>

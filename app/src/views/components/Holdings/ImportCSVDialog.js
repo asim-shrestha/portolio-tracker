@@ -11,7 +11,7 @@ import ImportCSVHeaderMatching from './ImportCSVHeaderMatching';
 import ImportCSVUpload from './ImportCSVUpload'
 
 export default ({ open, onClose }) => {
-    const [fileParsed, setFileParsed] = useState([])
+    const [parsedFile, setParsedFile] = useState([])
     const [headers, setHeaders] = useState([])                      // headers from file
     const [confirmHeaders, setConfirmHeaders] = useState(false)     // display header confirmation form
     const [symbol, setSymbol] = useState('');
@@ -41,8 +41,6 @@ export default ({ open, onClose }) => {
                     alert('Empty cells detected')
                     safeToContinue = false
                     resetFile()
-                    // reload page after to remove uploaded file
-                    // location.reload()
                 }
             })
 
@@ -52,10 +50,14 @@ export default ({ open, onClose }) => {
                 safeToContinue = false
                 resetFile()
             }
-            
+
             if (safeToContinue) {
                 setHeaders(results.data[0])
-                setFileParsed(results.data)
+                setSymbol(results.data[0][0] ? results.data[0][0] : '')
+                setPrice(results.data[0][1] ? results.data[0][1] : '')
+                setQuantity(results.data[0][2] ? results.data[0][2] : '')
+                setDate(results.data[0][3] ? results.data[0][3] : '')
+                setParsedFile(results.data)
                 setConfirmHeaders(true)
             }
         }
@@ -69,14 +71,14 @@ export default ({ open, onClose }) => {
     const submitHandler = (event) => {
         event.preventDefault()
 
-        if (fileParsed.length === 0) {
+        if (parsedFile.length === 0) {
             alert('No file uploaded')
         }
         // if headers are not yet mapped
         else if (!symbol || !price || !quantity || !date) {
             alert('Columns not matched')
         }
-        // duplicate
+        // duplicate matches
         else if (new Set([symbol, price, quantity, date]).size !== 4) {
             alert('There are duplicate matches')
         }
@@ -90,7 +92,7 @@ export default ({ open, onClose }) => {
             }
 
             const data = {
-                data: fileParsed,
+                data: parsedFile,
                 map: map,
             }
             const token = localStorage.getItem('token')
