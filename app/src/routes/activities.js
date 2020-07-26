@@ -1,6 +1,7 @@
 import express from 'express';
+import passport from 'passport'
 
-const router = express.Router();
+const router = express.Router(); 
 
 import ActivitiesController from '../controllers/ActivitiesController';
 const controller = new ActivitiesController();
@@ -27,7 +28,7 @@ router.post('/activity/order', [
 
 
 // POST upload user CSV file
-router.post('/upload', controller.uploadCSV);
+router.post('/upload', passport.authenticate('jwt', { session: false }), controller.uploadCSV);
 
 // TODO: remove this router later
 // route for testing IEX API calls

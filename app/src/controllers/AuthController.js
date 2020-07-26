@@ -19,14 +19,15 @@ export default class AuthController {
                 } else if (user) {
                     req.logIn(user, (error) => {
                         const token = jwt.sign({ id: user.email }, process.env.JWT_SECRET)
-                        res.send({
+                        res.status(200).send({
                             auth: true,
                             token: token,
                             user: user,
                             message: 'User found and logged in'
-                        }).status(200)
+                        })
                     })
-                } else {
+                }
+                else {
                     res.status(403).send('Invalid credentials')
                 }
             })(req, res)
@@ -35,7 +36,7 @@ export default class AuthController {
             res.sendStatus(400)
         }
     }
-    
+
     async register(req, res) {
         try {
             const checkEmail = await User.query().where('email', req.body.email)
@@ -63,7 +64,7 @@ export default class AuthController {
             res.sendStatus(400)
         }
     }
-    
+
     async findUser(req, res) {
         try {
             passport.authenticate('jwt', { session: false }, (error, user, info) => {
@@ -87,7 +88,7 @@ export default class AuthController {
             res.sendStatus(400)
         }
     }
-    
+
     capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
