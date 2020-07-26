@@ -38,7 +38,7 @@ const DashboardPage = () => {
     }
 
     const loadData = () => {
-        // Retrieve user preformance data
+        // Retrieve user performance data
         Axios.get(`/api/performance/${user.id}`).then((res) => {
             setPreformance((res.data));
         }).catch((err) => {
