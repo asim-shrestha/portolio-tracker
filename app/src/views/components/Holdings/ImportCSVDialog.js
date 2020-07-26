@@ -21,6 +21,11 @@ export default ({ open, onClose }) => {
 
     const uploadHandler = (event) => {
 
+        // function to reset file when error is found
+        const resetFile = () => {
+            document.getElementById('CSVUpload').value = ''
+        }
+
         // reading headers
         const reader = new FileReader()
         // file -> string
@@ -29,30 +34,35 @@ export default ({ open, onClose }) => {
         reader.onload = (event) => {
             const fileContent = event.target.result
             const results = readString(fileContent)     // papaparse
-
+            let safeToContinue = true
             // check for empty cells
             results.data.map(row => {
                 if (row.indexOf('') !== -1) {
                     alert('Empty cells detected')
+                    safeToContinue = false
+                    resetFile()
                     // reload page after to remove uploaded file
-                    location.reload()
+                    // location.reload()
                 }
             })
 
-            // no duplicates in headers
-            if (new Set(results.data[0]).size === results.data[0].length) {
+            // check for duplicates in headers
+            if (new Set(results.data[0]).size !== results.data[0].length) {
+                alert('Duplicate column names detected')
+                safeToContinue = false
+                resetFile()
+            }
+            
+            if (safeToContinue) {
                 setHeaders(results.data[0])
                 setFileParsed(results.data)
                 setConfirmHeaders(true)
             }
-            else {
-                alert('Duplicate column names detected')
-                // reload page after to remove uploaded file
-                location.reload()
-            }
         }
+
         reader.onerror = (event) => {
             alert('Failed to read file\n\n' + reader.error)
+            resetFile()
         }
     }
 

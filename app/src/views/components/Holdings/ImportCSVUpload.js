@@ -16,7 +16,7 @@ export default ({ uploadHandler }) => {
             </ul>
 
             <form>
-                <input type="file" name="file" accept=".csv" onChange={uploadHandler} />
+                <input type="file" id="CSVUpload" accept=".csv" onChange={uploadHandler} />
             </form>
         </div >
     )
