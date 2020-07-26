@@ -13,16 +13,16 @@ export default class ActivitiesController {
     // insert stock holding info (after purchase)
     async insertNewActivity(req, res) {
         try {
-            const symbols = await iexSymbols()
+            const symbols = await iexSymbols();
             if (await helper.validateSymbol(req.body.symbol, symbols)) {
-                const newActivity = await Activity.query().insert(req.body)
+                const newActivity = await Activity.query().insert(req.body);
                 res.json(newActivity);
             } else {
-                res.status(422).send('The symbol you entered is invalid. Please check the symbol, and try again.')
+                res.status(422).send(helper.getInvalidSymbolMessage());
             }
-
-        } catch (err) {
-            res.sendStatus(400)
+            
+        } catch(err) {
+            res.sendStatus(400);
         }
     }
 
