@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CardMedia from '@material-ui/core/CardMedia';
+import Grow from '@material-ui/core/Grow';
 
 const useStyles = makeStyles({
     root: {
@@ -28,6 +29,7 @@ const NewsPage = () => {
     const [descriptions, setDescriptions] = useState([]);
     const [urls, setUrls] = useState([]);
     const [imgs, setUrlImgs] = useState([]);
+    const [show, setShow] = useState(true);
 
     useEffect(() => {
         getnews();
@@ -49,21 +51,26 @@ const NewsPage = () => {
     }
 
     const nextnews = () => {
-        setAuthor(authors[count]);
-        setTitle(titles[count]);
-        setDescription(descriptions[count]);
-        setUrl(urls[count]);
-        setUrlImg(imgs[count]);
-        if(count<19){
-            setCount(count+1);
-        }
-        else{
-            setCount(0);
-        }
+        setShow(false);
+        setTimeout(() => {
+            setAuthor(authors[count]);
+            setTitle(titles[count]);
+            setDescription(descriptions[count]);
+            setUrl(urls[count]);
+            setUrlImg(imgs[count]);
+            if(count<19){
+                setCount(count+1);
+            }
+            else{
+                setCount(0);
+            }
+            setShow(true);
+        }, 300);
     }
-
+ 
     return (
         <>
+            <Grow in={show}>
             <Card className={classes.root}>
                 <CardMedia>
                     <img src={urlImg} width="100%" maxHeight="600"/>
@@ -79,6 +86,7 @@ const NewsPage = () => {
                     </Typography>
                 </CardContent>
             </Card>
+            </Grow>
         </>
     );
 }
