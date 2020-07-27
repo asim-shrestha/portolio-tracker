@@ -12,10 +12,10 @@ export default class AuthController {
             passport.authenticate('local', (error, user, info) => {
                 if (error) {
                     console.error(error)
-                    res.status(401).send(error)
+                    res.status(401).send({message: error.message})
                 } else if (info) {
                     console.info(info.message)
-                    res.status(403).send('Invalid credentials')
+                    res.status(403).send({message: 'Invalid credentials'})
                 } else if (user) {
                     req.logIn(user, (error) => {
                         const token = jwt.sign({ id: user.email }, process.env.JWT_SECRET)
@@ -28,15 +28,15 @@ export default class AuthController {
                     })
                 }
                 else {
-                    res.status(403).send('Invalid credentials')
+                    res.status(403).send({message: 'Invalid credentials'})
                 }
             })(req, res)
         } catch (err) {
             console.error(err)
-            res.sendStatus(400)
+            res.status(400).send({message: err.message})
         }
     }
-
+    
     async register(req, res) {
         try {
             const checkEmail = await User.query().where('email', req.body.email)
@@ -57,11 +57,11 @@ export default class AuthController {
             }
             else {
                 console.log("Email already registered")
-                res.status(409).send("Email already registered")
+                res.status(409).send({message: "Email already registered"})
             }
         } catch (err) {
             console.error(err)
-            res.sendStatus(400)
+            res.status(400).send({message: err.message})
         }
     }
 
@@ -70,11 +70,11 @@ export default class AuthController {
             passport.authenticate('jwt', { session: false }, (error, user, info) => {
                 if (error) {
                     console.error(error)
-                    res.status(401).send(error)
+                    res.status(401).send({message: error})
                 }
                 if (info) {
                     console.info(info.message)
-                    res.status(401).send(info.message)
+                    res.status(401).send({message: info.message})
                 }
                 else {
                     // Found user, set values to return from db
@@ -85,7 +85,7 @@ export default class AuthController {
             })(req, res)
         } catch (err) {
             console.error(err)
-            res.sendStatus(400)
+            res.send(400).status({message: err.message});
         }
     }
 
