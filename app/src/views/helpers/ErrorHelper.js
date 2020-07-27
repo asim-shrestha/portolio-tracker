@@ -3,9 +3,8 @@ const getResErrorMessage = (err) => {
     const data = err.response.data;
 
     // Check if message is already contained in response data
-    console.log(data);
-    if(typeof data === 'string' || data instanceof String) {
-        return data
+    if(data.message) {
+        return data.message
     } else if(status === 422) {
         // Case where request failed with Express Validator
         // Loop through response and concatenate all the problematic values
