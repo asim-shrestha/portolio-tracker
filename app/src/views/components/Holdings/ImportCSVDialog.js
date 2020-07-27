@@ -36,19 +36,19 @@ export default ({ open, onClose }) => {
             // check for empty cells
             results.data.map(row => {
                 if (row.indexOf('') !== -1) {
-                    enqueueSnackbar('Empty cells detected', {variant: "error"})
+                    enqueueSnackbar('Empty cells detected', { variant: "error" })
                     safeToContinue = false
                     resetFile()
                 }
             })
-            
+
             // check for duplicates in headers
             if (new Set(results.data[0]).size !== results.data[0].length) {
-                enqueueSnackbar('Duplicate column names detected', {variant: "error"})
+                enqueueSnackbar('Duplicate column names detected', { variant: "error" })
                 safeToContinue = false
                 resetFile()
             }
-            
+
             if (safeToContinue) {
                 setHeaders(results.data[0])
                 setSymbol(results.data[0][0] ? results.data[0][0] : '')
@@ -59,26 +59,26 @@ export default ({ open, onClose }) => {
                 setConfirmHeaders(true)
             }
         }
-        
+
         reader.onerror = (event) => {
-            enqueueSnackbar('Failed to read file\n\n' + reader.error, {variant: "error"});
+            enqueueSnackbar('Failed to read file\n\n' + reader.error, { variant: "error" });
             resetFile();
         }
     }
-    
+
     const submitHandler = (event) => {
         event.preventDefault()
-        
+
         if (parsedFile.length === 0) {
-            enqueueSnackbar('No file uploaded', {variant: "error"});
+            enqueueSnackbar('No file uploaded', { variant: "error" });
         }
         // if headers are not yet mapped
         else if (!symbol || !price || !quantity || !date) {
-            enqueueSnackbar('You must select a value for each field', {variant: "error"});
+            enqueueSnackbar('You must select a value for each field', { variant: "error" });
         }
         // duplicate matches
         else if (new Set([symbol, price, quantity, date]).size !== 4) {
-            enqueueSnackbar('You cannot select the same column multiple times', {variant: "error"});
+            enqueueSnackbar('You cannot select the same column multiple times', { variant: "error" });
         }
         else {
             // mapping columns to columns found in csv file
@@ -88,23 +88,23 @@ export default ({ open, onClose }) => {
                 quantity: headers.indexOf(quantity),
                 date: headers.indexOf(date),
             }
-            
+
             const data = {
                 data: parsedFile,
                 map: map,
             }
             const token = localStorage.getItem('token')
-            
+
             // sending to server
             Axios.post('/api/upload', data, {
                 headers: { Authorization: `JWT ${token}` }
             })
-            .then(res => {
-                console.log('Upload done', res.data.message)
-                location.reload()
-            })
-            .catch(err => {
-                    enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
+                .then(res => {
+                    console.log('Upload done', res.data.message)
+                    location.reload()
+                })
+                .catch(err => {
+                    enqueueSnackbar(getResErrorMessage(err), { variant: 'error' });
                     location.reload()
                 })
         }
