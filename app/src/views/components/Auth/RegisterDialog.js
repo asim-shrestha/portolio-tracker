@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
 import { useSnackbar } from 'notistack';
+import getResErrorMessage from '../../helpers/ErrorHelper';
 import AppDialog from '../AppDialog';
 import {TextField,IconButton} from "@material-ui/core";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import getResErrorMessage from '../../helpers/ErrorHelper';
 
 const RegisterDialog = ({open, onClose, openLogin}) => {
-
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
