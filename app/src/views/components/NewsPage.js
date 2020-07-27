@@ -1,30 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import { makeStyles } from "@material-ui/core/styles";
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import CardMedia from '@material-ui/core/CardMedia';
-import Grow from '@material-ui/core/Grow';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
-import Link from '@material-ui/core/Link';
-
-const CARD_WIDTH = 650;
+import NewsCard from './News/NewsCard'
 
 const useStyles = makeStyles((theme) => ({
-    card: {
-        maxWidth: CARD_WIDTH,
-        margin: 'auto'
-    },
-    image:{
-        width: CARD_WIDTH,
-        height: 400,
-        objectFit: "cover",
-    },
     avatar: {
         backgroundColor: theme.palette.primary.main,
     }
@@ -72,24 +56,9 @@ const NewsPage = () => {
                     </Avatar>
                 </IconButton>
             </Grid>
-            <Grow in={showArticle}>
-                <Grid item>
-                    <Card className={classes.card}>
-                        <CardMedia>
-                            <img src={currentArticle.urlToImage || ''} className={classes.image} />
-                        </CardMedia>
-                        <Link href={currentArticle.url} target="_blank">
-                            <CardContent>
-                                <Typography variant="h5" component="h2">{currentArticle.title}</Typography>
-                                <Typography color="textSecondary">
-                                    {currentArticle.source ? currentArticle.source.name : ''}
-                                    {currentArticle.author ? ': ' + currentArticle.author : ''}
-                                </Typography>
-                            </CardContent>
-                        </Link>
-                    </Card>
-                </Grid>
-            </Grow>
+            <Grid item>
+                <NewsCard article={currentArticle} showArticle={showArticle} />
+            </Grid>
             <Grid item>
                 <IconButton color="primary" variant="contained" onClick={() => changeArticleIndex(1)}>
                     <Avatar className={classes.avatar}>
