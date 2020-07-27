@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import theme from '../../../../theme';
 
-// Graph of preformance data that resizes alongside the window
-const PreformanceGraph = ({ data }) => {
+// Graph of performance data that resizes alongside the window
+const PerformanceGraph = ({ data }) => {
     const [width, setWidth] = useState(0);
     let colour = theme.palette.positive.main;
 
@@ -22,7 +22,7 @@ const PreformanceGraph = ({ data }) => {
         }
     }, [])
 
-    // Set colour based on preformance
+    // Set colour based on performance
     if (data.length > 0 && data[data.length - 1].y < 0) { colour = theme.palette.negative.main; }
 
     // This loading ensures that the graph will be animated when loaded
@@ -47,4 +47,4 @@ const PreformanceGraph = ({ data }) => {
     )
 }
 
-export default PreformanceGraph;
+export default PerformanceGraph;
