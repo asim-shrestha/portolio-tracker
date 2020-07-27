@@ -10,9 +10,9 @@ export default ({ uploadHandler }) => {
                     </Typography>
             <ul>
                 <li>Symbol (example: TSLA, AMZN)</li>
-                <li>Date (YYYY-MM-DD)</li>
                 <li>Price</li>
                 <li>Quantity</li>
+                <li>Date (YYYY-MM-DD)</li>
             </ul>
 
             <form>

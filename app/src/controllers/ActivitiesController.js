@@ -10,6 +10,7 @@ export default class ActivitiesController {
     async insertNewActivity(req, res) {
         try {
             const symbols = await iexSymbols();
+            req.body.symbol = req.body.symbol.toUpperCase() // Capitalize symbol name
             if (await helper.validateSymbol(req.body.symbol, symbols)) {
                 const newActivity = await Activity.query().insert(req.body);
                 res.json(newActivity);
@@ -33,7 +34,8 @@ export default class ActivitiesController {
             let safeToInsert = false
             const symbolsList = await iexSymbols()
             for (let i = 1; i < data.length; i++) {
-                const validSymbol = await helper.validateSymbol(data[i][symbol], symbolsList)
+                data[i][symbol] = data[i][symbol].toUpperCase() // Capitalize symbol name
+                const validSymbol = await helper.validateSymbol(data[i][symbol].toUpperCase(), symbolsList)
                 if (!validSymbol) {
                     console.log('Bad symbol:', data[i][symbol])
                     res.status(422).send({ message: helper.getInvalidSymbolMessage() })
