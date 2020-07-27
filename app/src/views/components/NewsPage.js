@@ -30,14 +30,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-// Truncate title so that card height will never change
-const truncateTitle = (title) => {
-    if (!title) { return ''}
-    const MAX_LENGTH = 60;
-    console.log(title);
-    return (title.length > MAX_LENGTH) ? title.substr(0, MAX_LENGTH - 3) + '...' : title;
-};
-
 const NewsPage = () => {
     const [showArticle, setShowArticle] = useState(false);
     const [articles, setArticles] = useState([]);
@@ -88,7 +80,7 @@ const NewsPage = () => {
                         </CardMedia>
                         <Link href={currentArticle.url} target="_blank">
                             <CardContent>
-                                <Typography variant="h5" component="h2">{truncateTitle(currentArticle.title)}</Typography>
+                                <Typography variant="h5" component="h2">{currentArticle.title}</Typography>
                                 <Typography color="textSecondary">
                                     {currentArticle.source ? currentArticle.source.name : ''}
                                     {currentArticle.author ? ': ' + currentArticle.author : ''}
