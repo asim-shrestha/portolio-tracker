@@ -18,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 750,
         margin: 'auto'
     },
+    image:{
+        width: 750,
+        height: 450,
+        objectFit: "cover",
+    },
     avatar: {
         backgroundColor: theme.palette.primary.main,
     }
@@ -77,7 +82,7 @@ const NewsPage = () => {
                 <Grid item>
                     <Card className={classes.card}>
                         <CardMedia>
-                            <img src={currentArticle.urlToImage || ''} width="100%" height="375px" />
+                            <img src={currentArticle.urlToImage || ''} className={classes.image} />
                         </CardMedia>
                         <Link href={currentArticle.url} target="_blank">
                             <CardContent>
