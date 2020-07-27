@@ -79,7 +79,7 @@ const NewsPage = () => {
                         <CardMedia>
                             <img src={currentArticle.urlToImage || ''} width="100%" height="375px" />
                         </CardMedia>
-                        <Link href={currentArticle.url}>
+                        <Link href={currentArticle.url} target="_blank">
                             <CardContent>
                                 <Typography variant="h5" component="h2">{truncateTitle(currentArticle.title)}</Typography>
                                 <Typography color="textSecondary">
