@@ -13,14 +13,16 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Link from '@material-ui/core/Link';
 
+const CARD_WIDTH = 650;
+
 const useStyles = makeStyles((theme) => ({
     card: {
-        maxWidth: 750,
+        maxWidth: CARD_WIDTH,
         margin: 'auto'
     },
     image:{
-        width: 750,
-        height: 450,
+        width: CARD_WIDTH,
+        height: 400,
         objectFit: "cover",
     },
     avatar: {
