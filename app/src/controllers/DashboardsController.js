@@ -33,7 +33,7 @@ export default class DashboardsController {
 
         } catch(err) {
             console.error(err)
-            res.sendStatus(400)
+            res.status(400).send({message: err.message})
         }
     }
     
@@ -52,10 +52,10 @@ export default class DashboardsController {
                 let symbolPerformanceData = await helper.generateSymbolPerformanceData(indexedPriceData);
                 res.send(symbolPerformanceData);
             } else {
-                res.status(422).send(activitiesHelper.getInvalidSymbolMessage())
+                res.status(422).send({message: activitiesHelper.getInvalidSymbolMessage()})
             }
         } catch(err) {
-            res.status(400).send(err.message);
+            res.status(400).send({message: err.message});
         }
     } 
 
@@ -86,7 +86,7 @@ export default class DashboardsController {
 
         } catch(err) {
             console.error(err)
-            res.sendStatus(400)
+            res.status(400).send({message: err.message})
         }
     }
 }

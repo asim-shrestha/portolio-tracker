@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import AppDialog from '../AppDialog';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography';
 import { readString } from 'react-papaparse'
 import ImportCSVHeaderMatching from './ImportCSVHeaderMatching';
 import ImportCSVUpload from './ImportCSVUpload'
+import { useSnackbar } from 'notistack';
+import getResErrorMessage from '../../helpers/ErrorHelper';
 
 export default ({ open, onClose }) => {
     const [parsedFile, setParsedFile] = useState([])
@@ -18,6 +15,7 @@ export default ({ open, onClose }) => {
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const uploadHandler = (event) => {
 
@@ -38,7 +36,7 @@ export default ({ open, onClose }) => {
             // check for empty cells
             results.data.map(row => {
                 if (row.indexOf('') !== -1) {
-                    alert('Empty cells detected')
+                    enqueueSnackbar('Empty cells detected', { variant: "error" })
                     safeToContinue = false
                     resetFile()
                 }
@@ -46,7 +44,7 @@ export default ({ open, onClose }) => {
 
             // check for duplicates in headers
             if (new Set(results.data[0]).size !== results.data[0].length) {
-                alert('Duplicate column names detected')
+                enqueueSnackbar('Duplicate column names detected', { variant: "error" })
                 safeToContinue = false
                 resetFile()
             }
@@ -63,8 +61,8 @@ export default ({ open, onClose }) => {
         }
 
         reader.onerror = (event) => {
-            alert('Failed to read file\n\n' + reader.error)
-            resetFile()
+            enqueueSnackbar('Failed to read file\n\n' + reader.error, { variant: "error" });
+            resetFile();
         }
     }
 
@@ -72,15 +70,15 @@ export default ({ open, onClose }) => {
         event.preventDefault()
 
         if (parsedFile.length === 0) {
-            alert('No file uploaded')
+            enqueueSnackbar('No file uploaded', { variant: "error" });
         }
         // if headers are not yet mapped
         else if (!symbol || !price || !quantity || !date) {
-            alert('Columns not matched')
+            enqueueSnackbar('You must select a value for each field', { variant: "error" });
         }
         // duplicate matches
         else if (new Set([symbol, price, quantity, date]).size !== 4) {
-            alert('There are duplicate matches')
+            enqueueSnackbar('You cannot select the same column multiple times', { variant: "error" });
         }
         else {
             // mapping columns to columns found in csv file
@@ -105,9 +103,8 @@ export default ({ open, onClose }) => {
                     console.log('Upload done', res.data.message)
                     location.reload()
                 })
-                .catch(error => {
-                    console.log('error msg', error)
-                    alert(error)
+                .catch(err => {
+                    enqueueSnackbar(getResErrorMessage(err), { variant: 'error' });
                     location.reload()
                 })
         }

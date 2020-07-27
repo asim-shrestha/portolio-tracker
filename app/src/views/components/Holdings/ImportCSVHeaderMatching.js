@@ -21,7 +21,7 @@ export default ({ headers, symbol, price, quantity, date, setSymbol, setPrice, s
                 </Grid>
 
                 <Grid item xs={3}>
-                    <Typography variant="h6" align="left" color="primary">Symbol</Typography>
+                    <Typography variant="h6" align="left" color="primary">Symbol:</Typography>
                 </Grid>
                 <Grid item xs={9}>
                     <FormControl variant="outlined" fullWidth>
@@ -32,7 +32,7 @@ export default ({ headers, symbol, price, quantity, date, setSymbol, setPrice, s
                 </Grid>
 
                 <Grid item xs={3}>
-                    <Typography variant="h6" align="left" color="primary">Price</Typography>
+                    <Typography variant="h6" align="left" color="primary">Price:</Typography>
                 </Grid>
                 <Grid item xs={9}>
                     <FormControl variant="outlined" fullWidth>
@@ -43,7 +43,7 @@ export default ({ headers, symbol, price, quantity, date, setSymbol, setPrice, s
                 </Grid>
 
                 <Grid item xs={3}>
-                    <Typography variant="h6" align="left" color="primary">Quantity</Typography>
+                    <Typography variant="h6" align="left" color="primary">Quantity:</Typography>
                 </Grid>
                 <Grid item xs={9}>
                     <FormControl variant="outlined" fullWidth>
@@ -54,7 +54,7 @@ export default ({ headers, symbol, price, quantity, date, setSymbol, setPrice, s
                 </Grid>
 
                 <Grid item xs={3}>
-                    <Typography variant="h6" align="left" color="primary">Date</Typography>
+                    <Typography variant="h6" align="left" color="primary">Date:</Typography>
                 </Grid>
                 <Grid item xs={9}>
                     <FormControl variant="outlined" fullWidth>
