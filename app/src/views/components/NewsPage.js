@@ -77,7 +77,7 @@ const NewsPage = () => {
                 <Grid item>
                     <Card className={classes.card}>
                         <CardMedia>
-                            <img src={currentArticle.urlToImage || ''} width="100%" height="450px" />
+                            <img src={currentArticle.urlToImage || ''} width="100%" height="375px" />
                         </CardMedia>
                         <Link href={currentArticle.url}>
                             <CardContent>
