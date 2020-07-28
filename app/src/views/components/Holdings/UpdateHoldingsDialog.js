@@ -15,7 +15,7 @@ export default ({open, onClose, title, buttonText, symbolValue, dateValue, actio
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
     const [commission, setCommission] = useState('');
-    const [action, setAction] = useState('');
+    const [action, setAction] = useState('buy'); // Default to buy
 
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -60,7 +60,6 @@ export default ({open, onClose, title, buttonText, symbolValue, dateValue, actio
                 // If default action is not provided, give action option
                 (!actionValue) ?
                 <TextField variant="outlined" margin="dense" fullWidth onChange={e => setAction(e.target.value)} label="Action" value={action} select>
-                    <MenuItem value={''} disabled>Actions:</MenuItem>
                     <MenuItem value={'buy'}>Buy</MenuItem>
                     <MenuItem value={'sell'}>Sell</MenuItem>
                 </TextField> :

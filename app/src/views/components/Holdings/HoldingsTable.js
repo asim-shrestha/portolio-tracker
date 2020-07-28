@@ -44,7 +44,7 @@ const HoldingsTable = ({data, openBuyHoldings, openSellHoldings}) => {
                 <TableCell align="center">{currencyFormat(parseFloat(stock.unrealizedGain)) + " (" + parseFloat(stock.unrealizedPercentage).toFixed(2) + "%)"}</TableCell>
                 <TableCell align="center">
                     <IconButton className={classes.buttonCell} onClick={() => openBuyHoldings(stock.symbol)}><AddCircleIcon/></IconButton>
-                    <IconButton className={classes.buttonCell}><ShoppingCartIcon/></IconButton>
+                    <IconButton className={classes.buttonCell} onClick={() => openSellHoldings(stock.symbol)}><ShoppingCartIcon/></IconButton>
                 </TableCell>
             </TableRow>
         ))

@@ -3,8 +3,8 @@ import UpdateHoldingsDialog from './UpdateHoldingsDialog';
 import Moment from 'moment'
 
 export default ({open, onClose, resetHoldings, symbol}) => {
-    const dialogText = "Buy " + (symbol || '') + " Stock";
-    const snackBarText = (symbol || '') + " successfully bought!";
+    const dialogText = "Sell " + (symbol || '') + " Stock";
+    const snackBarText = (symbol || '') + " successfully sold!";
 
     return (
         <UpdateHoldingsDialog
@@ -14,7 +14,7 @@ export default ({open, onClose, resetHoldings, symbol}) => {
             buttonText={dialogText}
             symbolValue={symbol}
             dateValue={Moment(new Date()).format('YYYY-MM-DD')}
-            actionValue={"buy"}
+            actionValue={"sell"}
             resetHoldings={resetHoldings}
             snackBarText={snackBarText}
         />
