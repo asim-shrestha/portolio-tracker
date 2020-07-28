@@ -8,7 +8,7 @@ import AppDialog from '../AppDialog';
 import MenuItem from '@material-ui/core/MenuItem';
 
 // If date or action is supplied, the option to change it is not available.
-export default ({open, onClose, title, buttonClick, buttonText, dateValue, actionValue}) => {
+export default ({open, onClose, title, buttonText, dateValue, actionValue, resetHoldings}) => {
     const [user, setUser] = useContext(UserContext);
     const [symbol, setSymbol] = useState('');
     const [price, setPrice] = useState('');
@@ -17,19 +17,30 @@ export default ({open, onClose, title, buttonClick, buttonText, dateValue, actio
     const [commission, setCommission] = useState('');
     const [action, setAction] = useState(actionValue || '');
 
-    const buildHolding = () => {
-        return {
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+    const handleButtonClick = () => {
+        Axios.post('/api/activity/order', {
             user_id:user.id,
             quantity:parseInt(quantity),
-            action:actionValue || action,
+            action: actionValue || action,
             symbol:symbol,
             price:parseFloat(price),
-            date:dateValue || String(date),
+            date: dateValue || String(date),
             commission: parseFloat(commission)
-        }
+        }).then(() => {
+            onClose();
+            resetHoldings();
+            closeSnackbar(); // Close on success
+            enqueueSnackbar('Holding successfully added!', {variant: 'success'});
+        }).catch((err) => {
+            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
+        })
+        
     }
+
     return (
-        <AppDialog open={open} onClose={() => {onClose(); setAction('');}} title={title} buttonClick={() => buttonClick(buildHolding())} buttonText={buttonText}>
+        <AppDialog open={open} onClose={() => onClose()} title={title} buttonClick={() => handleButtonClick()} buttonText={buttonText}>
             <TextField variant="outlined" margin="dense" fullWidth onChange={e => setSymbol(e.target.value)} label="Symbol"/>
             <TextField variant="outlined" margin="dense" fullWidth onChange={e => setPrice(e.target.value)} label="Price"/>
             <TextField variant="outlined" margin="dense" fullWidth onChange={e => setQuantity(e.target.value)} label="Quantity"/>
