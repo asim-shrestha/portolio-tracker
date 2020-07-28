@@ -30,7 +30,7 @@ const currencyFormat = (n) => {
 }
 
 // Table to display user holdings data
-const HoldingsTable = ({data}) => {
+const HoldingsTable = ({data, openBuyHoldings, openSellHoldings}) => {
     const classes = useStyles();
     
     let tableRows = <></>
@@ -43,7 +43,7 @@ const HoldingsTable = ({data}) => {
                 <TableCell align="center">{currencyFormat(parseFloat(stock.marketValue))}</TableCell>
                 <TableCell align="center">{currencyFormat(parseFloat(stock.unrealizedGain)) + " (" + parseFloat(stock.unrealizedPercentage).toFixed(2) + "%)"}</TableCell>
                 <TableCell align="center">
-                    <IconButton className={classes.buttonCell}><AddCircleIcon/></IconButton>
+                    <IconButton className={classes.buttonCell} onClick={() => openBuyHoldings(stock.symbol)}><AddCircleIcon/></IconButton>
                     <IconButton className={classes.buttonCell}><ShoppingCartIcon/></IconButton>
                 </TableCell>
             </TableRow>

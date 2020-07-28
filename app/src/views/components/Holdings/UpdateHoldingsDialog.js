@@ -8,14 +8,14 @@ import AppDialog from '../AppDialog';
 import MenuItem from '@material-ui/core/MenuItem';
 
 // If date or action is supplied, the option to change it is not available.
-export default ({open, onClose, title, buttonText, dateValue, actionValue, resetHoldings}) => {
+export default ({open, onClose, title, buttonText, symbolValue, dateValue, actionValue, snackBarText, resetHoldings}) => {
     const [user, setUser] = useContext(UserContext);
     const [symbol, setSymbol] = useState('');
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
-    const [date, setDate] = useState(dateValue || '');
+    const [date, setDate] = useState('');
     const [commission, setCommission] = useState('');
-    const [action, setAction] = useState(actionValue || '');
+    const [action, setAction] = useState('');
 
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -24,7 +24,7 @@ export default ({open, onClose, title, buttonText, dateValue, actionValue, reset
             user_id:user.id,
             quantity:parseInt(quantity),
             action: actionValue || action,
-            symbol:symbol,
+            symbol: symbolValue || symbol,
             price:parseFloat(price),
             date: dateValue || String(date),
             commission: parseFloat(commission)
@@ -32,7 +32,7 @@ export default ({open, onClose, title, buttonText, dateValue, actionValue, reset
             onClose();
             resetHoldings();
             closeSnackbar(); // Close on success
-            enqueueSnackbar('Holding successfully added!', {variant: 'success'});
+            enqueueSnackbar(snackBarText || 'Holding successfully added!', {variant: 'success'});
         }).catch((err) => {
             enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
         })
@@ -41,7 +41,12 @@ export default ({open, onClose, title, buttonText, dateValue, actionValue, reset
 
     return (
         <AppDialog open={open} onClose={() => onClose()} title={title} buttonClick={() => handleButtonClick()} buttonText={buttonText}>
-            <TextField variant="outlined" margin="dense" fullWidth onChange={e => setSymbol(e.target.value)} label="Symbol"/>
+            {
+                // If default date is not provided, give date option
+                (!symbolValue) ? 
+                <TextField variant="outlined" margin="dense" fullWidth onChange={e => setSymbol(e.target.value)} label="Symbol"/> :
+                <></>
+            }
             <TextField variant="outlined" margin="dense" fullWidth onChange={e => setPrice(e.target.value)} label="Price"/>
             <TextField variant="outlined" margin="dense" fullWidth onChange={e => setQuantity(e.target.value)} label="Quantity"/>
             {
