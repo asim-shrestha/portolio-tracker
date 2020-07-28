@@ -6,13 +6,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import SpinnerHoldingsTableRow from './SpinnerHoldingsTableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
     tableHeader: {
@@ -48,11 +48,10 @@ const HoldingsTable = ({data}) => {
                 </TableCell>
             </TableRow>
         ))
-    } else {
-        tableRows = <SpinnerHoldingsTableRow/>;
     }
 
     const noHoldingsMessage = <Paper><Typography variant="h5" align="center">You currently have no holdings.</Typography></Paper>;
+    const loadingSpinner = <Paper><Box align="center" p="1em"><CircularProgress/></Box></Paper>;
 
     return (
         <TableContainer component={Paper}>
@@ -71,6 +70,10 @@ const HoldingsTable = ({data}) => {
                     {tableRows}
                 </TableBody>
             </Table>
+            {
+                // Display a loading spinner if data is loading
+                (!data) ? loadingSpinner : <></>
+            }
             {
                 // Display a no holdings message if the user has no holdings
                 (data && data.length == 0) ? noHoldingsMessage : <></>
