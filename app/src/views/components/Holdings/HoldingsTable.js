@@ -9,11 +9,18 @@ import TableRow from '@material-ui/core/TableRow';
 import SpinnerHoldingsTableRow from './SpinnerHoldingsTableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+
 
 const useStyles = makeStyles((theme) => ({
     tableHeader: {
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.common.white,
+    },
+    buttonCell: {
+        color: theme.palette.primary.main
     }
 }));
 
@@ -31,10 +38,14 @@ const HoldingsTable = ({data}) => {
         tableRows = data.map((stock) => (
             <TableRow key={stock.symbol}>
                 <TableCell component="th" scope="row"><b>{stock.symbol}</b></TableCell>
-                <TableCell align="right">{parseInt(stock.quantity).toLocaleString()}</TableCell>
-                <TableCell align="right">{currencyFormat(parseFloat(stock.bookValue))}</TableCell>
-                <TableCell align="right">{currencyFormat(parseFloat(stock.marketValue))}</TableCell>
-                <TableCell align="right">{currencyFormat(parseFloat(stock.unrealizedGain)) + " (" + parseFloat(stock.unrealizedPercentage).toFixed(2) + "%)"}</TableCell>
+                <TableCell align="center">{parseInt(stock.quantity).toLocaleString()}</TableCell>
+                <TableCell align="center">{currencyFormat(parseFloat(stock.bookValue))}</TableCell>
+                <TableCell align="center">{currencyFormat(parseFloat(stock.marketValue))}</TableCell>
+                <TableCell align="center">{currencyFormat(parseFloat(stock.unrealizedGain)) + " (" + parseFloat(stock.unrealizedPercentage).toFixed(2) + "%)"}</TableCell>
+                <TableCell align="center">
+                    <IconButton className={classes.buttonCell}><AddCircleIcon/></IconButton>
+                    <IconButton className={classes.buttonCell}><ShoppingCartIcon/></IconButton>
+                </TableCell>
             </TableRow>
         ))
     } else {
@@ -49,10 +60,11 @@ const HoldingsTable = ({data}) => {
                 <TableHead>
                     <TableRow>
                         <TableCell className={classes.tableHeader} >Symbol</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Quantity</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Book Value ($)</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Market Value ($)</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Unrealized Gain ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Quantity</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Book Value ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Market Value ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Unrealized Gain ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Buy / Sell</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
