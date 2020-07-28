@@ -9,6 +9,7 @@ import ImportCSVDialog from './Holdings/ImportCSVDialog';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import DashboardGraph from './Charts/DashboardGraph';
+import HoldingsPieChart from './Charts/HoldingsPieChart'
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -68,6 +69,7 @@ const DashboardPage = () => {
             <Box align="center">
                 <DashboardGraph data={performance} holdings={holdings}/>
             </Box>
+            <HoldingsPieChart data={holdings} />
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Holdings:</Typography>
             <HoldingsTable data={holdings}/>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsAddHoldingsDialogOpen(true)}>Add individual</Button>
