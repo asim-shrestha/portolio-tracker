@@ -7,7 +7,8 @@ import {UserContext} from '../Auth/UserStore';
 import AppDialog from '../AppDialog';
 import MenuItem from '@material-ui/core/MenuItem';
 
-// If date or action is supplied, the option to change it is not available.
+// Dialog that deals with updating user holdings
+// If a symbolValue, dateValue, or actionValue is supplied, then the option to set these fields are not given
 export default ({open, onClose, title, buttonText, symbolValue, dateValue, actionValue, snackBarText, resetHoldings}) => {
     const [user, setUser] = useContext(UserContext);
     const [symbol, setSymbol] = useState('');
