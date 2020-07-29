@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import Axios from 'axios';
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
@@ -7,6 +7,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import NewsCard from './News/NewsCard'
+import {UserContext} from './Auth/UserStore';
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
@@ -20,20 +21,42 @@ const NewsPage = () => {
     const [currentArticle, setCurrentArticle] = useState({});
     const [index, setIndex] = useState(0);
     const classes = useStyles();
+    const [user, setUser] = useContext(UserContext);
 
     const getArticles = () => {
-        Axios.get(`http://newsapi.org/v2/everything?domains=wsj.com&apiKey=b620f7387d5744a0b08b0d5585040a40`).then((res) => {
-            setArticles(res.data.articles);
-            setCurrentArticle(res.data.articles[0]);
-            setShowArticle(true);
-        }).catch((err) => {
-            alert(err);
-        })
+        if(user != null) {
+            Axios.get(`/api/holdings/${user.id}`).then((res) => {
+                var str = 'SFU';
+                Object.keys(res.data).map(k => {
+                    str += ' OR ' + k; 
+                });
+                var url = "http://newsapi.org/v2/everything?q="+str+"&sortBy=popularity&apiKey=b620f7387d5744a0b08b0d5585040a40"
+                Axios.get(url).then((res) => {
+                    setArticles(res.data.articles);
+                    setCurrentArticle(res.data.articles[0]);
+                    setShowArticle(true);
+                }).catch((err) => {
+                    alert(err);
+                })
+            }).catch((err) => {
+                alert(err);
+            })
+        }
+        else{
+            var url = "http://newsapi.org/v2/everything?q="+"TSLA"+"&sortBy=popularity&apiKey=b620f7387d5744a0b08b0d5585040a40"
+            Axios.get(url).then((res) => {
+                setArticles(res.data.articles);
+                setCurrentArticle(res.data.articles[0]);
+                setShowArticle(true);
+            }).catch((err) => {
+                alert(err);
+            })
+        }
     }
 
     useEffect(() => {
         getArticles();
-    }, []);
+    }, [user]);
 
     const changeArticleIndex = (deltaIndex) => {
         setShowArticle(false);
