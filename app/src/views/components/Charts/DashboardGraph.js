@@ -21,7 +21,7 @@ const DashboardGraph = ({ data, holdings }) => {
 
     // This loading ensures that the graph will be animated when loaded
     if (data.length > 0) return (
-        <>
+        <div style={{marginTop: "3em", marginBottom: "3em"}}>
             <Typography variant="h5" color="primary">
                 Your portfolio is currently worth ${currencyFormat(totalValue)}
             </Typography>
@@ -29,7 +29,7 @@ const DashboardGraph = ({ data, holdings }) => {
                 {data[data.length - 1].y > 0 ? "Up" : "Down"} {currencyFormat(portfolioPercentage)}% all time
             </Typography>
             <PerformanceGraph data={data}/>
-        </>
+        </div>
     ); else return <Typography variant="h4" color="primary">Your portfolio is currently empty.</Typography>
 }
 

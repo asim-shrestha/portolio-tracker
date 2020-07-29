@@ -42,7 +42,7 @@ const PerformanceGraph = ({ data }) => {
                     dataMax => Math.floor(Math.max(dataMax * 0.75, dataMax * 1.25))
                 ]}/>
                 <Tooltip />
-                <Area type="monotone" dataKey="y" stroke={colour} strokeWidth="2.5" fill="url(#colorValue)" />
+                <Area type="linear" dataKey="y" stroke={colour} strokeWidth="2.5" fill="url(#colorValue)" />
             </AreaChart>
     )
 }

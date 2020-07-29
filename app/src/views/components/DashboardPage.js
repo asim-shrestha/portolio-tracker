@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import HoldingsTable from './Holdings/HoldingsTable';
 import AddHoldingsDialog from './Holdings/AddHoldingsDialog';
+import BuyHoldingsDialog from './Holdings/BuyHoldingsDialog';
+import SellHoldingsDialog from './Holdings/SellHoldingsDialog';
 import ImportCSVDialog from './Holdings/ImportCSVDialog';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,11 +23,15 @@ const useStyles = makeStyles((theme) => ({
 
 // Page to display user's portfolio metrics
 const DashboardPage = () => {
-    const [user, setUser] = useContext(UserContext);
+    const [selectedSymbol, setSelectedSymbol] = useState(null);
     const [holdings, setHoldings] = useState(null);
     const [performance, setPerformance] = useState([]);
     const [isAddHoldingsDialogOpen, setIsAddHoldingsDialogOpen] = useState(false);
+    const [isBuyHoldingsDialogOpen, setIsBuyHoldingsDialogOpen] = useState(false);
+    const [isSellHoldingsDialogOpen, setIsSellHoldingsDialogOpen] = useState(false);
     const [isImportCSVDialogOpen, setIsImportCSVDialogOpen] = useState(false);
+    const [user, setUser] = useContext(UserContext);
+    const classes = useStyles();
 
     // Format holding data into an array of objects
     const formatData = (data) => {
@@ -58,7 +64,16 @@ const DashboardPage = () => {
         }
     }, [user]);
 
-    const classes = useStyles();
+    const handleOpenBuyHoldings = (symbol) => {
+        setSelectedSymbol(symbol);
+        setIsBuyHoldingsDialogOpen(true);
+    }
+
+    const handleOpenSellHoldings = (symbol) => {
+        setSelectedSymbol(symbol);
+        setIsSellHoldingsDialogOpen(true);
+    }
+
 
     if(user === null) {return <Typography variant="h1" align="center" color="primary" className={classes.text}>Error loading user</Typography>}
     return (
@@ -69,10 +84,12 @@ const DashboardPage = () => {
                 <DashboardGraph data={performance} holdings={holdings}/>
             </Box>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Holdings:</Typography>
-            <HoldingsTable data={holdings}/>
+            <HoldingsTable data={holdings} openBuyHoldings={handleOpenBuyHoldings} openSellHoldings={handleOpenSellHoldings}/>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsAddHoldingsDialogOpen(true)}>Add individual</Button>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsImportCSVDialogOpen(true)}>Import from CSV</Button>
             <AddHoldingsDialog open={isAddHoldingsDialogOpen} onClose={() => setIsAddHoldingsDialogOpen(false)} resetHoldings={loadData}/>
+            <BuyHoldingsDialog open={isBuyHoldingsDialogOpen} onClose={() => setIsBuyHoldingsDialogOpen(false)} resetHoldings={loadData} symbol={selectedSymbol}/>
+            <SellHoldingsDialog open={isSellHoldingsDialogOpen} onClose={() => setIsSellHoldingsDialogOpen(false)} resetHoldings={loadData} symbol={selectedSymbol}/>
             <ImportCSVDialog open={isImportCSVDialogOpen} onClose={() => setIsImportCSVDialogOpen(false)}/>
         </>
     );
