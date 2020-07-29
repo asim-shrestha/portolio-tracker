@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import NewsCard from './News/NewsCard'
 import {UserContext} from './Auth/UserStore';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
@@ -22,6 +23,7 @@ const NewsPage = () => {
     const [index, setIndex] = useState(0);
     const classes = useStyles();
     const [user, setUser] = useContext(UserContext);
+    const [source, setSource] = useState('everything');
 
     const getArticles = () => {
         if(user != null) {
@@ -30,7 +32,8 @@ const NewsPage = () => {
                 Object.keys(res.data).map(k => {
                     str += ' OR ' + k; 
                 });
-                var url = "http://newsapi.org/v2/everything?q="+str+"&sortBy=popularity&apiKey=b620f7387d5744a0b08b0d5585040a40"
+                var url = "http://newsapi.org/v2/everything?q="+str+"&sortBy=popularity&apiKey=b620f7387d5744a0b08b0d5585040a40";
+                console.log(url);
                 Axios.get(url).then((res) => {
                     setArticles(res.data.articles);
                     setCurrentArticle(res.data.articles[0]);
@@ -90,6 +93,7 @@ const NewsPage = () => {
                 </IconButton>
             </Grid>
         </Grid>
+
     );
 }
 
