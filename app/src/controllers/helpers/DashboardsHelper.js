@@ -178,6 +178,17 @@ export default class ActivitiesHelper {
         })
     }
 
+    removeSoldStocks(indexedData) {
+        return new Promise((resolve, reject) => {
+            for (let key in indexedData) {
+                if (indexedData[key].quantity <= 0) {
+                    delete indexedData[key]
+                }
+            }
+            resolve()
+        })
+    }
+
     findSymbols(activities) {
         return new Promise((resolve, reject) => {
             let symbols = new Set()

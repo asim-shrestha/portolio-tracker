@@ -82,6 +82,7 @@ export default class DashboardsController {
             }
 
             const holdingsInfo = await helper.groupActivitiesBySymbol(activities, priceData)
+            helper.removeSoldStocks(holdingsInfo)
             res.json(holdingsInfo);
 
         } catch(err) {
