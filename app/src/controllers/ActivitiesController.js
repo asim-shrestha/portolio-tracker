@@ -10,10 +10,31 @@ export default class ActivitiesController {
     async insertNewActivity(req, res) {
         try {
             const symbols = await iexSymbols();
-            req.body.symbol = req.body.symbol.toUpperCase() // Capitalize symbol name
-            if (await helper.validateSymbol(req.body.symbol, symbols)) {
+            const symbol = req.body.symbol.toUpperCase() // Capitalize symbol name
+            const quantity = req.body.quantity
+            const action = req.body.action
+            const user_id = req.body.user_id
+            let validQuantity = true
+
+            // check if selling quantity is greater than bought
+            if (action == 'sell') {
+                const quantityResult = await Activity.query()
+                                        .sum("quantity")
+                                        .where("symbol", symbol)
+                                        .where("user_id", user_id)
+                
+                const availableQuantity = quantityResult[0].sum
+
+                if (availableQuantity < quantity ) {
+                    validQuantity = false
+                }
+            }
+
+            if (await helper.validateSymbol(symbol, symbols) && validQuantity) {
                 const newActivity = await Activity.query().insert(req.body);
                 res.json(newActivity);
+            } else if (!validQuantity) {
+                res.status(422).send({message: helper.getInvalidQuantityMessage()});
             } else {
                 res.status(422).send({message: helper.getInvalidSymbolMessage()});
             }
