@@ -2,6 +2,7 @@ import Activity from '../models/ActivityModel'
 import Symbol from '../models/SymbolModel'
 import DashboardsHelper from './helpers/DashboardsHelper'
 import ActivitiesHelper from './helpers/ActivitiesHelper'
+import { batchData } from '../libs/iexCustomWrapper'
 import { history, quote, iexSymbols } from 'iexcloud_api_wrapper'
 const helper = new DashboardsHelper()
 const activitiesHelper = new ActivitiesHelper()
@@ -24,9 +25,11 @@ export default class DashboardsController {
             const symbols = await helper.findSymbols(activities)
             const priceDataList = []
             
+            const charts = await batchData(symbols, 'chart', '1m')
+
             for (let s of symbols){
-                let priceData = await history(s, {chartByDay: true, period:'1m', closeOnly: true})
-                let indexedPriceData = await helper.indexHistoricalPricesByDate(priceData)
+                let chart = charts[s].chart
+                let indexedPriceData = await helper.indexHistoricalPricesByDate(chart, s)
                 priceDataList.push(indexedPriceData)
             }
             const performanceData = await helper.generatePerformanceData(priceDataList, activitiesByDate)
@@ -89,9 +92,10 @@ export default class DashboardsController {
 
             let priceData = {}
 
+            const quoteData = await batchData(symbols, 'previous')
+
             for (let s of symbols) {
-                let quoteData = await quote(s)
-                priceData[s] = quoteData.previousClose
+                priceData[s] = quoteData[s].previous.close
             }
 
             const holdingsInfo = await helper.groupActivitiesBySymbol(activities, priceData)
