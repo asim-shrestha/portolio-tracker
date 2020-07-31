@@ -13,8 +13,8 @@ export default class ActivitiesController {
             const user_id = req.body.user_id
             let validQuantity = true
 
-            let latestCachedDate = (await Symbol.query().max('date as date'))[0].date
             // update cache if outdated
+            let latestCachedDate = (await Symbol.query().max('date as date'))[0].date
             if (await helper.retrieveNewData(latestCachedDate)){
                 const retrievedSymbols = await iexSymbols()
                 const symbolsCache = await helper.processAPISymbols(retrievedSymbols)
@@ -26,7 +26,6 @@ export default class ActivitiesController {
             }
             
             const symbols =  (await Symbol.query().select('symbols').where('date', latestCachedDate))[0].symbols;
-            console.log(symbols)
             // console.log(symbols)
             const symbol = req.body.symbol.toUpperCase() // Capitalize symbol name
 
