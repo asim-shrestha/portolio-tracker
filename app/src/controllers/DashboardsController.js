@@ -1,4 +1,5 @@
 import Activity from '../models/ActivityModel'
+import Symbol from '../models/SymbolModel'
 import DashboardsHelper from './helpers/DashboardsHelper'
 import ActivitiesHelper from './helpers/ActivitiesHelper'
 import { history, quote, iexSymbols } from 'iexcloud_api_wrapper'
@@ -41,7 +42,19 @@ export default class DashboardsController {
     async getSymbolData(req, res) {
         try{
             const symbol = req.params.symbol;
-            const allSymbols = await iexSymbols()
+
+            // update cache if outdated
+            let latestCachedDate = (await Symbol.query().max('date as date'))[0].date
+            if (await activitiesHelper.retrieveNewData(latestCachedDate)){
+                const retrievedSymbols = await iexSymbols()
+                const symbolsCache = await activitiesHelper.processAPISymbols(retrievedSymbols)
+
+                if (symbolsCache){
+                    latestCachedDate = symbolsCache.date 
+                    await Symbol.query().insert(symbolsCache)
+                }
+            }
+            const allSymbols = (await Symbol.query().select('symbols').where('date', latestCachedDate))[0].symbols;
 
             // If symbol is valid, return performance data for it
             if (await activitiesHelper.validateSymbol(symbol, allSymbols)) {
@@ -82,6 +95,7 @@ export default class DashboardsController {
             }
 
             const holdingsInfo = await helper.groupActivitiesBySymbol(activities, priceData)
+            helper.removeSoldStocks(holdingsInfo)
             res.json(holdingsInfo);
 
         } catch(err) {

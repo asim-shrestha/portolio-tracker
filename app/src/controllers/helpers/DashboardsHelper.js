@@ -139,7 +139,6 @@ export default class ActivitiesHelper {
                     y: indexedPriceData[date].price
                 }
             }) 
-
             resolve(performanceData);
         })
     }
@@ -175,6 +174,17 @@ export default class ActivitiesHelper {
                 indexedData[symbol].unrealizedPercentage = `${((marketValue - bookValue) / bookValue) * 100}%`
             }
             resolve(indexedData)
+        })
+    }
+
+    removeSoldStocks(indexedData) {
+        return new Promise((resolve, reject) => {
+            for (let key in indexedData) {
+                if (indexedData[key].quantity <= 0) {
+                    delete indexedData[key]
+                }
+            }
+            resolve()
         })
     }
 
