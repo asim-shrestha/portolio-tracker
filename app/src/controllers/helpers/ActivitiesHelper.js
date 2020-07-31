@@ -1,4 +1,4 @@
-import moment from 'moment'
+import Axios from 'axios';
 import DashboardsHelper from '../helpers/DashboardsHelper'
 const helper = new DashboardsHelper()
 
@@ -8,43 +8,17 @@ export default class ActivitiesHelper {
  
     getInvalidSymbolMessage = () => 'The symbol you entered is invalid. Please check the symbol, and try again.';
 
-    retrieveNewData(latestCachedDate) {
+    getInternalSymbolsCache() {
         return new Promise((resolve, reject) => {
-            if (!latestCachedDate){
-                resolve(true)
-            }
-
-            const latestCachedDay = moment(latestCachedDate).day()
-            const today = moment().format('YYYY-MM-DD') 
-
-            if(helper.isWeekend(today) && latestCachedDay == 5){
-                resolve(false)
-            } else if (moment(latestCachedDate).isSame(moment(today))) {
-                resolve(false)
-            }
-
-            resolve(true)
+            Axios.get('127.0.0.1:8080/api/caches/symbols').then((res) => {
+                console.log("axios result: ", res)
+                resolve(res)
+            }).catch((err) => {
+                console.error(err);
+            });
         })
     }
-
-    processAPISymbols(iexSymbols){
-        return new Promise((resolve, reject) => {
-            if(iexSymbols) {
-                let symbols = []
-
-                for (let row of iexSymbols) {
-                    symbols.push(row.symbol)
-                }
-
-                resolve({
-                    date: moment().format('YYYY-MM-DD'),
-                    symbols: symbols
-                }) 
-            }
-            resolve(false)
-        })
-    }
-
+    
     validateSymbol(symbol, iexSymbols) {
         return new Promise((resolve, reject) => {
             resolve(iexSymbols.find(element => element == symbol) ? true : false)
