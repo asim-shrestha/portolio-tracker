@@ -1,20 +1,34 @@
 import Activity from '../models/ActivityModel'
+import Symbol from '../models/SymbolModel'
 import ActivitiesHelper from './helpers/ActivitiesHelper'
 import { iexSymbols } from 'iexcloud_api_wrapper'
-
 const helper = new ActivitiesHelper()
-
 
 export default class ActivitiesController {
     // insert stock holding info (after purchase)
     async insertNewActivity(req, res) {
         try {
-            const symbols = await iexSymbols();
-            const symbol = req.body.symbol.toUpperCase() // Capitalize symbol name
             const quantity = req.body.quantity
             const action = req.body.action
             const user_id = req.body.user_id
             let validQuantity = true
+
+            let latestCachedDate = (await Symbol.query().max('date as date'))[0].date
+            // update cache if outdated
+            if (await helper.retrieveNewData(latestCachedDate)){
+                const retrievedSymbols = await iexSymbols()
+                const symbolsCache = await helper.processAPISymbols(retrievedSymbols)
+
+                if (symbolsCache){
+                    latestCachedDate = symbolsCache.date 
+                    await Symbol.query().insert(symbolsCache)
+                }
+            }
+            
+            const symbols =  (await Symbol.query().select('symbols').where('date', latestCachedDate))[0].symbols;
+            console.log(symbols)
+            // console.log(symbols)
+            const symbol = req.body.symbol.toUpperCase() // Capitalize symbol name
 
             // check if selling quantity is greater than bought
             if (action == 'sell') {
@@ -40,6 +54,7 @@ export default class ActivitiesController {
             }
             
         } catch(err) {
+            console.error(err)
             res.sendStatus(400).send({message: err.message});
         }
     }

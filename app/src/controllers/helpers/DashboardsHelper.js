@@ -139,7 +139,6 @@ export default class ActivitiesHelper {
                     y: indexedPriceData[date].price
                 }
             }) 
-
             resolve(performanceData);
         })
     }
