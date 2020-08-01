@@ -11,6 +11,7 @@ import ImportCSVDialog from './Holdings/ImportCSVDialog';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import DashboardGraph from './Charts/DashboardGraph';
+import NewsComponent from './NewsComponent';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
     text: {
         fontWeight: "bold",
+        marginTop: theme.spacing(2),
     }
 }));
 
@@ -74,6 +76,7 @@ const DashboardPage = () => {
         setIsSellHoldingsDialogOpen(true);
     }
 
+    const queryTerms = holdings ? Array.from(holdings, holding => holding.symbol) : []
 
     if(user === null) {return <Typography variant="h1" align="center" color="primary" className={classes.text}>Error loading user</Typography>}
     return (
@@ -91,6 +94,15 @@ const DashboardPage = () => {
             <BuyHoldingsDialog open={isBuyHoldingsDialogOpen} onClose={() => setIsBuyHoldingsDialogOpen(false)} resetHoldings={loadData} symbol={selectedSymbol}/>
             <SellHoldingsDialog open={isSellHoldingsDialogOpen} onClose={() => setIsSellHoldingsDialogOpen(false)} resetHoldings={loadData} symbol={selectedSymbol}/>
             <ImportCSVDialog open={isImportCSVDialogOpen} onClose={() => setIsImportCSVDialogOpen(false)}/>
+            {
+                queryTerms.length > 0 ? 
+                <>
+                    <Typography variant="h3" align="left" color="primary" className={classes.text}>Holding News:</Typography>
+                    <NewsComponent queryTerms={queryTerms}/>
+                </> 
+                :
+                <></>
+            }
         </>
     );
 }

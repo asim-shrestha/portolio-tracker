@@ -7,6 +7,7 @@ import Axios from 'axios';
 import { useSnackbar } from 'notistack';
 import getResErrorMessage from '../helpers/ErrorHelper';
 import PerformanceGraph from './Charts/PerformanceGraph';
+import NewsComponent from './NewsComponent';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -58,6 +59,8 @@ const SymbolPage = () => {
                 <Box marginTop="5em">
                     <Typography variant="h4" align="center">{querySymbol} Performance:</Typography>
                     <PerformanceGraph data={symbolData}/>
+                    <Typography variant="h4" align="center">{querySymbol} News:</Typography>
+                    <NewsComponent queryTerms={[querySymbol]}/>
                 </Box> :
                 <></>
             }
