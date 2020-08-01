@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const NewsPage = ({ article, showArticle }) => {
+const NewsCard = ({ article, showArticle }) => {
     const classes = useStyles();
 
     return (
@@ -44,5 +44,5 @@ const NewsPage = ({ article, showArticle }) => {
     );
 }
 
-export default NewsPage;
+export default NewsCard;
 

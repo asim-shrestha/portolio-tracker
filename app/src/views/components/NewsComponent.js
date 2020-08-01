@@ -7,6 +7,9 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import NewsCard from './News/NewsCard'
+import Typography from '@material-ui/core/Typography';
+import { useSnackbar } from 'notistack';
+import getResErrorMessage from '../helpers/ErrorHelper';
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
@@ -14,22 +17,24 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const NewsPage = () => {
+const NewsComponent = ({queryTerms}) => {
     const [showArticle, setShowArticle] = useState(false);
     const [articles, setArticles] = useState([]);
     const [currentArticle, setCurrentArticle] = useState({});
     const [index, setIndex] = useState(0);
+    const { enqueueSnackbar } = useSnackbar();
     const classes = useStyles();
 
     const getArticles = () => {
-        Axios.get(`http://newsapi.org/v2/everything?domains=wsj.com&apiKey=b620f7387d5744a0b08b0d5585040a40`).then((res) => {
+        const query = queryTerms ? 'q=' + encodeURIComponent(queryTerms.join(' OR ')) + '&': '';
+        const sources = 'sources=' + ['the-wall-street-journal', 'bbc-news', 'techcrunch', 'engadget', 'MarketWatch'].join(',');
+        Axios.get('http://newsapi.org/v2/everything?' + query + 'language=en&' + sources + '&apiKey=b620f7387d5744a0b08b0d5585040a40').then((res) => {
             setArticles(res.data.articles);
-            setCurrentArticle(res.data.articles[0]);
+            setCurrentArticle(res.data.articles[0] || {});
             setShowArticle(true);
         }).catch((err) => {
-            alert(err);
-        })
-    }
+            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
+    })}
 
     useEffect(() => {
         getArticles();
@@ -46,6 +51,9 @@ const NewsPage = () => {
             setShowArticle(true);
         }, 300);
     }
+
+    // Check if any news articles came up
+    if (articles.length == 0) { return <Typography variant="h4" align="center" color="primary">There is currently no news available</Typography> }
 
     return (
         <Grid container direction="row" justify="space-evenly" alignItems="center">
@@ -70,5 +78,5 @@ const NewsPage = () => {
     );
 }
 
-export default NewsPage;
+export default NewsComponent;
 
