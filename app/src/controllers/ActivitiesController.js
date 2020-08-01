@@ -8,9 +8,11 @@ export default class ActivitiesController {
     // insert stock holding info (after purchase)
     async insertNewActivity(req, res) {
         try {
+            req.body.symbol = req.body.symbol.toUpperCase(); // Capitalize symbol name
             const quantity = req.body.quantity
             const action = req.body.action
             const user_id = req.body.user_id
+            const symbol = req.body.symbol
             let validQuantity = true
 
             // update cache if outdated
@@ -27,7 +29,6 @@ export default class ActivitiesController {
             
             const symbols =  (await Symbol.query().select('symbols').where('date', latestCachedDate))[0].symbols;
             // console.log(symbols)
-            const symbol = req.body.symbol.toUpperCase() // Capitalize symbol name
 
             // check if selling quantity is greater than bought
             if (action == 'sell') {
