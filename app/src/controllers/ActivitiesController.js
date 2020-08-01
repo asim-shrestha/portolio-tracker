@@ -10,7 +10,7 @@ export default class ActivitiesController {
         try {
             const quantity = req.body.quantity
             const action = req.body.action
-            const user_id = req.body.user_id
+            const user_id = req.user.id
             let validQuantity = true
 
             // update cache if outdated

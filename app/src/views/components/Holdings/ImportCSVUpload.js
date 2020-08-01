@@ -7,7 +7,7 @@ export default ({ uploadHandler }) => {
         < div >
             <Typography variant="h5" align="center" color="primary">
                 Upload a CSV file with the following columns:
-                    </Typography>
+            </Typography>
             <ul>
                 <li>Symbol (example: TSLA, AMZN)</li>
                 <li>Price</li>

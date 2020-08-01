@@ -16,7 +16,7 @@ router.post('/activity/order', [
     body('commission').isDecimal(),
     body('quantity').isInt(),
     body('symbol').isLength({ min:1, max:255 }),
-], (req, res) => {
+], passport.authenticate('jwt', { session: false }), (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });

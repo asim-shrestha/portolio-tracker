@@ -21,6 +21,7 @@ export default ({open, onClose, title, buttonText, symbolValue, dateValue, actio
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const handleButtonClick = () => {
+        const token = localStorage.getItem('token')
         Axios.post('/api/activity/order', {
             user_id:user.id,
             quantity:parseInt(quantity),
@@ -29,6 +30,10 @@ export default ({open, onClose, title, buttonText, symbolValue, dateValue, actio
             price:parseFloat(price),
             date: dateValue || String(date),
             commission: parseFloat(commission)
+        }, {
+            headers:{
+                'Authorization': `JWT ${token}`
+            }
         }).then(() => {
             onClose();
             resetHoldings();
