@@ -149,7 +149,7 @@ export default class ActivitiesHelper {
 
             for (let a of activities) {
                 let symbol = a.symbol
-                let prevClosingPrice = priceData[symbol]
+                let prevClosingPrice = priceData[symbol].price
                 let quantity = (a.action == 'buy') ? a.quantity : a.quantity * (-1)
 
                 let marketValue = parseFloat(prevClosingPrice) * quantity
@@ -157,6 +157,7 @@ export default class ActivitiesHelper {
 
                 if (!indexedData[symbol]) {
                     indexedData[symbol] = {
+                        companyName: priceData[symbol].companyName,
                         quantity: quantity,
                         prevClosingPrice: prevClosingPrice,
                         marketValue: marketValue,
