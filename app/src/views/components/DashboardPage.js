@@ -56,7 +56,7 @@ const DashboardPage = () => {
         Axios.get(`/api/holdings/${user.id}`).then((res) => {
             setHoldings(formatData(res.data));
         }).catch((err) => {
-            alert(err);
+            alert(err.message);
         })
     }
     
@@ -76,7 +76,8 @@ const DashboardPage = () => {
         setIsSellHoldingsDialogOpen(true);
     }
 
-    const queryTerms = holdings ? Array.from(holdings, holding => holding.symbol) : []
+    console.log(holdings);
+    const queryTerms = holdings ? Array.from(holdings, holding => holding.companyName) : []
 
     if(user === null) {return <Typography variant="h1" align="center" color="primary" className={classes.text}>Error loading user</Typography>}
     return (
