@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+// Will retrieve news from queryTerms if provided 
 const NewsComponent = ({queryTerms}) => {
     const [showArticle, setShowArticle] = useState(false);
     const [articles, setArticles] = useState([]);
@@ -34,7 +35,8 @@ const NewsComponent = ({queryTerms}) => {
             setShowArticle(true);
         }).catch((err) => {
             enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
-    })}
+        })
+    }
 
     useEffect(() => {
         getArticles();
