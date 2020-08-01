@@ -6,11 +6,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import SpinnerHoldingsTableRow from './SpinnerHoldingsTableRow';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton'
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import Box from '@material-ui/core/Box';
+import IconButton from '@material-ui/core/IconButton';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
 import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
@@ -18,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.common.white,
     },
+    buttonCell: {
+        color: theme.palette.primary.main
+    }
 }));
 
 // Format currency related strings to include commas and only two decimal places
@@ -26,7 +32,7 @@ const currencyFormat = (n) => {
 }
 
 // Table to display user holdings data
-const HoldingsTable = ({ data, loadData}) => {
+const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, loadData}) => {
 
     const handleDelete = (symbol) => {
         const token = localStorage.getItem('token')
@@ -53,17 +59,20 @@ const HoldingsTable = ({ data, loadData}) => {
                     <IconButton onClick={() => { handleDelete(stock.symbol) }}><DeleteForeverIcon /></IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row"><b>{stock.symbol}</b></TableCell>
-                <TableCell align="right">{parseInt(stock.quantity).toLocaleString()}</TableCell>
-                <TableCell align="right">{currencyFormat(parseFloat(stock.bookValue))}</TableCell>
-                <TableCell align="right">{currencyFormat(parseFloat(stock.marketValue))}</TableCell>
-                <TableCell align="right">{currencyFormat(parseFloat(stock.unrealizedGain)) + " (" + parseFloat(stock.unrealizedPercentage).toFixed(2) + "%)"}</TableCell>
+                <TableCell align="center">{parseInt(stock.quantity).toLocaleString()}</TableCell>
+                <TableCell align="center">{currencyFormat(parseFloat(stock.bookValue))}</TableCell>
+                <TableCell align="center">{currencyFormat(parseFloat(stock.marketValue))}</TableCell>
+                <TableCell align="center">{currencyFormat(parseFloat(stock.unrealizedGain)) + " (" + parseFloat(stock.unrealizedPercentage).toFixed(2) + "%)"}</TableCell>
+                <TableCell align="center">
+                    <IconButton className={classes.buttonCell} onClick={() => openBuyHoldings(stock.symbol)}><AddCircleIcon/></IconButton>
+                    <IconButton className={classes.buttonCell} onClick={() => openSellHoldings(stock.symbol)}><ShoppingCartIcon/></IconButton>
+                </TableCell>
             </TableRow>
         ))
-    } else {
-        tableRows = <SpinnerHoldingsTableRow/>;
     }
 
     const noHoldingsMessage = <Paper><Typography variant="h5" align="center">You currently have no holdings.</Typography></Paper>;
+    const loadingSpinner = <Paper><Box align="center" p="1em"><CircularProgress/></Box></Paper>;
 
     return (
         <TableContainer component={Paper}>
@@ -72,16 +81,21 @@ const HoldingsTable = ({ data, loadData}) => {
                     <TableRow>
                         <TableCell className={classes.tableHeader} padding='checkbox' />
                         <TableCell className={classes.tableHeader} >Symbol</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Quantity</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Book Value ($)</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Market Value ($)</TableCell>
-                        <TableCell className={classes.tableHeader} align="right">Unrealized Gain ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Quantity</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Book Value ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Market Value ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Unrealized Gain ($)</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Buy / Sell</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {tableRows}
                 </TableBody>
             </Table>
+            {
+                // Display a loading spinner if data is loading
+                (!data) ? loadingSpinner : <></>
+            }
             {
                 // Display a no holdings message if the user has no holdings
                 (data && data.length == 0) ? noHoldingsMessage : <></>

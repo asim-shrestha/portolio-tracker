@@ -24,16 +24,16 @@ export default class ActivitiesHelper {
         })
     }
 
-    indexHistoricalPricesByDate(priceData) {
+    indexHistoricalPricesByDate(chartData, symbol) {
         return new Promise((resolve, reject) => {
             let indexedData = {}
 
-            for (let p of priceData) {
-                let date = moment(p.date).format('YYYY-MM-DD')
+            for (let c of chartData) {
+                let date = moment(c.date).format('YYYY-MM-DD')
 
                 indexedData[date] = {
-                    symbol: p.symbol,
-                    price: parseFloat(p.close).toFixed(2),
+                    symbol: symbol,
+                    price: parseFloat(c.close).toFixed(2),
                 }
             }
             resolve(indexedData)
@@ -139,7 +139,6 @@ export default class ActivitiesHelper {
                     y: indexedPriceData[date].price
                 }
             }) 
-
             resolve(performanceData);
         })
     }
@@ -150,7 +149,7 @@ export default class ActivitiesHelper {
 
             for (let a of activities) {
                 let symbol = a.symbol
-                let prevClosingPrice = priceData[symbol]
+                let prevClosingPrice = priceData[symbol].price
                 let quantity = (a.action == 'buy') ? a.quantity : a.quantity * (-1)
 
                 let marketValue = parseFloat(prevClosingPrice) * quantity
@@ -158,6 +157,7 @@ export default class ActivitiesHelper {
 
                 if (!indexedData[symbol]) {
                     indexedData[symbol] = {
+                        companyName: priceData[symbol].companyName,
                         quantity: quantity,
                         prevClosingPrice: prevClosingPrice,
                         marketValue: marketValue,
@@ -175,6 +175,17 @@ export default class ActivitiesHelper {
                 indexedData[symbol].unrealizedPercentage = `${((marketValue - bookValue) / bookValue) * 100}%`
             }
             resolve(indexedData)
+        })
+    }
+
+    removeSoldStocks(indexedData) {
+        return new Promise((resolve, reject) => {
+            for (let key in indexedData) {
+                if (indexedData[key].quantity <= 0) {
+                    delete indexedData[key]
+                }
+            }
+            resolve()
         })
     }
 
