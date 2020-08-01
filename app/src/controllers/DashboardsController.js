@@ -92,10 +92,12 @@ export default class DashboardsController {
 
             let priceData = {}
 
-            const quoteData = await batchData(symbols, 'previous')
+            const quoteData = await batchData(symbols, 'quote')
 
             for (let s of symbols) {
-                priceData[s] = quoteData[s].previous.close
+                priceData[s] = {}
+                priceData[s].price = quoteData[s].quote.close
+                priceData[s].companyName = quoteData[s].quote.companyName
             }
 
             const holdingsInfo = await helper.groupActivitiesBySymbol(activities, priceData)
