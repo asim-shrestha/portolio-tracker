@@ -24,16 +24,16 @@ export default class ActivitiesHelper {
         })
     }
 
-    indexHistoricalPricesByDate(priceData) {
+    indexHistoricalPricesByDate(chartData, symbol) {
         return new Promise((resolve, reject) => {
             let indexedData = {}
 
-            for (let p of priceData) {
-                let date = moment(p.date).format('YYYY-MM-DD')
+            for (let c of chartData) {
+                let date = moment(c.date).format('YYYY-MM-DD')
 
                 indexedData[date] = {
-                    symbol: p.symbol,
-                    price: parseFloat(p.close).toFixed(2),
+                    symbol: symbol,
+                    price: parseFloat(c.close).toFixed(2),
                 }
             }
             resolve(indexedData)
