@@ -69,4 +69,19 @@ export default class ActivitiesController {
             res.sendStatus(400).send({message: err.message})
         }
     }
+
+    async delete(req, res){
+        try{
+            if (req.user) {
+                const result = await Activity.query().delete().where('symbol', req.body.symbol).andWhere('user_id', req.user.id)
+                res.status(200).send({ delete: true, recordsDeleted: result })
+            }
+            else {
+                res.sendStatus(403)
+            }
+        } catch (err) {
+            console.error(err)
+            res.sendStatus(400).send({ message: err.message })
+        }
+    }
 }

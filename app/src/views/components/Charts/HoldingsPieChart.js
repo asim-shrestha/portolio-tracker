@@ -1,39 +1,59 @@
-import React from 'react'
-import { PieChart, Pie, Legend, Cell, Tooltip } from 'recharts'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React, { useCallback } from 'react'
+import { PieChart, Pie, Tooltip } from 'recharts'
+import { Box, CircularProgress } from '@material-ui/core';
 
 export default ({ data }) => {
-    console.log('inside pie chart', data)
-
     if (!data) {
         return (
-            <CircularProgress size={30} color="primary" />
+            <Box align="center">
+                <CircularProgress size={50} color="primary" />
+            </Box>
         )
     }
     else {
         const pieData = data.map(e => {
             return {
                 name: e.symbol,
-                value: e.bookValue
+                value: e.marketValue
             }
         })
-
-        console.log('pieData', pieData)
+        let pieSum = 0
+        pieData.map(e => {pieSum += e.value})
+        const RADIAN = Math.PI / 180;
+        const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, value, name }) => {
+            const radius = 20 + innerRadius + (outerRadius - innerRadius) * 0.5;
+            const x = cx + radius * Math.cos(-midAngle * RADIAN);
+            const y = cy + radius * Math.sin(-midAngle * RADIAN);
+            const percent = (100 * value / pieSum).toFixed(0)
+            return (
+                <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                    {name} {percent}%
+                </text>
+            )
+        }
 
         // const pieColors = ['#39ab74', '#18f58b']
 
         return (
-            <PieChart width={400} height={400}>
-                <Pie 
-                    startAngle={450} 
-                    endAngle={90} data={pieData} 
-                    cx={200} cy={200} 
-                    outerRadius={80} 
-                    fill="#39ab74" 
-                    label 
-                />
-                <Tooltip />
-            </PieChart>
+            <Box align='center'>
+                <div style={{fontSize: '16px'}}>
+                    <PieChart width={600} height={600} >
+                        <Pie
+                            // no animation because recharts sucks and cant render
+                            isAnimationActive={false}
+                            data={pieData}
+                            dataKey='value'
+                            startAngle={360} endAngle={0}
+                            cx={300} cy={300}
+                            outerRadius={250}
+                            fill="#39ab74"
+                            labelLine={false}
+                            label={renderCustomizedLabel}
+                        />
+                        <Tooltip />
+                    </PieChart>
+                </div>
+            </Box>
         )
     }
 

@@ -69,11 +69,12 @@ const DashboardPage = () => {
             <Box align="center">
                 <DashboardGraph data={performance} holdings={holdings}/>
             </Box>
-            <HoldingsPieChart data={holdings} />
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Holdings:</Typography>
-            <HoldingsTable data={holdings}/>
+            <HoldingsTable data={holdings} loadData={loadData}/>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsAddHoldingsDialogOpen(true)}>Add individual</Button>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsImportCSVDialogOpen(true)}>Import from CSV</Button>
+            <Typography variant="h3" align="left" color="primary" className={classes.text}>Breakdown of Holdings:</Typography>
+            <HoldingsPieChart data={holdings} />
             <AddHoldingsDialog open={isAddHoldingsDialogOpen} onClose={() => setIsAddHoldingsDialogOpen(false)} resetHoldings={loadData}/>
             <ImportCSVDialog open={isImportCSVDialogOpen} onClose={() => setIsImportCSVDialogOpen(false)}/>
         </>
