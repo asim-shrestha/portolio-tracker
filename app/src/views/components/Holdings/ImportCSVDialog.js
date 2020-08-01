@@ -7,7 +7,7 @@ import ImportCSVUpload from './ImportCSVUpload'
 import { useSnackbar } from 'notistack';
 import getResErrorMessage from '../../helpers/ErrorHelper';
 
-export default ({ open, onClose }) => {
+export default ({ open, onClose, loadData }) => {
     const [parsedFile, setParsedFile] = useState([])
     const [headers, setHeaders] = useState([])                      // headers from file
     const [confirmHeaders, setConfirmHeaders] = useState(false)     // display header confirmation form
@@ -101,11 +101,11 @@ export default ({ open, onClose }) => {
             })
                 .then(res => {
                     console.log('Upload done', res.data.message)
-                    location.reload()
+                    loadData()
                 })
                 .catch(err => {
                     enqueueSnackbar(getResErrorMessage(err), { variant: 'error' });
-                    location.reload()
+                    loadData()
                 })
         }
 
