@@ -57,7 +57,7 @@ export default class DashboardsHelper {
             let cash = 0
             let performanceData = [];
             let d = startDate
-            console.log(activitiesData)
+
             while (!(moment(d).isSame(moment(endDate)))) {
                 if (this.isWeekend(d)) {
                     d = this.incrementDate(d)
@@ -65,7 +65,6 @@ export default class DashboardsHelper {
                 }
                 // extract all symbols required for calculation
                 let symbols = Object.keys(quantity)
-                console.log(d, gain)
                 // calculate current market value of all investments
                 for (let p of priceDataList) {
                     if (p[d]) {
@@ -75,7 +74,6 @@ export default class DashboardsHelper {
                             this.removeElement(symbols, data.symbol)
                             latest_price[data.symbol] = data.price
                         }
-                        console.log(d, data.symbol, quantity[data.symbol], data.price, curr_value)
                     }
                 }
 
@@ -85,11 +83,8 @@ export default class DashboardsHelper {
                     // skip update if latest price is unknown
                     if (latest_price[s]) {
                         curr_value += quantity[s] * latest_price[s]
-                        console.log(s, quantity[s], latest_price[s], curr_value)
                     }
                 }
-
-                console.log(d, curr_value)
 
                 // calculate return compared to yesterday's price
                 if (prev_value == 0) {
