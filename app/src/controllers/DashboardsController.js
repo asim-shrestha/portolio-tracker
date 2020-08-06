@@ -26,7 +26,7 @@ export default class DashboardsController {
             const symbols = await helper.findSymbols(activities)
             const priceDataList = []
             
-            const charts = await batchData(symbols, 'chart', '1m')
+            const charts = await batchData(symbols, 'chart', '1y')
 
             for (let s of symbols){
                 let chart = charts[s].chart

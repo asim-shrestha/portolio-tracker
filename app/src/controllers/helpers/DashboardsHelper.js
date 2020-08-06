@@ -63,6 +63,7 @@ export default class ActivitiesHelper {
                     d = this.incrementDate(d)
                     continue;
                 }
+
                 // extract all symbols required for calculation
                 let symbols = Object.keys(quantity)
 
@@ -122,7 +123,6 @@ export default class ActivitiesHelper {
                 curr_value = 0
                 d = this.incrementDate(d)
             }
-
             resolve(performanceData);
         })
     }

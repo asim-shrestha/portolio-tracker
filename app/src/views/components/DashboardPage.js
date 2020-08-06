@@ -76,7 +76,6 @@ const DashboardPage = () => {
         setIsSellHoldingsDialogOpen(true);
     }
 
-    console.log(holdings);
     const queryTerms = holdings ? Array.from(holdings, holding => holding.companyName) : []
 
     if(user === null) {return <Typography variant="h1" align="center" color="primary" className={classes.text}>Error loading user</Typography>}

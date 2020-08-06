@@ -24,19 +24,23 @@ export const batchData = (symbols, type, range=false, sandbox=true) => {
         const stockMarket = 'stock/market/'
         const batch = 'batch'
         const key = sandbox ? pk : base_pk
+        if ( symbols && type ){
+            Axios.get(`${prefix(key)}${apiversion}/${stockMarket}${batch}`, {
+                params: {
+                    types: type,
+                    symbols: [...symbols].join(','),
+                    ...range && { range: range },
+                    token: key
+                }
+            }).then((res) => {
+                resolve(res.data)
+            }).catch((err) => {
+                console.error(err);
+            });
+        } else {
+            resolve({})
+        }
 
-        Axios.get(`${prefix(key)}${apiversion}/${stockMarket}${batch}`, {
-            params: {
-                types: type,
-                symbols: [...symbols].join(','),
-                ...range && { range: range },
-                token: key
-            }
-        }).then((res) => {
-            resolve(res.data)
-        }).catch((err) => {
-            console.error(err);
-        });
     })
 }
 

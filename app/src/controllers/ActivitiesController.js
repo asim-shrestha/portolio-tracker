@@ -28,7 +28,6 @@ export default class ActivitiesController {
             }
             
             const symbols =  (await Symbol.query().select('symbols').where('date', latestCachedDate))[0].symbols;
-            // console.log(symbols)
 
             // check if selling quantity is greater than bought
             if (action == 'sell') {
