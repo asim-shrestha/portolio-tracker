@@ -63,7 +63,6 @@ export default class ActivitiesHelper {
                     d = this.incrementDate(d)
                     continue;
                 }
-
                 // extract all symbols required for calculation
                 let symbols = Object.keys(quantity)
 
