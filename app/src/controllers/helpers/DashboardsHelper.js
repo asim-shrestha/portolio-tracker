@@ -1,7 +1,7 @@
 import { quote, iexSymbols } from 'iexcloud_api_wrapper'
 import moment from 'moment'
 
-export default class ActivitiesHelper {
+export default class DashboardsHelper {
     indexActivitiesByDate(activities) {
         return new Promise((resolve, reject) => {
             let indexedData = {}
@@ -57,7 +57,7 @@ export default class ActivitiesHelper {
             let cash = 0
             let performanceData = [];
             let d = startDate
-
+            console.log(activitiesData)
             while (!(moment(d).isSame(moment(endDate)))) {
                 if (this.isWeekend(d)) {
                     d = this.incrementDate(d)
@@ -65,7 +65,7 @@ export default class ActivitiesHelper {
                 }
                 // extract all symbols required for calculation
                 let symbols = Object.keys(quantity)
-
+                console.log(d, gain)
                 // calculate current market value of all investments
                 for (let p of priceDataList) {
                     if (p[d]) {
@@ -75,6 +75,7 @@ export default class ActivitiesHelper {
                             this.removeElement(symbols, data.symbol)
                             latest_price[data.symbol] = data.price
                         }
+                        console.log(d, data.symbol, quantity[data.symbol], data.price, curr_value)
                     }
                 }
 
@@ -84,8 +85,11 @@ export default class ActivitiesHelper {
                     // skip update if latest price is unknown
                     if (latest_price[s]) {
                         curr_value += quantity[s] * latest_price[s]
+                        console.log(s, quantity[s], latest_price[s], curr_value)
                     }
                 }
+
+                console.log(d, curr_value)
 
                 // calculate return compared to yesterday's price
                 if (prev_value == 0) {

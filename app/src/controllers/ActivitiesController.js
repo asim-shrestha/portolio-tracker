@@ -2,15 +2,17 @@ import moment from 'moment'
 import Activity from '../models/ActivityModel'
 import Symbol from '../models/SymbolModel'
 import ActivitiesHelper from './helpers/ActivitiesHelper'
+import DashboardsHelper from './helpers/DashboardsHelper'
 import { iexSymbols } from 'iexcloud_api_wrapper'
 const helper = new ActivitiesHelper()
+const dashboardHelper = new DashboardsHelper()
 
 export default class ActivitiesController {
     // insert stock holding info (after purchase)
     async insertNewActivity(req, res) {
         try {
 
-            if (moment(req.body.date).isAfter(moment())){
+            if (moment(req.body.date).isAfter(moment()) || dashboardHelper.isWeekend(req.body.date)){
                 res.status(422).send({message: helper.getInvalidDateMessage()});
             } else {
                 req.body.symbol = req.body.symbol.toUpperCase(); // Capitalize symbol name
