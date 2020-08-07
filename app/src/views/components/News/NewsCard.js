@@ -28,7 +28,9 @@ const NewsCard = ({ article, showArticle }) => {
         <Grow in={showArticle}>
             <Card className={classes.card}>
                 <CardMedia>
-                    <img src={article.urlToImage || ''} className={classes.image} />
+                    {
+                        article.urlToImage ? <img src={article.urlToImage} className={classes.image} /> : <></>
+                    }
                 </CardMedia>
                 <Link href={article.url} target="_blank">
                     <CardContent>
