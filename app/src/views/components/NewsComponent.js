@@ -27,9 +27,9 @@ const NewsComponent = ({queryTerms}) => {
     const classes = useStyles();
 
     const getArticles = () => {
-        const query = queryTerms ? 'q=' + encodeURIComponent(queryTerms.join(' OR ')) + '&': '';
-        const sources = 'sources=' + ['axios', 'bloomberg', 'MarketWatch', 'techcrunch', 'the-wall-street-journal', "the-washington-post"].join(',');
-        Axios.get('http://newsapi.org/v2/everything?' + query + 'language=en&' + sources + '&apiKey=b620f7387d5744a0b08b0d5585040a40').then((res) => {
+        // NewsAPI requires encoded URI for query
+        const query = queryTerms ? encodeURIComponent(queryTerms.join(' OR ')): '';
+        Axios.get('/api/news/' + query).then((res) => {
             setArticles(res.data.articles);
             setCurrentArticle(res.data.articles[0] || {});
             setShowArticle(true);
