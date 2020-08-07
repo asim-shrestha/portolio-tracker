@@ -1,7 +1,7 @@
 import { quote, iexSymbols } from 'iexcloud_api_wrapper'
 import moment from 'moment'
 
-export default class ActivitiesHelper {
+export default class DashboardsHelper {
     indexActivitiesByDate(activities) {
         return new Promise((resolve, reject) => {
             let indexedData = {}
@@ -65,7 +65,6 @@ export default class ActivitiesHelper {
                 }
                 // extract all symbols required for calculation
                 let symbols = Object.keys(quantity)
-
                 // calculate current market value of all investments
                 for (let p of priceDataList) {
                     if (p[d]) {
@@ -122,7 +121,6 @@ export default class ActivitiesHelper {
                 curr_value = 0
                 d = this.incrementDate(d)
             }
-
             resolve(performanceData);
         })
     }
@@ -161,7 +159,11 @@ export default class ActivitiesHelper {
                         quantity: quantity,
                         prevClosingPrice: prevClosingPrice,
                         marketValue: marketValue,
-                        bookValue: bookValue,
+                        marketCap: this.categorizeMarketCap(priceData[symbol].marketCap),
+                        country: priceData[symbol].country,
+                        industry: priceData[symbol].industry,
+                        sector: priceData[symbol].sector,
+                        bookValue: bookValue
                     }
                 } else {
                     indexedData[symbol].quantity += parseFloat(quantity)
@@ -211,9 +213,32 @@ export default class ActivitiesHelper {
         return ((date.getDay() >= 6) || (date.getDay() <= 0) ? true : false)
     }
 
+    isEmptyArray(array) {
+        if (array.length < 1 || array == undefined) {
+            return true
+        }
+
+        return false
+    }
+
     incrementDate(d) {
         return moment(d).add(1, 'day').format('YYYY-MM-DD')
     }
 
+    categorizeMarketCap(size) {
+        const billion = 1000000000
+
+        if (size < 0.3 * billion) {
+            return 'micro-cap'
+        } else if (size >= 0.3 * billion  && size < 2 * billion) {
+            return 'small-cap'
+        } else if (size >= 2 * billion && size < 10 * billion) {
+            return 'mid-cap'
+        } else if (size >= 10 * billion) {
+            return 'large-cap'
+        } else {
+            return 'unknown'
+        }
+    }
 
 }
