@@ -56,6 +56,10 @@ function handleRender(req, res) {
 // Express
 const app = express();
 
+// Helmet for security
+import helmet from 'helmet';
+app.use(helmet());
+
 // Passport
 import cors from 'cors'
 import passport from 'passport'
@@ -77,11 +81,6 @@ const endpoints_prefix = '/api'
 app.use("/auth", auth)
 app.use(`${endpoints_prefix}`, activities)
 app.use(`${endpoints_prefix}`, dashboards)
-
-
-// Helmet for security
-import helmet from 'helmet';
-app.use(helmet());
 
 // This is fired every time the server-side receives a request.
 app.use(handleRender);
