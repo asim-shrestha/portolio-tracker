@@ -15,9 +15,9 @@ import SymbolPage from './components/SymbolPage';
 const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: theme.spacing(15),
-        marginLeft: theme.spacing(25),
-        marginRight: theme.spacing(25),
         marginBottom: theme.spacing(15),
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
     },
 }));
 

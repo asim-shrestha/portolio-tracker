@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import theme from '../../../../theme';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 // Graph of performance data that resizes alongside the window
 const PerformanceGraph = ({ data }) => {
+    const matches = useMediaQuery('(min-width:1000px)');
+
     const [width, setWidth] = useState(0);
     let colour = theme.palette.positive.main;
 
     const updateWidth = () => {
         // Subtract magic number to get proper right margins
-        setWidth(window.innerWidth - theme.spacing(28) * 2);
+        setWidth(window.innerWidth - theme.spacing(2) * 2);
     }
 
     // Add event listener to the window so that we can capture window width changes
