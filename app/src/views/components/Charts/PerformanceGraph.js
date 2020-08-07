@@ -15,24 +15,8 @@ const PerformanceGraph = ({ data }) => {
         w = 1200;
         h = 600;
     } 
-    
-    // const [width, setWidth] = useState(300);
+
     let colour = theme.palette.positive.main;
-
-    // const updateWidth = () => {
-    //     // Subtract magic number to get proper right margins
-    //     setWidth(window.innerWidth - theme.spacing(2) * 2);
-    // }
-
-    // // Add event listener to the window so that we can capture window width changes
-    // useEffect(() => {
-    //     window.addEventListener('resize', updateWidth);
-    //     updateWidth();
-    //     // returned function will be called on component unmount 
-    //     return () => {
-    //         window.removeEventListener('resize', updateWidth)
-    //     }
-    // }, [])
 
     // Set colour based on performance
     if (data.length > 0 && data[data.length - 1].y < 0) { colour = theme.palette.negative.main; }
