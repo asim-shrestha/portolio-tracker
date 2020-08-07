@@ -12,6 +12,8 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import DashboardGraph from './Charts/DashboardGraph';
 import NewsComponent from './NewsComponent';
+import { useSnackbar } from 'notistack';
+import getResErrorMessage from '../helpers/ErrorHelper';
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -34,6 +36,7 @@ const DashboardPage = () => {
     const [isImportCSVDialogOpen, setIsImportCSVDialogOpen] = useState(false);
     const [user, setUser] = useContext(UserContext);
     const classes = useStyles();
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     // Format holding data into an array of objects
     const formatData = (data) => {
@@ -50,13 +53,13 @@ const DashboardPage = () => {
         Axios.get(`/api/performance/${user.id}`).then((res) => {
             setPerformance((res.data));
         }).catch((err) => {
-            alert(err);
+            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
         })
         // Retrieve user holding data
         Axios.get(`/api/holdings/${user.id}`).then((res) => {
             setHoldings(formatData(res.data));
         }).catch((err) => {
-            alert(err.message);
+            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
         })
     }
     

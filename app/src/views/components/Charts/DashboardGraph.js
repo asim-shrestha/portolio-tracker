@@ -5,7 +5,7 @@ import PerformanceGraph from './PerformanceGraph';
 // TODO share method with HoldingsTable
 // Format currency related strings to include commas and only two decimal places
 const currencyFormat = (n) => {
-    if (n === null) { return 0 };
+    if (n === null || n === undefined) { return 0 };
     return n.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
