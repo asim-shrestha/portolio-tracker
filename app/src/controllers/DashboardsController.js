@@ -129,7 +129,7 @@ export default class DashboardsController {
 
             for (let s of symbols) {
                 priceData[s] = {}
-                priceData[s].price = quoteData[s].quote.close
+                priceData[s].price = quoteData[s].quote.latestPrice
                 priceData[s].companyName = quoteData[s].quote.companyName
                 priceData[s].marketCap = quoteData[s].quote.marketCap
                 priceData[s].country = companyData[s].country
