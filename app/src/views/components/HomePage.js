@@ -37,7 +37,7 @@ const HomePage = () => {
         <div className={classes.root}>
             <Typography variant="h1" color="primary" align="center" className={classes.title}>Welcome to Trendline. 👋</Typography>
             <Typography variant="h3" color="primary" align="center" className={classes.subtitle}>A free investment-portfolio management tool</Typography>
-            <SymbolSearchBar margin="0" padding="0"/>
+            <SymbolSearchBar/>
             <Box className={classes.diagram} align="center">
                 <HomePageGraphic className={classes.diagram} />
                 <HomePageContentblock

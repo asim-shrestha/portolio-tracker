@@ -20,7 +20,7 @@ const SymbolSearchBar = () => {
     }
 
     return (
-        <Box marginTop="5em" >
+        <Box marginTop="5em">
             <TextField
                 variant="outlined"
                 fullWidth label="Search symbols"

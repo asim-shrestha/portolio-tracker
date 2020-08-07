@@ -84,7 +84,7 @@ const DashboardPage = () => {
         <>
             <Typography variant="h1" align="left" color="primary" className={classes.text}>{user.first_name}'s Dashboard</Typography>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Performance:</Typography>
-            <Box align="center" mx="auto" p={0}>
+            <Box align="center">
                 <DashboardGraph data={performance} holdings={holdings}/>
             </Box>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Holdings:</Typography>
