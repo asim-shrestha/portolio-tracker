@@ -98,6 +98,7 @@ const endpoints_prefix = '/api'
 
 app.use("/auth", auth)
 app.use(`${endpoints_prefix}`, activities)
+app.use(`${endpoints_prefix}`, dashboards)
 app.use(`${endpoints_prefix}`, news)
 
 // This is fired every time the server-side receives a request.
