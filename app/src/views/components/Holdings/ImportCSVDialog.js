@@ -7,7 +7,7 @@ import ImportCSVUpload from './ImportCSVUpload'
 import { useSnackbar } from 'notistack';
 import getResErrorMessage from '../../helpers/ErrorHelper';
 
-export default ({ open, onClose, loadData }) => {
+export default ({ open, onClose, resetHoldings }) => {
     const [parsedFile, setParsedFile] = useState([])
     const [headers, setHeaders] = useState([])                      // headers from file
     const [confirmHeaders, setConfirmHeaders] = useState(false)     // display header confirmation form
@@ -40,6 +40,13 @@ export default ({ open, onClose, loadData }) => {
                     resetFile()
                 }
             })
+
+            // check for missing required columns
+            if(results.data[0].length < 4){
+                enqueueSnackbar('Detected missing required column', { variant: "error" })
+                safeToContinue = false
+                resetFile()
+            }
 
             // check for duplicates in headers
             if (new Set(results.data[0]).size !== results.data[0].length) {
@@ -101,13 +108,13 @@ export default ({ open, onClose, loadData }) => {
             })
                 .then(res => {
                     console.log('Upload done', res.data.message)
-                    loadData()
+                    resetHoldings()
                     onClose()
                     setConfirmHeaders(false)
                 })
                 .catch(err => {
-                    enqueueSnackbar(getResErrorMessage(err), { variant: 'error' });
-                    loadData()
+                    enqueueSnackbar(getResErrorMessage(err), { variant: 'error' })
+                    resetHoldings()
                     onClose()
                 })
         }

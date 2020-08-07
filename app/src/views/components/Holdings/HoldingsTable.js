@@ -56,7 +56,7 @@ const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, resetHoldings}
         tableRows = data.map((stock) => (
             <TableRow key={stock.symbol}>
                 <TableCell>
-                    <IconButton onClick={() => { handleDelete(stock.symbol) }}><DeleteForeverIcon /></IconButton>
+                    <IconButton onClick={() => { handleDelete(stock.symbol) }} className={classes.buttonCell}><DeleteForeverIcon /></IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row"><b>{stock.symbol}</b></TableCell>
                 <TableCell align="center">{parseInt(stock.quantity).toLocaleString()}</TableCell>

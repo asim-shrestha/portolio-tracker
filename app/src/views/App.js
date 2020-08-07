@@ -9,7 +9,7 @@ import { SnackbarProvider } from 'notistack';
 import Button from '@material-ui/core/Button';
 import CloseIcon from '@material-ui/icons/Close';
 import DashboardPage from './components/DashboardPage';
-import NewsPage from './components/NewsPage';
+import NewsComponent from './components/NewsComponent';
 import SymbolPage from './components/SymbolPage';
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +48,7 @@ const App = () => {
                 <div className={classes.root}>
                     <Switch>
                         <Route path="/symbol" render={() => <SymbolPage />} />
-                        <Route exact path="/news" render={() => <NewsPage />} />
+                        <Route exact path="/news" render={() => <NewsComponent />} />
                         <Route exact path="/dashboard" render={() => <DashboardPage />} />
                         <Route exact path="/" render={() => <HomePage />} />
                         <Route render={() => <Redirect to="/" />} />
