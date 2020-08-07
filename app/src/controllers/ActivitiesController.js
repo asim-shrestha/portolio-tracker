@@ -10,7 +10,7 @@ export default class ActivitiesController {
         try {
             const quantity = req.body.quantity
             const action = req.body.action
-            const user_id = req.user.id
+            const user_id = req.body.user_id
             let validQuantity = true
 
             // update cache if outdated
@@ -66,8 +66,21 @@ export default class ActivitiesController {
             const { symbol, price, quantity, date } = map
 
             // Check symbols
+            // update cache if outdated
+            let latestCachedDate = (await Symbol.query().max('date as date'))[0].date
+            if (await helper.retrieveNewData(latestCachedDate)) {
+                const retrievedSymbols = await iexSymbols()
+                const symbolsCache = await helper.processAPISymbols(retrievedSymbols)
+
+                if (symbolsCache) {
+                    latestCachedDate = symbolsCache.date
+                    await Symbol.query().insert(symbolsCache)
+                }
+            }
+            const symbolsList = (await Symbol.query().select('symbols').where('date', latestCachedDate))[0].symbols;
+            
             let safeToInsert = false
-            const symbolsList = await iexSymbols()
+            // const symbolsList = await iexSymbols()
             for (let i = 1; i < data.length; i++) {
                 data[i][symbol] = data[i][symbol].toUpperCase() // Capitalize symbol name
                 const validSymbol = await helper.validateSymbol(data[i][symbol].toUpperCase(), symbolsList)
@@ -105,7 +118,7 @@ export default class ActivitiesController {
         }
     }
 
-    async delete(req, res){
+    async deleteStock(req, res){
         try{
             if (req.user) {
                 const result = await Activity.query().delete().where('symbol', req.body.symbol).andWhere('user_id', req.user.id)

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography';
 
-export default ({ uploadHandler }) => {
-
+export default ({ uploadHandler, resetFile }) => {
+    useEffect(()=>{
+        return () => {
+            resetFile()
+        }
+    },[])
     return (
         < div >
             <Typography variant="h5" align="center" color="primary">
