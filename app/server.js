@@ -58,7 +58,24 @@ const app = express();
 
 // Helmet for security
 import helmet from 'helmet';
-app.use(helmet());
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            'default-src': ["'self'"],
+            'base-uri': ["'self'"],
+            'block-all-mixed-content': [],
+            'font-src': ["'self'", 'https: data:'],
+            'frame-ancestors': ["'self'"],
+            'img-src': ["*", "data:"],
+            'object-src': ["'none'"],
+            'script-src': ["'self'"],
+            'script-src-attr': ["'none'"],
+            'style-src': ["'self'", "https: 'unsafe-inline'"],
+            'upgrade-insecure-requests': [],
+            "default-src": ["'self'"],
+        }
+    }
+}));
 
 // Passport
 import cors from 'cors'
