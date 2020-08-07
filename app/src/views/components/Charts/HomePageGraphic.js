@@ -18,7 +18,7 @@ const HomePageGraphic = () => {
     const matches = useMediaQuery('(min-width:1000px)');
     return (
         <>
-            <LineChart width={`${matches}`=='true'?400:200} height={`${matches}`=='true'?400:200} data={data} >
+            <LineChart width={`${matches}`=='true'?800:400} height={`${matches}`=='true'?400:200} data={data} >
                 <Line type="monotone" dataKey="pv" stroke={strokeColour} strokeWidth={5} dot={false}/>
             </LineChart>
         </>

@@ -16,8 +16,14 @@ const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: theme.spacing(15),
         marginBottom: theme.spacing(15),
-        marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
+        "@media (max-width: 1000px)": {
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(1),
+        },
+        "@media (min-width: 1000px)": {
+            marginLeft: theme.spacing(25),
+            marginRight: theme.spacing(25),
+        },
     },
 }));
 
