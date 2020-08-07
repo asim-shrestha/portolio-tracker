@@ -79,6 +79,10 @@ app.use(`${endpoints_prefix}`, activities)
 app.use(`${endpoints_prefix}`, dashboards)
 
 
+// Helmet for security
+import helmet from 'helmet';
+app.use(helmet());
+
 // This is fired every time the server-side receives a request.
 app.use(handleRender);
 
