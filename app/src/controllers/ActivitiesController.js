@@ -105,7 +105,7 @@ export default class ActivitiesController {
         }
     }
 
-    async delete(req, res){
+    async deleteStock(req, res){
         try{
             if (req.user) {
                 const result = await Activity.query().delete().where('symbol', req.body.symbol).andWhere('user_id', req.user.id)

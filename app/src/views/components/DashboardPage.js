@@ -85,7 +85,7 @@ const DashboardPage = () => {
                 <DashboardGraph data={performance} holdings={holdings}/>
             </Box>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Holdings:</Typography>
-            <HoldingsTable data={holdings} openBuyHoldings={handleOpenBuyHoldings} openSellHoldings={handleOpenSellHoldings}/>
+            <HoldingsTable data={holdings} openBuyHoldings={handleOpenBuyHoldings} openSellHoldings={handleOpenSellHoldings} resetHoldings={loadData}/>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsAddHoldingsDialogOpen(true)}>Add individual</Button>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsImportCSVDialogOpen(true)}>Import from CSV</Button>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Breakdown of Holdings:</Typography>

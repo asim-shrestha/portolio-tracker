@@ -32,7 +32,7 @@ const currencyFormat = (n) => {
 }
 
 // Table to display user holdings data
-const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, loadData}) => {
+const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, resetHoldings}) => {
 
     const handleDelete = (symbol) => {
         const token = localStorage.getItem('token')
@@ -45,7 +45,7 @@ const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, loadData}) => 
             }
         })
             .then(() => {
-                loadData()
+                resetHoldings()
             })
     }
 
