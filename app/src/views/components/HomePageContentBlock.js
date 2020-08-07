@@ -12,13 +12,26 @@ const useStyles = makeStyles((theme) => ({
 
     },
     image: {
-        width: 640,
-        height: 360
+        "@media (max-width: 1000px)": {
+            width: 320,
+            height: 180
+        },
+        "@media (min-width: 1000px)": {
+            width: 640,
+            height: 360
+        },
     },
     text: {
         flex: 1,
-        margin: "2em"
+        margin: "2em",
+        "@media (max-width: 1000px)": {
+            fontSize: 20,
+        },
+        "@media (min-width: 1000px)": {
+            fontSize: 40,
+        },
     },
+    
 }));
 
 // Combination of image and text

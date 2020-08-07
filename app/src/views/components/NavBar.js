@@ -13,8 +13,15 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        paddingLeft: theme.spacing(20),
-        paddingRight: theme.spacing(20),
+
+        "@media (max-width: 1000px)": {
+            paddingLeft: theme.spacing(5),
+            paddingRight: theme.spacing(5),
+        },
+        "@media (min-width: 1000px)": {
+            paddingLeft: theme.spacing(10),
+            paddingRight: theme.spacing(10),
+        },
     },
     title: {
         flexGrow: 1,
