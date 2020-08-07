@@ -78,7 +78,6 @@ export default class ActivitiesController {
                 }
             }
             const symbolsList = (await Symbol.query().select('symbols').where('date', latestCachedDate))[0].symbols;
-            
             let safeToInsert = false
             // const symbolsList = await iexSymbols()
             for (let i = 1; i < data.length; i++) {

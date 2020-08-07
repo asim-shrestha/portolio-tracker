@@ -16,13 +16,13 @@ export default ({ open, onClose, loadData }) => {
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-    // function to reset file when error is found
-    const resetFile = () => {
-        document.getElementById('CSVUpload').value = ''
-    }
     
     const uploadHandler = (event) => {
+        // function to reset file when error is found
+        const resetFile = () => {
+            document.getElementById('CSVUpload').value = ''
+        }
+
         // reading headers
         const reader = new FileReader()
         // file -> string
@@ -103,6 +103,7 @@ export default ({ open, onClose, loadData }) => {
                     console.log('Upload done', res.data.message)
                     loadData()
                     onClose()
+                    setConfirmHeaders(false)
                 })
                 .catch(err => {
                     enqueueSnackbar(getResErrorMessage(err), { variant: 'error' });
@@ -125,7 +126,7 @@ export default ({ open, onClose, loadData }) => {
                 />
                 :
                 // Upload screen
-                <ImportCSVUpload uploadHandler={uploadHandler} resetFile={resetFile}/>
+                <ImportCSVUpload uploadHandler={uploadHandler} />
             }
         </AppDialog>
     )

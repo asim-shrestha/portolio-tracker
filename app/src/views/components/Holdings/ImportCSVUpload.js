@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import Typography from '@material-ui/core/Typography';
 
-export default ({ uploadHandler, resetFile }) => {
-    useEffect(()=>{
-        return () => {
-            resetFile()
-        }
-    },[])
+export default ({ uploadHandler }) => {
+
     return (
         < div >
             <Typography variant="h5" align="center" color="primary">
                 Upload a CSV file with the following columns:
-            </Typography>
+                    </Typography>
             <ul>
                 <li>Symbol (example: TSLA, AMZN)</li>
                 <li>Price</li>
