@@ -15,8 +15,8 @@ const PerformanceGraph = ({ data }) => {
         height = 400;
     }
     if (useMediaQuery('(max-width:1000px)')){
-        width = 400;
-        height = 200;
+        width = 450;
+        height = 225;
     } 
 
 
