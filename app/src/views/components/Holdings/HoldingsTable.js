@@ -36,7 +36,7 @@ const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, resetHoldings}
 
     const handleDelete = (symbol) => {
         const token = localStorage.getItem('token')
-        axios.delete('/api/delete', {
+        axios.delete('/api/activity/delete', {
             data: {
                 symbol: symbol
             },
