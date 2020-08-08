@@ -1,16 +1,33 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Box, TextField } from '@material-ui/core';
+import { Typography, Box } from '@material-ui/core';
 import HomePageGraphic from './Charts/HomePageGraphic';
 import HomePageContentblock from './HomePageContentBlock';
 import SymbolSearchBar from './Symbols/SymbolSearchBar';
 
 const useStyles = makeStyles((theme) => ({
+
     title: {
-        fontWeight: "Bold"
+        fontWeight: "Bold",
+        "@media (max-width: 1000px)": {
+            fontSize: 40,
+        },
+        "@media (min-width: 1000px)": {
+            fontSize: 60,
+        },
+    },
+    subtitle: {
+        fontWeight: "Light",
+        "@media (max-width: 1000px)": {
+            fontSize: 20,
+        },
+        "@media (min-width: 1000px)": {
+            fontSize: 30,
+        },
     },
     diagram: {
-        marginTop: theme.spacing(10),
+        marginTop: theme.spacing(5),
+        marginBottom: theme.spacing(5),
     }
 }));
 
@@ -19,7 +36,7 @@ const HomePage = () => {
     return (
         <div className={classes.root}>
             <Typography variant="h1" color="primary" align="center" className={classes.title}>Welcome to Trendline. 👋</Typography>
-            <Typography variant="h3" color="primary" align="center">A free investment-portfolio management tool</Typography>
+            <Typography variant="h3" color="primary" align="center" className={classes.subtitle}>A free investment-portfolio management tool</Typography>
             <SymbolSearchBar/>
             <Box className={classes.diagram} align="center">
                 <HomePageGraphic className={classes.diagram} />

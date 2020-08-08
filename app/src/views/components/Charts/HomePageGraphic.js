@@ -1,6 +1,7 @@
 import React from 'react';
 import { LineChart, Line } from 'recharts';
 import theme from '../../../../theme';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const data = [
     { name: 'Page A', uv: 4000, pv: 2400, amt: 2400, },
@@ -14,10 +15,11 @@ const data = [
 
 const HomePageGraphic = () => {
     const strokeColour = theme.palette.primary.main;
+    const matches = useMediaQuery('(min-width:1000px)');
     return (
         <>
-            <LineChart width={800} height={400} data={data} >
-                <Line type="monotone" dataKey="pv" stroke={strokeColour} strokeWidth={10} dot={false}/>
+            <LineChart width={`${matches}`=='true'?800:400} height={`${matches}`=='true'?400:200} data={data} >
+                <Line type="monotone" dataKey="pv" stroke={strokeColour} strokeWidth={5} dot={false}/>
             </LineChart>
         </>
     );

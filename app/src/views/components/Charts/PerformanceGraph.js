@@ -1,33 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import theme from '../../../../theme';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 // Graph of performance data that resizes alongside the window
 const PerformanceGraph = ({ data }) => {
-    const [width, setWidth] = useState(0);
-    let colour = theme.palette.positive.main;
-
-    const updateWidth = () => {
-        // Subtract magic number to get proper right margins
-        setWidth(window.innerWidth - theme.spacing(28) * 2);
+    var w = 400;
+    var h = 200
+    if (useMediaQuery('(min-width:1000px)')){
+        w = 800;
+        h = 400;
     }
+    if (useMediaQuery('(min-width:1500px)')){
+        w = 1200;
+        h = 600;
+    } 
 
-    // Add event listener to the window so that we can capture window width changes
-    useEffect(() => {
-        window.addEventListener('resize', updateWidth);
-        updateWidth();
-        // returned function will be called on component unmount 
-        return () => {
-            window.removeEventListener('resize', updateWidth)
-        }
-    }, [])
+    let colour = theme.palette.positive.main;
 
     // Set colour based on performance
     if (data.length > 0 && data[data.length - 1].y < 0) { colour = theme.palette.negative.main; }
 
     // This loading ensures that the graph will be animated when loaded
     return (
-            <AreaChart width={width} height={500} data={data} isAbove >
+            <AreaChart width={w} height={h} data={data} isAbove >
                 <defs>
                     <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="10%" stopColor={colour} stopOpacity={1} />
