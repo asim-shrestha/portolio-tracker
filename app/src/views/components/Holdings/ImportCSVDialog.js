@@ -7,7 +7,7 @@ import ImportCSVUpload from './ImportCSVUpload'
 import { useSnackbar } from 'notistack';
 import getResErrorMessage from '../../helpers/ErrorHelper';
 
-export default ({ open, onClose }) => {
+export default ({ open, onClose, resetHoldings }) => {
     const [parsedFile, setParsedFile] = useState([])
     const [headers, setHeaders] = useState([])                      // headers from file
     const [confirmHeaders, setConfirmHeaders] = useState(false)     // display header confirmation form
@@ -16,9 +16,8 @@ export default ({ open, onClose }) => {
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
+    
     const uploadHandler = (event) => {
-
         // function to reset file when error is found
         const resetFile = () => {
             document.getElementById('CSVUpload').value = ''
@@ -42,6 +41,13 @@ export default ({ open, onClose }) => {
                 }
             })
 
+            // check for missing required columns
+            if(results.data[0].length < 4){
+                enqueueSnackbar('Detected missing required column', { variant: "error" })
+                safeToContinue = false
+                resetFile()
+            }
+
             // check for duplicates in headers
             if (new Set(results.data[0]).size !== results.data[0].length) {
                 enqueueSnackbar('Duplicate column names detected', { variant: "error" })
@@ -57,6 +63,7 @@ export default ({ open, onClose }) => {
                 setDate(results.data[0][3] ? results.data[0][3] : '')
                 setParsedFile(results.data)
                 setConfirmHeaders(true)
+                resetFile();
             }
         }
 
@@ -101,11 +108,14 @@ export default ({ open, onClose }) => {
             })
                 .then(res => {
                     console.log('Upload done', res.data.message)
-                    location.reload()
+                    resetHoldings()
+                    onClose()
+                    setConfirmHeaders(false)
                 })
                 .catch(err => {
-                    enqueueSnackbar(getResErrorMessage(err), { variant: 'error' });
-                    location.reload()
+                    enqueueSnackbar(getResErrorMessage(err), { variant: 'error' })
+                    resetHoldings()
+                    onClose()
                 })
         }
 

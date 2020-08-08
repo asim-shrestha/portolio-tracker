@@ -16,7 +16,7 @@ router.post('/activity/order', [
     body('commission').isDecimal(),
     body('quantity').isInt(),
     body('symbol').isLength({ min:1, max:255 }),
-], (req, res) => {
+], passport.authenticate('jwt', { session: false }), (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422).json({ errors: errors.array() });
@@ -29,6 +29,9 @@ router.post('/activity/order', [
 
 // POST upload user CSV file
 router.post('/upload', passport.authenticate('jwt', { session: false }), controller.uploadCSV);
+
+// DELETE delete all stocks for symbol
+router.delete('/delete', passport.authenticate('jwt', { session: false }), controller.deleteStock)
 
 // TODO: remove this router later
 // route for testing IEX API calls
