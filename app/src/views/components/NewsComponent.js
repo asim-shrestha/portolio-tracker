@@ -28,8 +28,10 @@ const NewsComponent = ({queryTerms}) => {
     const classes = useStyles();
 
     const getArticles = () => {
+        // Filter terms for the first " " for every holding. (This will remove the "Inc" from searches)
+        const filteredQueryTerms = queryTerms ? queryTerms.map(term => term.substr(0, term.indexOf(' '))): '';
         // NewsAPI requires encoded URI for query
-        const query = queryTerms ? encodeURIComponent(queryTerms.join(' OR ')): '';
+        const query = filteredQueryTerms ? encodeURIComponent(filteredQueryTerms.join(' OR ')): '';
         // Check if we have already retrieved news for this query
         if (query == savedQuery) { return; }
         else { setSavedQuery(query); }
