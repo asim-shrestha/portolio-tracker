@@ -7,6 +7,7 @@ import HoldingsTable from './Holdings/HoldingsTable';
 import AddHoldingsDialog from './Holdings/AddHoldingsDialog';
 import BuyHoldingsDialog from './Holdings/BuyHoldingsDialog';
 import SellHoldingsDialog from './Holdings/SellHoldingsDialog';
+import DeleteHoldingRowDialog from './Holdings/DeleteHoldingRowDialog';
 import ImportCSVDialog from './Holdings/ImportCSVDialog';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -34,6 +35,7 @@ const DashboardPage = () => {
     const [isAddHoldingsDialogOpen, setIsAddHoldingsDialogOpen] = useState(false);
     const [isBuyHoldingsDialogOpen, setIsBuyHoldingsDialogOpen] = useState(false);
     const [isSellHoldingsDialogOpen, setIsSellHoldingsDialogOpen] = useState(false);
+    const [isDeleteHoldingRowDialogOpen, setIsDeleteHoldingRowDialogOpen] = useState(false);
     const [isImportCSVDialogOpen, setIsImportCSVDialogOpen] = useState(false);
     const [user, setUser] = useContext(UserContext);
     const classes = useStyles();
@@ -89,8 +91,14 @@ const DashboardPage = () => {
         setIsSellHoldingsDialogOpen(true);
     }
 
-    const queryTerms = holdings ? Array.from(holdings, holding => holding.companyName) : []
+    const handleOpenDeleteHoldingRow = (symbol) => {
+        setSelectedSymbol(symbol);
+        setIsDeleteHoldingRowDialogOpen(true);
+    }
 
+    // Grab the company name before the first "," for every holding. (This will remove the "Inc" from searches)
+    const queryTerms = holdings ? Array.from(holdings, holding => holding.companyName) : []
+    
     if (user === null) { return <Typography variant="h1" align="center" color="primary" className={classes.text}>Error loading user</Typography> }
     return (
         <>
@@ -100,18 +108,19 @@ const DashboardPage = () => {
                 <DashboardGraph data={performance} holdings={holdings} />
             </Box>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Holdings:</Typography>
-            <HoldingsTable data={holdings} openBuyHoldings={handleOpenBuyHoldings} openSellHoldings={handleOpenSellHoldings} resetHoldings={loadData}/>
+            <HoldingsTable data={holdings} openBuyHoldings={handleOpenBuyHoldings} openSellHoldings={handleOpenSellHoldings} openDeleteHoldingRow={handleOpenDeleteHoldingRow} resetHoldings={loadData}/>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsAddHoldingsDialogOpen(true)}>Add individual</Button>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsImportCSVDialogOpen(true)}>Import from CSV</Button>
-            <Typography variant="h3" align="left" color="primary" className={classes.text}>Breakdown of Holdings:</Typography>
-            <HoldingsPieChart data={holdings} />
             <ImportCSVDialog resetHoldings={loadData} open={isImportCSVDialogOpen} onClose={() => setIsImportCSVDialogOpen(false)} />
             <AddHoldingsDialog open={isAddHoldingsDialogOpen} onClose={() => setIsAddHoldingsDialogOpen(false)} resetHoldings={loadData}/>
             <BuyHoldingsDialog open={isBuyHoldingsDialogOpen} onClose={() => setIsBuyHoldingsDialogOpen(false)} resetHoldings={loadData} symbol={selectedSymbol}/>
             <SellHoldingsDialog open={isSellHoldingsDialogOpen} onClose={() => setIsSellHoldingsDialogOpen(false)} resetHoldings={loadData} symbol={selectedSymbol}/>
+            <DeleteHoldingRowDialog open={isDeleteHoldingRowDialogOpen} onClose={() => setIsDeleteHoldingRowDialogOpen(false)} resetHoldings={loadData} symbol={selectedSymbol}/>
             {
                 queryTerms.length > 0 ? 
                 <>
+                    <Typography variant="h3" align="left" color="primary" className={classes.text}>Breakdown of Holdings:</Typography>
+                    <HoldingsPieChart data={holdings} />
                     <Typography variant="h3" align="left" color="primary" className={classes.text}>Holding News:</Typography>
                     <NewsComponent queryTerms={queryTerms}/>
                 </> 

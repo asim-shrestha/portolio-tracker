@@ -29,7 +29,7 @@ const NewsComponent = ({queryTerms}) => {
 
     const getArticles = () => {
         // Filter terms for the first " " for every holding. (This will remove the "Inc" from searches)
-        const filteredQueryTerms = queryTerms ? queryTerms.map(term => term.substr(0, term.indexOf(' '))): '';
+        const filteredQueryTerms = queryTerms ? queryTerms.map(term => term.substr(0, term.indexOf(','))): queryTerms;
         // NewsAPI requires encoded URI for query
         const query = filteredQueryTerms ? encodeURIComponent(filteredQueryTerms.join(' OR ')): '';
         // Check if we have already retrieved news for this query
@@ -41,7 +41,7 @@ const NewsComponent = ({queryTerms}) => {
             setCurrentArticle(res.data.articles[0] || {});
             setShowArticle(true);
         }).catch((err) => {
-            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
+            enqueueSnackbar("Error retrieving news information: " + getResErrorMessage(err), {variant: 'error'});
         })
     }
 

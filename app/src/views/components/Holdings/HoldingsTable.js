@@ -14,7 +14,6 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     tableHeader: {
@@ -32,23 +31,7 @@ const currencyFormat = (n) => {
 }
 
 // Table to display user holdings data
-const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, resetHoldings}) => {
-
-    const handleDelete = (symbol) => {
-        const token = localStorage.getItem('token')
-        axios.delete('/api/delete', {
-            data: {
-                symbol: symbol
-            },
-            headers: {
-                Authorization: `JWT ${token}`
-            }
-        })
-            .then(() => {
-                resetHoldings()
-            })
-    }
-
+const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, openDeleteHoldingRow}) => {
     const classes = useStyles();
     
     let tableRows = <></>
@@ -65,7 +48,7 @@ const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, resetHoldings}
                     <IconButton className={classes.buttonCell} onClick={() => openSellHoldings(stock.symbol)}><ShoppingCartIcon/></IconButton>
                 </TableCell>
                 <TableCell align="center">
-                    <IconButton className={classes.buttonCell} onClick={() => { handleDelete(stock.symbol) }}><DeleteForeverIcon/></IconButton>
+                    <IconButton className={classes.buttonCell} onClick={() => openDeleteHoldingRow(stock.symbol)}><DeleteForeverIcon/></IconButton>
                 </TableCell>
             </TableRow>
         ))
