@@ -57,6 +57,7 @@ function handleRender(req, res) {
 const app = express();
 
 // Helmet for security
+// Default content security values except for img-src so that we can display article images from all sources
 import helmet from 'helmet';
 app.use(helmet({
     contentSecurityPolicy: {

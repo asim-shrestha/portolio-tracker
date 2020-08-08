@@ -36,7 +36,10 @@ const NewsComponent = ({queryTerms}) => {
         if (query == savedQuery) { return; }
         else { setSavedQuery(query); }
         // Get articles
-        Axios.get('/api/news/' + query).then((res) => {
+        const token = localStorage.getItem('token');
+        Axios.get('/api/news/' + query, {headers: {
+            Authorization: `JWT ${token}`
+        }}).then((res) => {
             setArticles(res.data.articles);
             setCurrentArticle(res.data.articles[0] || {});
             setShowArticle(true);

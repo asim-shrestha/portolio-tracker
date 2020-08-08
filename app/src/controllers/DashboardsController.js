@@ -42,7 +42,7 @@ export default class DashboardsController {
         }
     }
     
-    // Get the 30 day performance data of an individual symbol
+    // Get the 30 day performance data of an individual symbol along with the company name
     async getSymbolData(req, res) {
         try{
             const symbol = req.params.symbol;
