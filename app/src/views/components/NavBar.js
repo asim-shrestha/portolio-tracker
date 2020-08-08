@@ -15,12 +15,12 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
 
         "@media (max-width: 1000px)": {
-            paddingLeft: theme.spacing(5),
-            paddingRight: theme.spacing(5),
+            paddingLeft: theme.spacing(1),
+            paddingRight: theme.spacing(1),
         },
         "@media (min-width: 1000px)": {
-            paddingLeft: theme.spacing(10),
-            paddingRight: theme.spacing(10),
+            paddingLeft: theme.spacing(25),
+            paddingRight: theme.spacing(25),
         },
     },
     title: {
