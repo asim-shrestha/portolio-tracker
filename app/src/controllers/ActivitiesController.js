@@ -72,8 +72,20 @@ export default class ActivitiesController {
             const { symbol, price, quantity, date } = map
 
             // Check symbols
+            // update cache if outdated
+            let latestCachedDate = (await Symbol.query().max('date as date'))[0].date
+            if (await helper.retrieveNewData(latestCachedDate)) {
+                const retrievedSymbols = await iexSymbols()
+                const symbolsCache = await helper.processAPISymbols(retrievedSymbols)
+
+                if (symbolsCache) {
+                    latestCachedDate = symbolsCache.date
+                    await Symbol.query().insert(symbolsCache)
+                }
+            }
+            const symbolsList = (await Symbol.query().select('symbols').where('date', latestCachedDate))[0].symbols;
             let safeToInsert = false
-            const symbolsList = await iexSymbols()
+            // const symbolsList = await iexSymbols()
             for (let i = 1; i < data.length; i++) {
                 data[i][symbol] = data[i][symbol].toUpperCase() // Capitalize symbol name
                 const validSymbol = await helper.validateSymbol(data[i][symbol].toUpperCase(), symbolsList)
@@ -108,6 +120,21 @@ export default class ActivitiesController {
         catch (err) {
             console.error(err)
             res.sendStatus(400).send({message: err.message})
+        }
+    }
+
+    async deleteStock(req, res){
+        try{
+            if (req.user) {
+                const result = await Activity.query().delete().where('symbol', req.body.symbol).andWhere('user_id', req.user.id)
+                res.status(200).send({ delete: true, recordsDeleted: result })
+            }
+            else {
+                res.sendStatus(403)
+            }
+        } catch (err) {
+            console.error(err)
+            res.sendStatus(400).send({ message: err.message })
         }
     }
 }
