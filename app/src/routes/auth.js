@@ -39,7 +39,7 @@ router.get('/findUser', (req, res) => {
 })
 
 // only add to test deleting test users
-if (!process.env.NODE_ENV) {
+if (process.env.TESTING) {
 
     router.delete('/deleteUser', (req, res) => {
         controller.deleteUser(req, res)
