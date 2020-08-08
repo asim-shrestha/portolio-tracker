@@ -11,26 +11,15 @@ const CARD_WIDTH = 650;
 
 const useStyles = makeStyles((theme) => ({
     card: {
-        "@media (max-width: 1000px)": {
-            maxWidth: 600,
+        margin: 'auto',
+        maxWidth: CARD_WIDTH,
+        "@media (max-width: 850px)": {
+            maxWidth: CARD_WIDTH * 0.75,
         },
-        "@media (min-width: 1000px)": {
-            maxWidth: 800,
-        },
-        margin: 'auto'
-
     },
     image: {
-        "@media (max-width: 1000px)": {
-            width: 600,
-            height: 400,
-
-        },
-        "@media (min-width: 1000px)": {
-            width: 800,
-            height: 600,
-
-        },
+        width: CARD_WIDTH,
+        height: 400,
         objectFit: "cover",
     },
 }));
