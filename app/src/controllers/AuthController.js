@@ -89,6 +89,11 @@ export default class AuthController {
         }
     }
 
+    async deleteUser(req, res){
+        const result = await User.query().delete().where('email', 'like', req.body.email)
+        res.status(200).send({ delete: true, recordsDeleted: result })
+    }
+
     capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
