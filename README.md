@@ -10,6 +10,10 @@ add all of the investments they have made to their portfolio. It is here that th
 - Alert messages through a snackbar package
 - User login session kept track of through JWT
 
+## Current Constraints:
+- Only US Equity Data wil be tracked
+- To limit the size of API messages, the performance graph only retrieves price data within **1 year** ending today
+
 ## Setup:
     > sudo docker-compose build
     > sudo docker-compose up

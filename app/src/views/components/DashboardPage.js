@@ -1,6 +1,6 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Axios from 'axios';
-import {UserContext} from './Auth/UserStore';
+import { UserContext } from './Auth/UserStore';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import HoldingsTable from './Holdings/HoldingsTable';
@@ -11,6 +11,7 @@ import ImportCSVDialog from './Holdings/ImportCSVDialog';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import DashboardGraph from './Charts/DashboardGraph';
+import HoldingsPieChart from './Charts/HoldingsPieChart'
 import NewsComponent from './NewsComponent';
 
 const useStyles = makeStyles((theme) => ({
@@ -46,22 +47,31 @@ const DashboardPage = () => {
     }
 
     const loadData = () => {
+        const token = localStorage.getItem('token')
         // Retrieve user performance data
-        Axios.get(`/api/performance/${user.id}`).then((res) => {
+        Axios.get(`/api/performance/${user.id}`, {
+            headers: {
+                'Authorization': `JWT ${token}`
+            }
+        }).then((res) => {
             setPerformance((res.data));
         }).catch((err) => {
             alert(err);
         })
         // Retrieve user holding data
-        Axios.get(`/api/holdings/${user.id}`).then((res) => {
+        Axios.get(`/api/holdings/${user.id}`, {
+            headers: {
+                'Authorization': `JWT ${token}`
+            }
+        }).then((res) => {
             setHoldings(formatData(res.data));
         }).catch((err) => {
             alert(err.message);
         })
     }
-    
+
     useEffect(() => {
-        if(user != null) {
+        if (user != null) {
             loadData();
         }
     }, [user]);
@@ -76,25 +86,26 @@ const DashboardPage = () => {
         setIsSellHoldingsDialogOpen(true);
     }
 
-    console.log(holdings);
     const queryTerms = holdings ? Array.from(holdings, holding => holding.companyName) : []
 
-    if(user === null) {return <Typography variant="h1" align="center" color="primary" className={classes.text}>Error loading user</Typography>}
+    if (user === null) { return <Typography variant="h1" align="center" color="primary" className={classes.text}>Error loading user</Typography> }
     return (
         <>
             <Typography variant="h1" align="left" color="primary" className={classes.text}>{user.first_name}'s Dashboard</Typography>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Performance:</Typography>
             <Box align="center">
-                <DashboardGraph data={performance} holdings={holdings}/>
+                <DashboardGraph data={performance} holdings={holdings} />
             </Box>
             <Typography variant="h3" align="left" color="primary" className={classes.text}>Holdings:</Typography>
-            <HoldingsTable data={holdings} openBuyHoldings={handleOpenBuyHoldings} openSellHoldings={handleOpenSellHoldings}/>
+            <HoldingsTable data={holdings} openBuyHoldings={handleOpenBuyHoldings} openSellHoldings={handleOpenSellHoldings} resetHoldings={loadData}/>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsAddHoldingsDialogOpen(true)}>Add individual</Button>
             <Button variant="contained" color="primary" className={classes.button} fullWidth onClick={() => setIsImportCSVDialogOpen(true)}>Import from CSV</Button>
+            <Typography variant="h3" align="left" color="primary" className={classes.text}>Breakdown of Holdings:</Typography>
+            <HoldingsPieChart data={holdings} />
+            <ImportCSVDialog resetHoldings={loadData} open={isImportCSVDialogOpen} onClose={() => setIsImportCSVDialogOpen(false)} />
             <AddHoldingsDialog open={isAddHoldingsDialogOpen} onClose={() => setIsAddHoldingsDialogOpen(false)} resetHoldings={loadData}/>
             <BuyHoldingsDialog open={isBuyHoldingsDialogOpen} onClose={() => setIsBuyHoldingsDialogOpen(false)} resetHoldings={loadData} symbol={selectedSymbol}/>
             <SellHoldingsDialog open={isSellHoldingsDialogOpen} onClose={() => setIsSellHoldingsDialogOpen(false)} resetHoldings={loadData} symbol={selectedSymbol}/>
-            <ImportCSVDialog open={isImportCSVDialogOpen} onClose={() => setIsImportCSVDialogOpen(false)}/>
             {
                 queryTerms.length > 0 ? 
                 <>

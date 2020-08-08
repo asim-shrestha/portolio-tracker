@@ -38,4 +38,13 @@ router.get('/findUser', (req, res) => {
     controller.findUser(req, res)
 })
 
+// only add to test deleting test users
+if (process.env.TESTING) {
+
+    router.delete('/deleteUser', (req, res) => {
+        controller.deleteUser(req, res)
+    })
+}
+
+
 export default router
