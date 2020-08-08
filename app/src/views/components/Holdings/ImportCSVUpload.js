@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ArrowRightIcon from '@material-ui/icons/ArrowRight'
-import IconButton from '@material-ui/core/IconButton'
 import Button from '@material-ui/core/Button'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
@@ -44,15 +43,17 @@ export default ({ uploadHandler }) => {
                         <ListItemIcon><ArrowRightIcon /></ListItemIcon>
                         <ListItemText primary="Date (YYYY-MM-DD)" />
                     </ListItem>
+                    <ListItem>
+                        <Typography align="center" color="primary">
+                            Note that the "Action" value will be set to "Buy" and the "Commission" value will be set to 0 for all entries.
+                        </Typography>
+                    </ListItem>
                 </List>
             </div>
 
             <div style={{ textAlign: 'center' }}>
-                <Button onClick={handleClick} color="primary">
-                    <div>
-                        <CloudUploadIcon style={{ fontSize: '100px' }} />
-                        <Typography variant="h6">Upload</Typography>
-                    </div>
+                <Button onClick={handleClick} color="primary" variant="contained" startIcon={<CloudUploadIcon fontSize="large"/>}>
+                        <Typography>Upload CSV</Typography>
                 </Button>
             </div>
             <form>
