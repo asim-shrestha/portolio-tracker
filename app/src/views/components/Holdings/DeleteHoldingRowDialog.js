@@ -10,7 +10,7 @@ export default ({ open, onClose, resetHoldings, symbol }) => {
 
     const handleDelete = () => {
         const token = localStorage.getItem('token');
-        Axios.delete('/api/delete', {
+        Axios.delete('/api/activity/delete', {
             data: {
                 symbol: symbol
             },

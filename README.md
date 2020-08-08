@@ -12,7 +12,7 @@ add all of the investments they have made to their portfolio. It is here that th
 
 ## Current Constraints:
 - Only US Equity Data wil be tracked
-- To limit the size of API messages, the performance graph only retrieves price data within **1 year** ending today
+- To limit the size of API messages, the performance graph only retrieves price data within **1 year** ending today. Issues will arise if you set the date for holdings to be anytime before 1 year ago.
 
 ## Setup:
     > sudo docker-compose build
