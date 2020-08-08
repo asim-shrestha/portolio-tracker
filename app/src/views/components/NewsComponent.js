@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 // Will retrieve news from queryTerms if provided 
 const NewsComponent = ({queryTerms}) => {
+    const [savedQuery, setSavedQuery] = useState(null);
     const [showArticle, setShowArticle] = useState(false);
     const [articles, setArticles] = useState([]);
     const [currentArticle, setCurrentArticle] = useState({});
@@ -29,6 +30,10 @@ const NewsComponent = ({queryTerms}) => {
     const getArticles = () => {
         // NewsAPI requires encoded URI for query
         const query = queryTerms ? encodeURIComponent(queryTerms.join(' OR ')): '';
+        // Check if we have already retrieved news for this query
+        if (query == savedQuery) { return; }
+        else { setSavedQuery(query); }
+        // Get articles
         Axios.get('/api/news/' + query).then((res) => {
             setArticles(res.data.articles);
             setCurrentArticle(res.data.articles[0] || {});
@@ -40,7 +45,7 @@ const NewsComponent = ({queryTerms}) => {
 
     useEffect(() => {
         getArticles();
-    }, []);
+    }, [queryTerms]);
 
     const changeArticleIndex = (deltaIndex) => {
         setShowArticle(false);
