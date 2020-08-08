@@ -28,10 +28,10 @@ router.post('/activity/order', [
 
 
 // POST upload user CSV file
-router.post('/upload', passport.authenticate('jwt', { session: false }), controller.uploadCSV);
+router.post('/activity/upload', passport.authenticate('jwt', { session: false }), controller.uploadCSV);
 
 // DELETE delete all stocks for symbol
-router.delete('/delete', passport.authenticate('jwt', { session: false }), controller.deleteStock)
+router.delete('/activity/delete', passport.authenticate('jwt', { session: false }), controller.deleteStock)
 
 // TODO: remove this router later
 // route for testing IEX API calls

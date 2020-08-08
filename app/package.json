@@ -40,6 +40,7 @@
 		"webpack-cli": "latest"
 	},
 	"scripts": {
+		"test": "env TESTING=true node_modules/.bin/mocha ./tests/*.js --require @babel/polyfill --require @babel/register --timeout 10000 --exit",
 		"start": "npm-run-all -p build serve",
 		"devstart": "npm-run-all -p devbuild serve",
 		"build": "webpack",
@@ -49,6 +50,12 @@
 		"post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
 	},
 	"devDependencies": {
+		"@babel/plugin-transform-runtime": "^7.11.0",
+		"@babel/polyfill": "^7.10.4",
+		"@babel/register": "^7.10.5",
+		"chai": "^4.2.0",
+		"chai-http": "^4.3.0",
+		"mocha": "^8.1.1",
 		"nodemon": "latest",
 		"npm-run-all": "latest",
 		"webpack": "latest"

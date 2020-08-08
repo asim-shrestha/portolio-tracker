@@ -85,7 +85,6 @@ export default class ActivitiesController {
             }
             const symbolsList = (await Symbol.query().select('symbols').where('date', latestCachedDate))[0].symbols;
             let safeToInsert = false
-            // const symbolsList = await iexSymbols()
             for (let i = 1; i < data.length; i++) {
                 data[i][symbol] = data[i][symbol].toUpperCase() // Capitalize symbol name
                 const validSymbol = await helper.validateSymbol(data[i][symbol].toUpperCase(), symbolsList)
@@ -115,6 +114,9 @@ export default class ActivitiesController {
                     await Activity.query().insert(insertRow)
                 }
                 res.send({ message: 'Successful upload' })
+            }
+            else{
+                res.status(400).send({message: 'Failed to upload'})
             }
         }
         catch (err) {

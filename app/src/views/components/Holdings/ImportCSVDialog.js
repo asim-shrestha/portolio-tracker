@@ -103,7 +103,7 @@ export default ({ open, onClose, resetHoldings }) => {
             const token = localStorage.getItem('token')
 
             // sending to server
-            Axios.post('/api/upload', data, {
+            Axios.post('/api/activity/upload', data, {
                 headers: { Authorization: `JWT ${token}` }
             })
                 .then(res => {
