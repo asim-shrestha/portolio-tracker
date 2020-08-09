@@ -35,7 +35,7 @@ export default ({ open, onClose, resetHoldings }) => {
             // check for empty cells
             results.data.map(row => {
                 if (row.indexOf('') !== -1) {
-                    enqueueSnackbar('Empty cells detected', { variant: "error" })
+                    enqueueSnackbar('Please ensure your CSV file has no empty cells', { variant: "error" })
                     safeToContinue = false
                     resetFile()
                 }
@@ -43,14 +43,14 @@ export default ({ open, onClose, resetHoldings }) => {
 
             // check for missing required columns
             if(results.data[0].length < 4){
-                enqueueSnackbar('Detected missing required column', { variant: "error" })
+                enqueueSnackbar('Please ensure your CSV file has the required number of columns', { variant: "error" })
                 safeToContinue = false
                 resetFile()
             }
 
             // check for duplicates in headers
             if (new Set(results.data[0]).size !== results.data[0].length) {
-                enqueueSnackbar('Duplicate column names detected', { variant: "error" })
+                enqueueSnackbar('Please ensure your CSV file does not contain duplicate column names', { variant: "error" })
                 safeToContinue = false
                 resetFile()
             }
@@ -113,7 +113,7 @@ export default ({ open, onClose, resetHoldings }) => {
                     setConfirmHeaders(false)
                 })
                 .catch(err => {
-                    enqueueSnackbar(getResErrorMessage(err), { variant: 'error' })
+                    enqueueSnackbar("Error parsing CSV data. Please ensure all data within your CSV file is valid", { variant: 'error' })
                     resetHoldings()
                     onClose()
                 })

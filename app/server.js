@@ -56,6 +56,28 @@ function handleRender(req, res) {
 // Express
 const app = express();
 
+// Helmet for security
+// Default content security values except for img-src so that we can display article images from all sources
+import helmet from 'helmet';
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            'default-src': ["'self'"],
+            'base-uri': ["'self'"],
+            'block-all-mixed-content': [],
+            'font-src': ["'self'", 'https: data:'],
+            'frame-ancestors': ["'self'"],
+            'img-src': ["*", "data:"],
+            'object-src': ["'none'"],
+            'script-src': ["'self'"],
+            'script-src-attr': ["'none'"],
+            'style-src': ["'self'", "https: 'unsafe-inline'"],
+            'upgrade-insecure-requests': [],
+            "default-src": ["'self'"],
+        }
+    }
+}));
+
 // Passport
 import cors from 'cors'
 import passport from 'passport'
@@ -72,12 +94,13 @@ app.use(bodyParser.json());
 import auth from "./src/routes/auth"
 import activities from "./src/routes/activities"
 import dashboards from "./src/routes/dashboards"
+import news from "./src/routes/news"
 const endpoints_prefix = '/api'
 
 app.use("/auth", auth)
 app.use(`${endpoints_prefix}`, activities)
 app.use(`${endpoints_prefix}`, dashboards)
-
+app.use(`${endpoints_prefix}`, news)
 
 // This is fired every time the server-side receives a request.
 app.use(handleRender);

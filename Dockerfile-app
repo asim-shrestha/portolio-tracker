@@ -10,7 +10,7 @@ WORKDIR /app
 COPY ./app/package.json .
 RUN npm install
 
-# My hacky solution to docker doing docker things. Comment out if not needed
+# Installing these packages globally to avoid some docker issues
 RUN npm install -g knex npm-run-all nodemon webpack webpack-cli @babel/node @babel/core
 
 # Bundle app source

@@ -14,7 +14,6 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
-import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     tableHeader: {
@@ -32,32 +31,13 @@ const currencyFormat = (n) => {
 }
 
 // Table to display user holdings data
-const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, resetHoldings}) => {
-
-    const handleDelete = (symbol) => {
-        const token = localStorage.getItem('token')
-        axios.delete('/api/activity/delete', {
-            data: {
-                symbol: symbol
-            },
-            headers: {
-                Authorization: `JWT ${token}`
-            }
-        })
-            .then(() => {
-                resetHoldings()
-            })
-    }
-
+const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, openDeleteHoldingRow}) => {
     const classes = useStyles();
     
     let tableRows = <></>
     if(data) {
         tableRows = data.map((stock) => (
             <TableRow key={stock.symbol}>
-                <TableCell>
-                    <IconButton onClick={() => { handleDelete(stock.symbol) }} className={classes.buttonCell}><DeleteForeverIcon /></IconButton>
-                </TableCell>
                 <TableCell component="th" scope="row"><b>{stock.symbol}</b></TableCell>
                 <TableCell align="center">{parseInt(stock.quantity).toLocaleString()}</TableCell>
                 <TableCell align="center">{currencyFormat(parseFloat(stock.bookValue))}</TableCell>
@@ -66,6 +46,9 @@ const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, resetHoldings}
                 <TableCell align="center">
                     <IconButton className={classes.buttonCell} onClick={() => openBuyHoldings(stock.symbol)}><AddCircleIcon/></IconButton>
                     <IconButton className={classes.buttonCell} onClick={() => openSellHoldings(stock.symbol)}><ShoppingCartIcon/></IconButton>
+                </TableCell>
+                <TableCell align="center">
+                    <IconButton className={classes.buttonCell} onClick={() => openDeleteHoldingRow(stock.symbol)}><DeleteForeverIcon/></IconButton>
                 </TableCell>
             </TableRow>
         ))
@@ -79,13 +62,13 @@ const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, resetHoldings}
             <Table className={classes.table} aria-label="customized table">
                 <TableHead>
                     <TableRow>
-                        <TableCell className={classes.tableHeader} padding='checkbox' />
                         <TableCell className={classes.tableHeader} >Symbol</TableCell>
                         <TableCell className={classes.tableHeader} align="center">Quantity</TableCell>
                         <TableCell className={classes.tableHeader} align="center">Book Value ($)</TableCell>
                         <TableCell className={classes.tableHeader} align="center">Market Value ($)</TableCell>
                         <TableCell className={classes.tableHeader} align="center">Unrealized Gain ($)</TableCell>
                         <TableCell className={classes.tableHeader} align="center">Buy / Sell</TableCell>
+                        <TableCell className={classes.tableHeader} align="center">Delete Row</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

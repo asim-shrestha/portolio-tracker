@@ -27,6 +27,7 @@ const getObjectFromQueryString = (string) => {
 const SymbolPage = () => {
     const [querySymbol, setQuerySymbol] = useState('');
     const [symbolData, setSymbolData] = useState([]);
+    const [companyName, setCompanyName] = useState('');
     const classes = useStyles();
     const location = useLocation();
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -43,7 +44,8 @@ const SymbolPage = () => {
         if(querySymbol == '' || symbolData.length > 0) {return;}
         Axios.get(`/api/symbol/${querySymbol}`).then((res) => {
             closeSnackbar();
-            setSymbolData(res.data);
+            setCompanyName(res.data.companyName);
+            setSymbolData(res.data.performance);
         }).catch((err) => {
             enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
         })
@@ -59,8 +61,8 @@ const SymbolPage = () => {
                 <Box marginTop="5em" align="center">
                     <Typography variant="h4" align="center">{querySymbol} Performance:</Typography>
                     <PerformanceGraph data={symbolData}/>
-                    <Typography variant="h4" align="center">{querySymbol} News:</Typography>
-                    <NewsComponent queryTerms={[querySymbol]}/>
+                    <Typography variant="h4" align="center">{querySymbol} Related News:</Typography>
+                    <NewsComponent queryTerms={[companyName]}/>
                 </Box> :
                 <></>
             }

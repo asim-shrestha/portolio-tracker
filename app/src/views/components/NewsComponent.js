@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 // Will retrieve news from queryTerms if provided 
 const NewsComponent = ({queryTerms}) => {
+    const [savedQueryTerms, setSavedQueryTerms] = useState(null);
     const [showArticle, setShowArticle] = useState(false);
     const [articles, setArticles] = useState([]);
     const [currentArticle, setCurrentArticle] = useState({});
@@ -27,20 +28,36 @@ const NewsComponent = ({queryTerms}) => {
     const classes = useStyles();
 
     const getArticles = () => {
-        const query = queryTerms ? 'q=' + encodeURIComponent(queryTerms.join(' OR ')) + '&': '';
-        const sources = 'sources=' + ['axios', 'bloomberg', 'MarketWatch', 'techcrunch', 'the-wall-street-journal', "the-washington-post"].join(',');
-        Axios.get('http://newsapi.org/v2/everything?' + query + 'language=en&' + sources + '&apiKey=b620f7387d5744a0b08b0d5585040a40').then((res) => {
+        // Filter terms to only get text before the first "," for every holding.
+        // This will remove the ", Inc" from searches which ruins search results
+        const filteredQueryTerms = queryTerms ? queryTerms.map(term => term.substr(0, term.indexOf(','))): queryTerms;
+        // NewsAPI requires encoded URI for query
+        const query = filteredQueryTerms ? encodeURIComponent(filteredQueryTerms.join(' OR ')): '';
+
+        // Get articles
+        const token = localStorage.getItem('token');
+        Axios.get('/api/news/' + query, {headers: {
+            Authorization: `JWT ${token}`
+        }}).then((res) => {
             setArticles(res.data.articles);
             setCurrentArticle(res.data.articles[0] || {});
             setShowArticle(true);
         }).catch((err) => {
-            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
+            enqueueSnackbar("Error retrieving news information: " + getResErrorMessage(err), {variant: 'error'});
         })
     }
 
     useEffect(() => {
-        getArticles();
-    }, []);
+        // Check if we have already retrieved news for this query
+        // Need to .join('') because we cannot explicitly check equality for arrays
+        if (savedQueryTerms && queryTerms.join('') === savedQueryTerms.join('')) { 
+            return; // Articles for query already recieved. Do not fetch again
+        } else {
+            // Articles not retrieved for query terms.
+            setSavedQueryTerms(queryTerms);
+            getArticles();
+        }
+    }, [queryTerms]);
 
     const changeArticleIndex = (deltaIndex) => {
         setShowArticle(false);

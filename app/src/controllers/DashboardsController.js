@@ -42,7 +42,7 @@ export default class DashboardsController {
         }
     }
     
-    // Get the 30 day performance data of an individual symbol
+    // Get the 30 day performance data of an individual symbol along with the company name
     async getSymbolData(req, res) {
         try{
             const symbol = req.params.symbol;
@@ -67,7 +67,11 @@ export default class DashboardsController {
                 let indexedPriceData = await helper.indexHistoricalPricesByDate(priceData)
                 // Extract datapoints for front end
                 let symbolPerformanceData = await helper.generateSymbolPerformanceData(indexedPriceData);
-                res.send(symbolPerformanceData);
+                let companyData = (await batchData([symbol], 'company', false, false))[symbol].company;
+                res.send({
+                    companyName: companyData.companyName,
+                    performance: symbolPerformanceData
+                });
             } else {
                 res.status(422).send({message: activitiesHelper.getInvalidSymbolMessage()})
             }

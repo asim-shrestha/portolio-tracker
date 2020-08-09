@@ -8,6 +8,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/',
   },
+  devtool: "source-map", // So that the content security policy does not flag for lazy evaluations
   module: {
     rules: [
       {
