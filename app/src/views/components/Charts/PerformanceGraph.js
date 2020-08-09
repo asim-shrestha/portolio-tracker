@@ -5,25 +5,27 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 // Graph of performance data that resizes alongside the window
 const PerformanceGraph = ({ data }) => {
-    var w = 400;
-    var h = 200
-    if (useMediaQuery('(min-width:1000px)')){
-        w = 800;
-        h = 400;
+    let colour = theme.palette.positive.main;
+    let width = 1200;
+    let height = 600
+
+    // Dynamically change based on screen size
+    if (useMediaQuery('(max-width:1500px)')){
+        width = 800;
+        height = 400;
     }
-    if (useMediaQuery('(min-width:1500px)')){
-        w = 1200;
-        h = 600;
+    if (useMediaQuery('(max-width:1000px)')){
+        width = 450;
+        height = 225;
     } 
 
-    let colour = theme.palette.positive.main;
 
     // Set colour based on performance
     if (data.length > 0 && data[data.length - 1].y < 0) { colour = theme.palette.negative.main; }
 
     // This loading ensures that the graph will be animated when loaded
     return (
-            <AreaChart width={w} height={h} data={data} isAbove >
+            <AreaChart width={width} height={height} data={data} isAbove >
                 <defs>
                     <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="10%" stopColor={colour} stopOpacity={1} />

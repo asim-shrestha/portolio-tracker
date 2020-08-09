@@ -58,7 +58,7 @@ const SymbolPage = () => {
             {
                 // Show performance graph if we have data, show nothing otherwise
                 symbolData.length > 0 ?
-                <Box marginTop="5em">
+                <Box marginTop="5em" align="center">
                     <Typography variant="h4" align="center">{querySymbol} Performance:</Typography>
                     <PerformanceGraph data={symbolData}/>
                     <Typography variant="h4" align="center">{querySymbol} Related News:</Typography>
