@@ -15,11 +15,18 @@ const data = [
 
 const HomePageGraphic = () => {
     const strokeColour = theme.palette.primary.main;
-    const matches = useMediaQuery('(min-width:1000px)');
+    let width = 800;
+    let height = 400;
+
+    if (useMediaQuery('(max-width:1000px)')) {
+        width = 400;
+        height = 200;
+    }
+
     return (
         <>
-            <LineChart width={`${matches}`=='true'?800:400} height={`${matches}`=='true'?400:200} data={data} >
-                <Line type="monotone" dataKey="pv" stroke={strokeColour} strokeWidth={5} dot={false}/>
+            <LineChart width={width} height={height} data={data} >
+                <Line type="monotone" dataKey="pv" stroke={strokeColour} strokeWidth={10} dot={false}/>
             </LineChart>
         </>
     );

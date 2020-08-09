@@ -6,24 +6,11 @@ import HomePageContentblock from './HomePageContentBlock';
 import SymbolSearchBar from './Symbols/SymbolSearchBar';
 
 const useStyles = makeStyles((theme) => ({
-
     title: {
         fontWeight: "Bold",
-        "@media (max-width: 1000px)": {
-            fontSize: 40,
-        },
-        "@media (min-width: 1000px)": {
-            fontSize: 60,
-        },
     },
     subtitle: {
         fontWeight: "Light",
-        "@media (max-width: 1000px)": {
-            fontSize: 20,
-        },
-        "@media (min-width: 1000px)": {
-            fontSize: 30,
-        },
     },
     diagram: {
         marginTop: theme.spacing(5),
@@ -39,7 +26,7 @@ const HomePage = () => {
             <Typography variant="h3" color="primary" align="center" className={classes.subtitle}>A free investment-portfolio management tool</Typography>
             <SymbolSearchBar/>
             <Box className={classes.diagram} align="center">
-                <HomePageGraphic className={classes.diagram} />
+                <HomePageGraphic/>
                 <HomePageContentblock
                     image={"/home_image_1.jpg"}
                     text="Quickly set up your portfolio and start tracking investments."
