@@ -26,10 +26,10 @@ const HomePageGraphic = () => {
     return (
         <>
             <LineChart width={width} height={height} data={data} >
-                <Line type="monotone" dataKey="pv" stroke={strokeColour} strokeWidth={10} dot={false}/>
+                <Line type="monotone" dataKey="pv" stroke={strokeColour} strokeWidth={10} dot={false} />
             </LineChart>
         </>
     );
-}
+};
 
 export default HomePageGraphic;

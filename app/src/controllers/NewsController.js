@@ -9,12 +9,12 @@ export default class NewsController {
     // GET /news/:query?
     async getNews(req, res) {
         try {
-            const queryUri = req.params.query ? 'q=' + encodeURIComponent(req.params.query) + '&': '';
-            const result = await Axios.get(BASE_URL+ '/everything?' + queryUri + 'language=en&' + SOURCES_URI + '&apiKey=' + API_KEY)
+            const queryUri = req.params.query ? 'q=' + encodeURIComponent(req.params.query) + '&' : '';
+            const result = await Axios.get(BASE_URL + '/everything?' + queryUri + 'language=en&' + SOURCES_URI + '&apiKey=' + API_KEY);
             res.status(200).send(result.data);
-        } catch(err) {
-            console.error(err)
-            res.status(400).send({message: err.message})
+        } catch (err) {
+            console.error(err);
+            res.status(400).send({ message: err.message });
         }
     }
 }

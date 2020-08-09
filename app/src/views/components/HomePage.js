@@ -24,9 +24,9 @@ const HomePage = () => {
         <div className={classes.root}>
             <Typography variant="h1" color="primary" align="center" className={classes.title}>Welcome to Trendline. 👋</Typography>
             <Typography variant="h3" color="primary" align="center" className={classes.subtitle}>A free investment-portfolio management tool</Typography>
-            <SymbolSearchBar/>
+            <SymbolSearchBar />
             <Box className={classes.diagram} align="center">
-                <HomePageGraphic/>
+                <HomePageGraphic />
                 <HomePageContentblock
                     image={"/home_image_1.jpg"}
                     text="Quickly set up your portfolio and start tracking investments."
@@ -44,6 +44,6 @@ const HomePage = () => {
             </Box>
         </div>
     );
-}
+};
 
-export default HomePage
+export default HomePage;

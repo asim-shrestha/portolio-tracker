@@ -1,5 +1,5 @@
 import express from 'express';
-import passport from 'passport'
+import passport from 'passport';
 const router = express.Router();
 
 import DashboardsController from '../controllers/DashboardsController';
@@ -14,4 +14,4 @@ router.get('/symbol/:symbol', controller.getSymbolData);
 // GET display table containing all stocks owned by user
 router.get('/holdings/:user_id', passport.authenticate('jwt', { session: false }), controller.getHoldingsData);
 
-export default router
+export default router;

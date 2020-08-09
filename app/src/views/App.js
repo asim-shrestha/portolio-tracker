@@ -34,9 +34,9 @@ const App = () => {
     // add action to all snackbars
     const onClickDismiss = key => () => {
         notistackRef.current.closeSnackbar(key);
-    }
+    };
     return (
-        <SnackbarProvider 
+        <SnackbarProvider
             maxSnack={2}
             anchorOrigin={{
                 vertical: 'top',
@@ -45,9 +45,9 @@ const App = () => {
             ref={notistackRef}
             action={(key) => (
                 <Button onClick={onClickDismiss(key)}>
-                    <CloseIcon color="secondary"/>
+                    <CloseIcon color="secondary" />
                 </Button>
-        )}>
+            )}>
             <UserProvider>
                 <Authenticator />
                 <Navbar />
@@ -63,7 +63,7 @@ const App = () => {
             </UserProvider>
         </SnackbarProvider>
     );
-}
+};
 
 export default App;
 

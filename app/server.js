@@ -1,12 +1,12 @@
 "use strict";
 
-import {} from 'dotenv/config'
+import { } from 'dotenv/config';
 import express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
-import {StaticRouter} from 'react-router-dom'
+import { StaticRouter } from 'react-router-dom';
 import App from './src/views/App';
 import theme from './theme';
 import bodyParser from "body-parser";
@@ -31,12 +31,12 @@ function renderFullPage(html, css) {
 
 function handleRender(req, res) {
     const sheets = new ServerStyleSheets();
-    
-    const context = {}
+
+    const context = {};
     // Render the component to a string.
     const html = ReactDOMServer.renderToString(
         sheets.collect(
-            <StaticRouter location={req.url}context={context}>
+            <StaticRouter location={req.url} context={context}>
                 <ThemeProvider theme={theme}>
                     {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                     <CssBaseline />
@@ -79,11 +79,11 @@ app.use(helmet({
 }));
 
 // Passport
-import cors from 'cors'
-import passport from 'passport'
-import './src/passport_config'
-app.use(cors())
-app.use(passport.initialize())
+import cors from 'cors';
+import passport from 'passport';
+import './src/passport_config';
+app.use(cors());
+app.use(passport.initialize());
 
 app.use('/build', express.static('build'));
 
@@ -91,16 +91,16 @@ app.use('/build', express.static('build'));
 app.use(bodyParser.json());
 
 // auth route
-import auth from "./src/routes/auth"
-import activities from "./src/routes/activities"
-import dashboards from "./src/routes/dashboards"
-import news from "./src/routes/news"
-const endpoints_prefix = '/api'
+import auth from "./src/routes/auth";
+import activities from "./src/routes/activities";
+import dashboards from "./src/routes/dashboards";
+import news from "./src/routes/news";
+const endpoints_prefix = '/api';
 
-app.use("/auth", auth)
-app.use(`${endpoints_prefix}`, activities)
-app.use(`${endpoints_prefix}`, dashboards)
-app.use(`${endpoints_prefix}`, news)
+app.use("/auth", auth);
+app.use(`${endpoints_prefix}`, activities);
+app.use(`${endpoints_prefix}`, dashboards);
+app.use(`${endpoints_prefix}`, news);
 
 // This is fired every time the server-side receives a request.
 app.use(handleRender);
@@ -111,4 +111,4 @@ app.listen(PORT, () => {
     console.log(`Listening on ${PORT}`);
 });
 
-export default app
+export default app;

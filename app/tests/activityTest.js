@@ -1,15 +1,15 @@
-import chai from 'chai'
-import chaiHttp from 'chai-http'
-import app from '../server'
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../server';
 
 // Chai configs
-chai.use(chaiHttp)
-chai.should()
+chai.use(chaiHttp);
+chai.should();
 
 const testUser = {
     email: 'test@test.com',
     password: '123456',
-}
+};
 
 describe("Activity Test", () => {
     describe("POST /login success", () => {
@@ -18,17 +18,17 @@ describe("Activity Test", () => {
                 .post('/auth/login')
                 .send(testUser)
                 .end((err, res) => {
-                    res.should.have.status(200)
-                    res.body.should.be.a('object')
-                    res.body.auth.should.be.equal(true)
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.auth.should.be.equal(true);
 
                     // save token for later use
-                    testUser.token = res.body.token
+                    testUser.token = res.body.token;
 
-                    done()
-                })
-        })
-    })
+                    done();
+                });
+        });
+    });
 
     describe("POST /activity/order success", () => {
         it('Should successfully add activity', (done) => {
@@ -41,19 +41,19 @@ describe("Activity Test", () => {
                 quantity: 10,
                 symbol: 'FB',
                 action: 'buy'
-            }
+            };
 
             chai.request(app)
                 .post('/api/activity/order')
                 .set('Authorization', `JWT ${testUser.token}`) // set Authorization header
                 .send(testOrder)
                 .end((err, res) => {
-                    res.should.have.status(200)
-                    res.body.should.be.a('object')
-                    done()
-                })
-        })
-    })
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    done();
+                });
+        });
+    });
 
 
     describe("POST /activity/order fail", () => {
@@ -67,17 +67,17 @@ describe("Activity Test", () => {
                 quantity: 10,
                 symbol: 'FB',
                 action: 'buy'
-            }
+            };
 
             chai.request(app)
                 .post('/api/activity/order')
                 .send(testOrder)
                 .end((err, res) => {
-                    res.should.have.status(401)
-                    done()
-                })
-        })
-    })
+                    res.should.have.status(401);
+                    done();
+                });
+        });
+    });
 
     describe("POST /activity/upload success", () => {
         it('Should fail to add activity (no auth header)', (done) => {
@@ -88,37 +88,37 @@ describe("Activity Test", () => {
                     ['FB', '3333', '33', '2020-08-02']
                 ],
                 map: {
-                    symbol: 0, 
-                    price: 1, 
-                    quantity: 2, 
+                    symbol: 0,
+                    price: 1,
+                    quantity: 2,
                     date: 3
                 }
-            }
+            };
 
             chai.request(app)
                 .post('/api/activity/upload')
                 .set('Authorization', `JWT ${testUser.token}`) // set Authorization header
                 .send(testCSV)
                 .end((err, res) => {
-                    res.should.have.status(200)
-                    done()
-                })
-        })
-    })
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+    });
 
     describe("Delete stock FB", () => {
         it('Should delete all FB stocks', (done) => {
             chai.request(app)
-            .delete('/api/activity/delete')
-            .set('Authorization', `JWT ${testUser.token}`) // set Authorization header
+                .delete('/api/activity/delete')
+                .set('Authorization', `JWT ${testUser.token}`) // set Authorization header
                 .send({ symbol: 'FB' })
                 .end((err, res) => {
-                    res.should.have.status(200)
-                    res.body.delete.should.be.equal(true)
-                    done()
-                })
-        })
-    })
+                    res.should.have.status(200);
+                    res.body.delete.should.be.equal(true);
+                    done();
+                });
+        });
+    });
 
 
-})
+});

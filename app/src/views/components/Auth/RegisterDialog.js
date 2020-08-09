@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import Axios from 'axios'
+import React, { useState } from 'react';
+import Axios from 'axios';
 import { useSnackbar } from 'notistack';
 import getResErrorMessage from '../../helpers/ErrorHelper';
 import AppDialog from '../AppDialog';
-import {TextField,IconButton} from "@material-ui/core";
+import { TextField, IconButton } from "@material-ui/core";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-const RegisterDialog = ({open, onClose, openLogin}) => {
+const RegisterDialog = ({ open, onClose, openLogin }) => {
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
@@ -26,22 +26,22 @@ const RegisterDialog = ({open, onClose, openLogin}) => {
             onClose();
             openLogin();
             closeSnackbar(); // Close on success
-            enqueueSnackbar('User successfully registered!', {variant: 'success'});
+            enqueueSnackbar('User successfully registered!', { variant: 'success' });
         }).catch((err) => {
-            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
-        })
-    }
+            enqueueSnackbar(getResErrorMessage(err), { variant: 'error' });
+        });
+    };
 
     return (
         <AppDialog open={open} onClose={onClose} title={"Register"} buttonClick={handleRegister} buttonText={"Register"}>
-            <TextField variant="outlined" fullWidth margin="dense" label="First name" onChange={e => setFirstName(e.target.value)}/>
-            <TextField variant="outlined" fullWidth margin="dense" label="Last name" onChange={e => setLastName(e.target.value)}/>
-            <TextField variant="outlined" fullWidth margin="dense" label="Email" onChange={e => setEmail(e.target.value)}/>
-            <TextField variant="outlined" fullWidth margin="dense" label="Password" onChange={e => setPassword(e.target.value)} 
-                type={showPassword?'text':'password'} InputProps={{endAdornment:<IconButton onClick={()=>setShowPassword(!showPassword)}>{showPassword?<Visibility fontSize="small" />:<VisibilityOff fontSize="small" />}</IconButton>}}
-               />
+            <TextField variant="outlined" fullWidth margin="dense" label="First name" onChange={e => setFirstName(e.target.value)} />
+            <TextField variant="outlined" fullWidth margin="dense" label="Last name" onChange={e => setLastName(e.target.value)} />
+            <TextField variant="outlined" fullWidth margin="dense" label="Email" onChange={e => setEmail(e.target.value)} />
+            <TextField variant="outlined" fullWidth margin="dense" label="Password" onChange={e => setPassword(e.target.value)}
+                type={showPassword ? 'text' : 'password'} InputProps={{ endAdornment: <IconButton onClick={() => setShowPassword(!showPassword)}>{showPassword ? <Visibility fontSize="small" /> : <VisibilityOff fontSize="small" />}</IconButton> }}
+            />
         </AppDialog>
     );
-}
+};
 
 export default RegisterDialog;

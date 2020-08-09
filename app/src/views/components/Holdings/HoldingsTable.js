@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever'
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles((theme) => ({
     tableHeader: {
@@ -27,15 +27,15 @@ const useStyles = makeStyles((theme) => ({
 
 // Format currency related strings to include commas and only two decimal places
 const currencyFormat = (n) => {
-    return n.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-}
+    return n.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+};
 
 // Table to display user holdings data
-const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, openDeleteHoldingRow}) => {
+const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, openDeleteHoldingRow }) => {
     const classes = useStyles();
-    
-    let tableRows = <></>
-    if(data) {
+
+    let tableRows = <></>;
+    if (data) {
         tableRows = data.map((stock) => (
             <TableRow key={stock.symbol}>
                 <TableCell component="th" scope="row"><b>{stock.symbol}</b></TableCell>
@@ -44,18 +44,18 @@ const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, openDeleteHold
                 <TableCell align="center">{currencyFormat(parseFloat(stock.marketValue))}</TableCell>
                 <TableCell align="center">{currencyFormat(parseFloat(stock.unrealizedGain)) + " (" + parseFloat(stock.unrealizedPercentage).toFixed(2) + "%)"}</TableCell>
                 <TableCell align="center">
-                    <IconButton className={classes.buttonCell} onClick={() => openBuyHoldings(stock.symbol)}><AddCircleIcon/></IconButton>
-                    <IconButton className={classes.buttonCell} onClick={() => openSellHoldings(stock.symbol)}><ShoppingCartIcon/></IconButton>
+                    <IconButton className={classes.buttonCell} onClick={() => openBuyHoldings(stock.symbol)}><AddCircleIcon /></IconButton>
+                    <IconButton className={classes.buttonCell} onClick={() => openSellHoldings(stock.symbol)}><ShoppingCartIcon /></IconButton>
                 </TableCell>
                 <TableCell align="center">
-                    <IconButton className={classes.buttonCell} onClick={() => openDeleteHoldingRow(stock.symbol)}><DeleteForeverIcon/></IconButton>
+                    <IconButton className={classes.buttonCell} onClick={() => openDeleteHoldingRow(stock.symbol)}><DeleteForeverIcon /></IconButton>
                 </TableCell>
             </TableRow>
-        ))
+        ));
     }
 
     const noHoldingsMessage = <Paper><Typography variant="h5" align="center">You currently have no holdings.</Typography></Paper>;
-    const loadingSpinner = <Paper><Box align="center" p="1em"><CircularProgress/></Box></Paper>;
+    const loadingSpinner = <Paper><Box align="center" p="1em"><CircularProgress /></Box></Paper>;
 
     return (
         <TableContainer component={Paper}>
@@ -85,6 +85,6 @@ const HoldingsTable = ({ data, openBuyHoldings, openSellHoldings, openDeleteHold
             }
         </TableContainer>
     );
-}
+};
 
 export default HoldingsTable;

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid'
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 export default ({ headers, symbol, price, quantity, date, setSymbol, setPrice, setQuantity, setDate }) => {
@@ -65,5 +65,5 @@ export default ({ headers, symbol, price, quantity, date, setSymbol, setPrice, s
                 </Grid>
             </Grid>
         </div>
-    )
-}
+    );
+};

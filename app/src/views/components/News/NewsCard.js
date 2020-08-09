@@ -47,7 +47,7 @@ const NewsCard = ({ article, showArticle }) => {
             </Card>
         </Grow>
     );
-}
+};
 
 export default NewsCard;
 

@@ -1,7 +1,7 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
-import {UserContext} from './Auth/UserStore';
+import { UserContext } from './Auth/UserStore';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -40,28 +40,28 @@ const Navbar = () => {
     const handleLogout = () => {
         setUser(null);
         localStorage.removeItem('token');
-        history.push('/')
-    }
+        history.push('/');
+    };
 
     // Display different buttons based on whether or not the user is logged in
-    let buttons = []
-    if(!user) {
+    let buttons = [];
+    if (!user) {
         buttons = [
             <Button color="inherit" onClick={() => setIsLoginDialogOpen(true)} key={1}>Login</Button>,
             <Button color="inherit" onClick={() => setIsRegisterDialogOpen(true)} key={2}>Register</Button>
-        ]
+        ];
     } else {
-        buttons = [<Button color="inherit" onClick={handleLogout} key={3}>Logout</Button>]
+        buttons = [<Button color="inherit" onClick={handleLogout} key={3}>Logout</Button>];
     }
 
     // Display different buttons for navigation if user is logged in
-    if(user) {
-        const path = location.pathname
-        if(path == '/') {
-            buttons.unshift(<Button color="inherit" onClick={() => history.push("/dashboard")} key={1}>Dashboard</Button>)
-            buttons.unshift(<Button color="inherit" onClick={() => history.push("/news")} key={2}>News</Button>)
+    if (user) {
+        const path = location.pathname;
+        if (path == '/') {
+            buttons.unshift(<Button color="inherit" onClick={() => history.push("/dashboard")} key={1}>Dashboard</Button>);
+            buttons.unshift(<Button color="inherit" onClick={() => history.push("/news")} key={2}>News</Button>);
         } else {
-            buttons.unshift(<Button color="inherit" onClick={() => history.push("/")} key={1}>Home</Button>)
+            buttons.unshift(<Button color="inherit" onClick={() => history.push("/")} key={1}>Home</Button>);
         }
     }
 
@@ -69,15 +69,15 @@ const Navbar = () => {
         <>
             <AppBar position="static" className={classes.root}>
                 <Toolbar>
-                    <TrendingUpIcon/>
+                    <TrendingUpIcon />
                     <Typography variant="h6" className={classes.title}>Trendline</Typography>
                     {buttons}
                 </Toolbar>
             </AppBar>
-            <LoginDialog open={isLoginDialogOpen} onClose={() => setIsLoginDialogOpen(false)}/>
-            <RegisterDialog open={isRegisterDialogOpen} openLogin={() => setIsLoginDialogOpen(true)}  onClose={() => setIsRegisterDialogOpen(false)} />
+            <LoginDialog open={isLoginDialogOpen} onClose={() => setIsLoginDialogOpen(false)} />
+            <RegisterDialog open={isRegisterDialogOpen} openLogin={() => setIsLoginDialogOpen(true)} onClose={() => setIsRegisterDialogOpen(false)} />
         </>
     );
-}
+};
 
-export default Navbar
+export default Navbar;

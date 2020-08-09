@@ -16,7 +16,7 @@ router.post("/login", [
         console.log("Login form validation failed");
         return res.status(422).json({ errors: errors.array() });
     }
-    controller.login(req, res)
+    controller.login(req, res);
 });
 
 router.post('/register', [
@@ -28,23 +28,23 @@ router.post('/register', [
 ], (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(errors)
+        console.log(errors);
         return res.status(422).json({ errors: errors.array() });
     }
-    controller.register(req, res)
+    controller.register(req, res);
 });
 
 router.get('/findUser', (req, res) => {
-    controller.findUser(req, res)
-})
+    controller.findUser(req, res);
+});
 
 // only add to test deleting test users
 if (process.env.TESTING) {
 
     router.delete('/deleteUser', (req, res) => {
-        controller.deleteUser(req, res)
-    })
+        controller.deleteUser(req, res);
+    });
 }
 
 
-export default router
+export default router;

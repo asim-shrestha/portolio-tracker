@@ -1,18 +1,18 @@
-import React from 'react'
-import Typography from '@material-ui/core/Typography'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ArrowRightIcon from '@material-ui/icons/ArrowRight'
-import Button from '@material-ui/core/Button'
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 export default ({ uploadHandler }) => {
 
 
     // Create a reference to the hidden file input element
-    const hiddenFileInput = React.useRef(null)
+    const hiddenFileInput = React.useRef(null);
 
     // click hidden file input
     const handleClick = event => {
@@ -52,8 +52,8 @@ export default ({ uploadHandler }) => {
             </div>
 
             <div style={{ textAlign: 'center' }}>
-                <Button onClick={handleClick} color="primary" variant="contained" startIcon={<CloudUploadIcon fontSize="large"/>}>
-                        <Typography>Upload CSV</Typography>
+                <Button onClick={handleClick} color="primary" variant="contained" startIcon={<CloudUploadIcon fontSize="large" />}>
+                    <Typography>Upload CSV</Typography>
                 </Button>
             </div>
             <form>
@@ -61,5 +61,5 @@ export default ({ uploadHandler }) => {
             </form>
 
         </div >
-    )
-}
+    );
+};

@@ -1,6 +1,6 @@
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
 import Axios from 'axios';
-import {UserContext} from './UserStore';
+import { UserContext } from './UserStore';
 
 // Component that checks whether or not an existing user token is available
 export default () => {
@@ -26,5 +26,5 @@ export default () => {
 
     return (
         <></>
-    )
-}
+    );
+};

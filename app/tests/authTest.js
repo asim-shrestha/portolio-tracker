@@ -1,17 +1,17 @@
-import chai from 'chai'
-import chaiHttp from 'chai-http'
-import app from '../server'
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../server';
 
 // Chai configs
-chai.use(chaiHttp)
-chai.should()
+chai.use(chaiHttp);
+chai.should();
 
 const testUser = {
     email: 'chaiTester@test.com',
     password: '123456',
     first_name: 'chai',
     last_name: 'tester'
-}
+};
 
 describe("Authentication Test", () => {
     describe("GET /", () => {
@@ -19,11 +19,11 @@ describe("Authentication Test", () => {
             chai.request(app)
                 .get('/')
                 .end((err, res) => {
-                    res.should.have.status(200)
-                    done()
-                })
-        })
-    })
+                    res.should.have.status(200);
+                    done();
+                });
+        });
+    });
 
     describe("POST /register success", () => {
         it('Should return new user created', (done) => {
@@ -31,13 +31,13 @@ describe("Authentication Test", () => {
                 .post('/auth/register')
                 .send(testUser)
                 .end((err, res) => {
-                    res.should.have.status(201)
-                    res.body.should.be.a('object')
-                    res.body.userCreated.should.be.equal(true)
-                    done()
-                })
-        })
-    })
+                    res.should.have.status(201);
+                    res.body.should.be.a('object');
+                    res.body.userCreated.should.be.equal(true);
+                    done();
+                });
+        });
+    });
 
     describe("POST /register duplicate", () => {
         it('Should return email already registered', (done) => {
@@ -45,11 +45,11 @@ describe("Authentication Test", () => {
                 .post('/auth/register')
                 .send(testUser)
                 .end((err, res) => {
-                    res.should.have.status(409)
-                    done()
-                })
-        })
-    })
+                    res.should.have.status(409);
+                    done();
+                });
+        });
+    });
 
     describe("POST /login success", () => {
         it('Should return successful login', (done) => {
@@ -57,16 +57,16 @@ describe("Authentication Test", () => {
                 .post('/auth/login')
                 .send(testUser)
                 .end((err, res) => {
-                    res.should.have.status(200)
-                    res.body.should.be.a('object')
-                    res.body.auth.should.be.equal(true)
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.auth.should.be.equal(true);
 
-                    testUser.token = res.body.token
+                    testUser.token = res.body.token;
 
-                    done()
-                })
-        })
-    })
+                    done();
+                });
+        });
+    });
 
     describe("GET /findUser success", () => {
         it('Should get user data', (done) => {
@@ -74,25 +74,25 @@ describe("Authentication Test", () => {
                 .get('/auth/findUser')
                 .set('Authorization', `JWT ${testUser.token}`) // set Authorization header
                 .end((err, res) => {
-                    res.should.have.status(200)
-                    res.body.should.be.a('object')
-                    res.body.auth.should.be.equal(true)
-                    res.body.email.should.be.equal(testUser.email)
-                    done()
-                })
-        })
-    })
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.auth.should.be.equal(true);
+                    res.body.email.should.be.equal(testUser.email);
+                    done();
+                });
+        });
+    });
 
     describe("GET /findUser fail", () => {
         it('Should get user data', (done) => {
             chai.request(app)
                 .get('/auth/findUser')  // no Authorization header
                 .end((err, res) => {
-                    res.should.have.status(401)
-                    done()
-                })
-        })
-    })
+                    res.should.have.status(401);
+                    done();
+                });
+        });
+    });
 
     describe("Delete test user", () => {
         it('Should delete test user', (done) => {
@@ -100,13 +100,13 @@ describe("Authentication Test", () => {
                 .delete('/auth/deleteUser')
                 .send({ email: testUser.email })
                 .end((err, res) => {
-                    res.should.have.status(200)
-                    res.body.delete.should.be.equal(true)
-                    res.body.recordsDeleted.should.be.equal(1)
-                    done()
-                })
-        })
-    })
+                    res.should.have.status(200);
+                    res.body.delete.should.be.equal(true);
+                    res.body.recordsDeleted.should.be.equal(1);
+                    done();
+                });
+        });
+    });
 
     describe("POST /login fail", () => {
         it('Should return failed login', (done) => {
@@ -114,9 +114,9 @@ describe("Authentication Test", () => {
                 .post('/auth/login')
                 .send(testUser)
                 .end((err, res) => {
-                    res.should.have.status(403)
-                    done()
-                })
-        })
-    })
-})
+                    res.should.have.status(403);
+                    done();
+                });
+        });
+    });
+});

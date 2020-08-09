@@ -6,7 +6,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
-import NewsCard from './News/NewsCard'
+import NewsCard from './News/NewsCard';
 import Typography from '@material-ui/core/Typography';
 import { useSnackbar } from 'notistack';
 import getResErrorMessage from '../helpers/ErrorHelper';
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // Will retrieve news from queryTerms if provided 
-const NewsComponent = ({queryTerms}) => {
+const NewsComponent = ({ queryTerms }) => {
     const [savedQueryTerms, setSavedQueryTerms] = useState(null);
     const [showArticle, setShowArticle] = useState(false);
     const [articles, setArticles] = useState([]);
@@ -30,27 +30,29 @@ const NewsComponent = ({queryTerms}) => {
     const getArticles = () => {
         // Filter terms to only get text before the first "," for every holding.
         // This will remove the ", Inc" from searches which ruins search results
-        const filteredQueryTerms = queryTerms ? queryTerms.map(term => term.substr(0, term.indexOf(','))): queryTerms;
+        const filteredQueryTerms = queryTerms ? queryTerms.map(term => term.substr(0, term.indexOf(','))) : queryTerms;
         // NewsAPI requires encoded URI for query
-        const query = filteredQueryTerms ? encodeURIComponent(filteredQueryTerms.join(' OR ')): '';
+        const query = filteredQueryTerms ? encodeURIComponent(filteredQueryTerms.join(' OR ')) : '';
 
         // Get articles
         const token = localStorage.getItem('token');
-        Axios.get('/api/news/' + query, {headers: {
-            Authorization: `JWT ${token}`
-        }}).then((res) => {
+        Axios.get('/api/news/' + query, {
+            headers: {
+                Authorization: `JWT ${token}`
+            }
+        }).then((res) => {
             setArticles(res.data.articles);
             setCurrentArticle(res.data.articles[0] || {});
             setShowArticle(true);
         }).catch((err) => {
-            enqueueSnackbar("Error retrieving news information: " + getResErrorMessage(err), {variant: 'error'});
-        })
-    }
+            enqueueSnackbar("Error retrieving news information: " + getResErrorMessage(err), { variant: 'error' });
+        });
+    };
 
     useEffect(() => {
         // Check if we have already retrieved news for this query
         // Need to .join('') because we cannot explicitly check equality for arrays
-        if (savedQueryTerms && queryTerms.join('') === savedQueryTerms.join('')) { 
+        if (savedQueryTerms && queryTerms.join('') === savedQueryTerms.join('')) {
             return; // Articles for query already recieved. Do not fetch again
         } else {
             // Articles not retrieved for query terms.
@@ -69,10 +71,10 @@ const NewsComponent = ({queryTerms}) => {
             setIndex(nextIndex);
             setShowArticle(true);
         }, 300);
-    }
+    };
 
     // Check if any news articles came up
-    if (articles.length == 0) { return <Typography variant="h4" align="center" color="primary">There is currently no news available</Typography> }
+    if (articles.length == 0) { return <Typography variant="h4" align="center" color="primary">There is currently no news available</Typography>; }
 
     return (
         <Grid container direction="row" justify="space-evenly" alignItems="center">
@@ -95,7 +97,7 @@ const NewsComponent = ({queryTerms}) => {
             </Grid>
         </Grid>
     );
-}
+};
 
 export default NewsComponent;
 

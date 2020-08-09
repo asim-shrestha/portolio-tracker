@@ -21,7 +21,7 @@ export default ({ open, onClose, resetHoldings, symbol }) => {
             resetHoldings();
             onClose();
         }).catch((err) => {
-            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
+            enqueueSnackbar(getResErrorMessage(err), { variant: 'error' });
         });
     };
 

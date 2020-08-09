@@ -1,80 +1,80 @@
-import React, { useState, useEffect } from 'react'
-import Axios from 'axios'
+import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
 import AppDialog from '../AppDialog';
-import { readString } from 'react-papaparse'
+import { readString } from 'react-papaparse';
 import ImportCSVHeaderMatching from './ImportCSVHeaderMatching';
-import ImportCSVUpload from './ImportCSVUpload'
+import ImportCSVUpload from './ImportCSVUpload';
 import { useSnackbar } from 'notistack';
 import getResErrorMessage from '../../helpers/ErrorHelper';
 
 export default ({ open, onClose, resetHoldings }) => {
-    const [parsedFile, setParsedFile] = useState([])
-    const [headers, setHeaders] = useState([])                      // headers from file
-    const [confirmHeaders, setConfirmHeaders] = useState(false)     // display header confirmation form
+    const [parsedFile, setParsedFile] = useState([]);
+    const [headers, setHeaders] = useState([]);                      // headers from file
+    const [confirmHeaders, setConfirmHeaders] = useState(false);     // display header confirmation form
     const [symbol, setSymbol] = useState('');
     const [price, setPrice] = useState('');
     const [quantity, setQuantity] = useState('');
     const [date, setDate] = useState('');
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-    
+
     const uploadHandler = (event) => {
         // function to reset file when error is found
         const resetFile = () => {
-            document.getElementById('CSVUpload').value = ''
-        }
+            document.getElementById('CSVUpload').value = '';
+        };
 
         // reading headers
-        const reader = new FileReader()
+        const reader = new FileReader();
         // file -> string
-        reader.readAsText(event.target.files[0])
+        reader.readAsText(event.target.files[0]);
         // read as a string
         reader.onload = (event) => {
-            const fileContent = event.target.result
-            const results = readString(fileContent)     // papaparse
-            let safeToContinue = true
+            const fileContent = event.target.result;
+            const results = readString(fileContent);     // papaparse
+            let safeToContinue = true;
             // check for empty cells
             results.data.map(row => {
                 if (row.indexOf('') !== -1) {
-                    enqueueSnackbar('Please ensure your CSV file has no empty cells', { variant: "error" })
-                    safeToContinue = false
-                    resetFile()
+                    enqueueSnackbar('Please ensure your CSV file has no empty cells', { variant: "error" });
+                    safeToContinue = false;
+                    resetFile();
                 }
-            })
+            });
 
             // check for missing required columns
-            if(results.data[0].length < 4){
-                enqueueSnackbar('Please ensure your CSV file has the required number of columns', { variant: "error" })
-                safeToContinue = false
-                resetFile()
+            if (results.data[0].length < 4) {
+                enqueueSnackbar('Please ensure your CSV file has the required number of columns', { variant: "error" });
+                safeToContinue = false;
+                resetFile();
             }
 
             // check for duplicates in headers
             if (new Set(results.data[0]).size !== results.data[0].length) {
-                enqueueSnackbar('Please ensure your CSV file does not contain duplicate column names', { variant: "error" })
-                safeToContinue = false
-                resetFile()
+                enqueueSnackbar('Please ensure your CSV file does not contain duplicate column names', { variant: "error" });
+                safeToContinue = false;
+                resetFile();
             }
 
             if (safeToContinue) {
-                setHeaders(results.data[0])
-                setSymbol(results.data[0][0] ? results.data[0][0] : '')
-                setPrice(results.data[0][1] ? results.data[0][1] : '')
-                setQuantity(results.data[0][2] ? results.data[0][2] : '')
-                setDate(results.data[0][3] ? results.data[0][3] : '')
-                setParsedFile(results.data)
-                setConfirmHeaders(true)
+                setHeaders(results.data[0]);
+                setSymbol(results.data[0][0] ? results.data[0][0] : '');
+                setPrice(results.data[0][1] ? results.data[0][1] : '');
+                setQuantity(results.data[0][2] ? results.data[0][2] : '');
+                setDate(results.data[0][3] ? results.data[0][3] : '');
+                setParsedFile(results.data);
+                setConfirmHeaders(true);
                 resetFile();
             }
-        }
+        };
 
         reader.onerror = (event) => {
             enqueueSnackbar('Failed to read file\n\n' + reader.error, { variant: "error" });
             resetFile();
-        }
-    }
+        };
+    };
 
     const submitHandler = (event) => {
-        event.preventDefault()
+        event.preventDefault();
 
         if (parsedFile.length === 0) {
             enqueueSnackbar('No file uploaded', { variant: "error" });
@@ -94,32 +94,32 @@ export default ({ open, onClose, resetHoldings }) => {
                 price: headers.indexOf(price),
                 quantity: headers.indexOf(quantity),
                 date: headers.indexOf(date),
-            }
+            };
 
             const data = {
                 data: parsedFile,
                 map: map,
-            }
-            const token = localStorage.getItem('token')
+            };
+            const token = localStorage.getItem('token');
 
             // sending to server
             Axios.post('/api/activity/upload', data, {
                 headers: { Authorization: `JWT ${token}` }
             })
                 .then(res => {
-                    console.log('Upload done', res.data.message)
-                    resetHoldings()
-                    onClose()
-                    setConfirmHeaders(false)
+                    console.log('Upload done', res.data.message);
+                    resetHoldings();
+                    onClose();
+                    setConfirmHeaders(false);
                 })
                 .catch(err => {
-                    enqueueSnackbar("Error parsing CSV data. Please ensure all data within your CSV file is valid", { variant: 'error' })
-                    resetHoldings()
-                    onClose()
-                })
+                    enqueueSnackbar("Error parsing CSV data. Please ensure all data within your CSV file is valid", { variant: 'error' });
+                    resetHoldings();
+                    onClose();
+                });
         }
 
-    }
+    };
 
     return (
         <AppDialog open={open} onClose={onClose} title={"Import Holdings From CSV"} buttonClick={submitHandler} buttonText={"Import"}>
@@ -136,5 +136,5 @@ export default ({ open, onClose, resetHoldings }) => {
                 <ImportCSVUpload uploadHandler={uploadHandler} />
             }
         </AppDialog>
-    )
-}
+    );
+};

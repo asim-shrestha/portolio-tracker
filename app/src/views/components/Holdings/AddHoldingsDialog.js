@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 import UpdateHoldingsDialog from './UpdateHoldingsDialog';
 
-export default ({open, onClose, resetHoldings}) => {
+export default ({ open, onClose, resetHoldings }) => {
     return (
         <UpdateHoldingsDialog
             open={open}
-            onClose={() => {onClose();}}
+            onClose={() => { onClose(); }}
             title={"Add Individual Holding"}
             buttonText={"Add"}
             resetHoldings={resetHoldings}
         />
-    )
-}
+    );
+};

@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
 
 const getObjectFromQueryString = (string) => {
     string = string.substr(1); // Remove leading "?"
-    return JSON.parse('{"' + decodeURI(string).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
-}
+    return JSON.parse('{"' + decodeURI(string).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+};
 
 // Page that searches for symbol performance data based on a url query string
 const SymbolPage = () => {
@@ -41,15 +41,15 @@ const SymbolPage = () => {
 
     // Load symbolData for given symbol
     useEffect(() => {
-        if(querySymbol == '' || symbolData.length > 0) {return;}
+        if (querySymbol == '' || symbolData.length > 0) { return; }
         Axios.get(`/api/symbol/${querySymbol}`).then((res) => {
             closeSnackbar();
             setCompanyName(res.data.companyName);
             setSymbolData(res.data.performance);
         }).catch((err) => {
-            enqueueSnackbar(getResErrorMessage(err), {variant: 'error'});
-        })
-    }, [querySymbol, symbolData])
+            enqueueSnackbar(getResErrorMessage(err), { variant: 'error' });
+        });
+    }, [querySymbol, symbolData]);
 
     return (
         <div className={classes.root}>
@@ -58,16 +58,16 @@ const SymbolPage = () => {
             {
                 // Show performance graph if we have data, show nothing otherwise
                 symbolData.length > 0 ?
-                <Box marginTop="5em" align="center">
-                    <Typography variant="h4" align="center">{querySymbol} Performance:</Typography>
-                    <PerformanceGraph data={symbolData}/>
-                    <Typography variant="h4" align="center">{querySymbol} Related News:</Typography>
-                    <NewsComponent queryTerms={[companyName]}/>
-                </Box> :
-                <></>
+                    <Box marginTop="5em" align="center">
+                        <Typography variant="h4" align="center">{querySymbol} Performance:</Typography>
+                        <PerformanceGraph data={symbolData} />
+                        <Typography variant="h4" align="center">{querySymbol} Related News:</Typography>
+                        <NewsComponent queryTerms={[companyName]} />
+                    </Box> :
+                    <></>
             }
         </div>
     );
-}
+};
 
-export default SymbolPage
+export default SymbolPage;

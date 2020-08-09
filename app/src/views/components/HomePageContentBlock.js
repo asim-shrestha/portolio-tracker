@@ -31,28 +31,28 @@ const useStyles = makeStyles((theme) => ({
             fontSize: 40,
         },
     },
-    
+
 }));
 
 // Combination of image and text
 // Optional textFirst prop that will make the text appear on the left if supplied
 // Optional textLink prop to add link to text
-const HomePageContentblock = ({image, text, textFirst, textLink}) => {
+const HomePageContentblock = ({ image, text, textFirst, textLink }) => {
     const classes = useStyles();
 
     let content = [
-        <img className={classes.image} src={image} key={1}/>,
+        <img className={classes.image} src={image} key={1} />,
         <Typography variant="h3" color="primary" align="left" className={classes.text} key={2}>{text}</Typography>
     ];
 
     // Add link to text if textLink supplied
-    if(textLink) {
+    if (textLink) {
         content[1] = <Link href={textLink} key={2}>{content[1]}</Link>;
     }
 
     // Swap positions so that the text is first if the textFirst prop is supplied
-    if(textFirst) {
-        [content[0], content[1]] = [content[1], content[0]]
+    if (textFirst) {
+        [content[0], content[1]] = [content[1], content[0]];
     }
 
     return (
@@ -60,6 +60,6 @@ const HomePageContentblock = ({image, text, textFirst, textLink}) => {
             {content}
         </div>
     );
-}
+};
 
-export default HomePageContentblock
+export default HomePageContentblock;
