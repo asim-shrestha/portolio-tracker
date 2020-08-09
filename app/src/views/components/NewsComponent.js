@@ -28,7 +28,7 @@ const NewsComponent = ({queryTerms}) => {
     const classes = useStyles();
 
     const getArticles = () => {
-        // Filter terms for the first " " for every holding. (This will remove the "Inc" from searches)
+        // Filter terms for the first "," for every holding. (This will remove the "Inc" from searches)
         const filteredQueryTerms = queryTerms ? queryTerms.map(term => term.substr(0, term.indexOf(','))): queryTerms;
         // NewsAPI requires encoded URI for query
         const query = filteredQueryTerms ? encodeURIComponent(filteredQueryTerms.join(' OR ')): '';
