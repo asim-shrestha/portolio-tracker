@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 // Will retrieve news from queryTerms if provided 
 const NewsComponent = ({queryTerms}) => {
-    const [savedQuery, setSavedQuery] = useState(null);
+    const [savedQueryTerms, setSavedQueryTerms] = useState(null);
     const [showArticle, setShowArticle] = useState(false);
     const [articles, setArticles] = useState([]);
     const [currentArticle, setCurrentArticle] = useState({});
@@ -28,13 +28,12 @@ const NewsComponent = ({queryTerms}) => {
     const classes = useStyles();
 
     const getArticles = () => {
-        // Filter terms for the first "," for every holding. (This will remove the "Inc" from searches)
+        // Filter terms to only get text before the first "," for every holding.
+        // This will remove the ", Inc" from searches which ruins search results
         const filteredQueryTerms = queryTerms ? queryTerms.map(term => term.substr(0, term.indexOf(','))): queryTerms;
         // NewsAPI requires encoded URI for query
         const query = filteredQueryTerms ? encodeURIComponent(filteredQueryTerms.join(' OR ')): '';
-        // Check if we have already retrieved news for this query
-        if (query == savedQuery) { return; }
-        else { setSavedQuery(query); }
+
         // Get articles
         const token = localStorage.getItem('token');
         Axios.get('/api/news/' + query, {headers: {
@@ -49,7 +48,15 @@ const NewsComponent = ({queryTerms}) => {
     }
 
     useEffect(() => {
-        getArticles();
+        // Check if we have already retrieved news for this query
+        // Need to .join('') because we cannot explicitly check equality for arrays
+        if (savedQueryTerms && queryTerms.join('') === savedQueryTerms.join('')) { 
+            return; // Articles for query already recieved. Do not fetch again
+        } else {
+            // Articles not retrieved for query terms.
+            setSavedQueryTerms(queryTerms);
+            getArticles();
+        }
     }, [queryTerms]);
 
     const changeArticleIndex = (deltaIndex) => {
