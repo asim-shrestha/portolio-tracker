@@ -11,17 +11,21 @@ export default class ActivitiesController {
     // insert stock holding info (after purchase)
     async insertNewActivity(req, res) {
         try {
+            req.body.symbol = req.body.symbol.toUpperCase(); // Capitalize symbol name
+            const activityDate = req.body.date;
+            const quantity = req.body.quantity;
+            const action = req.body.action;
+            const user_id = req.body.user_id;
+            const symbol = req.body.symbol;
+            let validQuantity = true; 
 
-            if (moment(req.body.date).isAfter(moment()) || dashboardsHelper.isWeekend(req.body.date)) {
+            const initialActivityDate = (await Activity.query().min('date as date'))[0].date;
+
+            if (moment(activityDate).isAfter(moment()) || dashboardsHelper.isWeekend(activityDate)) {
                 res.status(422).send({ message: helper.getInvalidDateMessage() });
+            } else if (action = 'sell' && (!initialActivityDate || moment(activityDate).isAfter(moment(initialActivityDate)))) { 
+                res.status(422).send({ message: helper.getInvalidSellDateMessage() });
             } else {
-                req.body.symbol = req.body.symbol.toUpperCase(); // Capitalize symbol name
-                const quantity = req.body.quantity;
-                const action = req.body.action;
-                const user_id = req.body.user_id;
-                const symbol = req.body.symbol;
-                let validQuantity = true;
-
                 // update cache if outdated
                 let latestCachedDate = (await Symbol.query().max('date as date'))[0].date;
                 if (await helper.retrieveNewData(latestCachedDate)) {
