@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { PieChart, Pie, Tooltip } from 'recharts';
 import { Box, CircularProgress, TextField, MenuItem } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { keyStats } from 'iexcloud_api_wrapper';
 
 export default ({ data }) => {
-    const [pieChartBreakdown, setPieChartBreakdown] = useState('marketValue')
+    const [pieChartBreakdown, setPieChartBreakdown] = useState('marketValue');
 
-
+    // Change pie chart size if the window is too small 
     let sizePercentage = 1;
-
     if (useMediaQuery('(max-width:1000px)')) {
         sizePercentage = 0.75;
     }
@@ -38,7 +36,7 @@ export default ({ data }) => {
         else {
 
             // count of each type
-            const pieMap = new Map
+            const pieMap = new Map;
             data.forEach(e => {
                 if (pieMap[e[pieChartBreakdown]]) {
                     pieMap[e[pieChartBreakdown]] = pieMap[e[pieChartBreakdown]] + 1;
@@ -46,7 +44,7 @@ export default ({ data }) => {
                 else {
                     pieMap[e[pieChartBreakdown]] = 1;
                 }
-            })
+            });
 
             // map -> array
             for (const [k, v] of Object.entries(pieMap)) {
