@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, Tooltip } from 'recharts';
-import { Box, CircularProgress, TextField, MenuItem, Menu } from '@material-ui/core';
+import { Box, CircularProgress, TextField, MenuItem } from '@material-ui/core';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { keyStats } from 'iexcloud_api_wrapper';
 
