@@ -229,13 +229,13 @@ export default class DashboardsHelper {
         const billion = 1000000000;
 
         if (size < 0.3 * billion) {
-            return 'micro-cap';
+            return 'Micro-Cap';
         } else if (size >= 0.3 * billion && size < 2 * billion) {
-            return 'small-cap';
+            return 'Small-Cap';
         } else if (size >= 2 * billion && size < 10 * billion) {
-            return 'mid-cap';
+            return 'Mid-Cap';
         } else if (size >= 10 * billion) {
-            return 'large-cap';
+            return 'Large-Cap';
         } else {
             return 'unknown';
         }
