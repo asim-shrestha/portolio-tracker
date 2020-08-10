@@ -102,6 +102,8 @@ app.use(`${endpoints_prefix}`, activities);
 app.use(`${endpoints_prefix}`, dashboards);
 app.use(`${endpoints_prefix}`, news);
 
+// For app favicon
+app.use('/favicon.ico', express.static('public/favicon.ico'));
 // This is fired every time the server-side receives a request.
 app.use(handleRender);
 
