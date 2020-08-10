@@ -54,7 +54,7 @@ const App = () => {
                 <div className={classes.root}>
                     <Switch>
                         <Route path="/symbol" render={() => <SymbolPage />} />
-                        <Route exact path="/news" render={() => <NewsComponent />} />
+                        <Route exact path="/dashboard" render={() => <DashboardPage />} />
                         <Route exact path="/" render={() => <HomePage />} />
                         <Route render={() => <Redirect to="/" />} />
                     </Switch>

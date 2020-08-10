@@ -62,7 +62,7 @@ export default ({ data }) => {
             const y = cy + radius * Math.sin(-midAngle * RADIAN);
             const percent = (100 * value / pieSum).toFixed(0);
             return (
-                <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" style={{fontWeight: "bold", fontSize: 25*sizePercentage}}>
+                <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" style={{ fontWeight: "bold", fontSize: 25 * sizePercentage }}>
                     {name} {percent}%
                 </text>
             );
@@ -71,7 +71,7 @@ export default ({ data }) => {
         return (
             <>
                 <Box style={{ marginTop: '25px' }}>
-                    <TextField fullWidth variant='outlined' label='Breakdown' select onChange={e => setPieChartBreakdown(e.target.value)} value={pieChartBreakdown}>
+                    <TextField fullWidth variant='outlined' label='Breakdown by:' select onChange={e => setPieChartBreakdown(e.target.value)} value={pieChartBreakdown}>
                         <MenuItem value='bookValue'>Book Value</MenuItem>
                         <MenuItem value='marketValue'>Market Value</MenuItem>
                         <MenuItem value='marketCap'>Market Cap</MenuItem>
@@ -83,7 +83,7 @@ export default ({ data }) => {
 
                 <Box align='center'>
                     <div style={{ fontSize: '16px' }}>
-                        <PieChart width={sizePercentage >= 1 ? 1200: 550 } height={600 * sizePercentage} >
+                        <PieChart width={sizePercentage >= 1 ? 1200 : 550} height={600 * sizePercentage} >
                             <Pie
                                 // no animation because recharts sucks and cant render
                                 isAnimationActive={false}
