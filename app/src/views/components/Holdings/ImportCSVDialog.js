@@ -107,7 +107,6 @@ export default ({ open, onClose, resetHoldings }) => {
                 headers: { Authorization: `JWT ${token}` }
             })
                 .then(res => {
-                    console.log('Upload done', res.data.message);
                     resetHoldings();
                     onClose();
                     setConfirmHeaders(false);

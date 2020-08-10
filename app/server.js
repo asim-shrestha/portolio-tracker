@@ -110,7 +110,7 @@ app.use(handleRender);
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     // eslint-disable-next-line no-console
-    console.log(`Listening on ${PORT}`);
+    console.log(`Listening on ${PORT}. Nginx will run on 8080.`);
 });
 
 export default app;
