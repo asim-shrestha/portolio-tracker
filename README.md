@@ -70,4 +70,4 @@ add all of the investments they have made to their portfolio. It is here that th
 - Objection.js for an ORM
 - Passport.hs for authentication
 - Notistack for snackbars
-- Helmet for 
+- Helmet for security through HTTP headers
