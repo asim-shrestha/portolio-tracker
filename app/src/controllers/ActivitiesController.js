@@ -11,17 +11,32 @@ export default class ActivitiesController {
     // insert stock holding info (after purchase)
     async insertNewActivity(req, res) {
         try {
+            req.body.symbol = req.body.symbol.toUpperCase(); // Capitalize symbol name
+            const activityDate = req.body.date;
+            const quantity = req.body.quantity;
+            const action = req.body.action;
+            const user_id = req.body.user_id;
+            const symbol = req.body.symbol;
+            let validQuantity = true; 
 
-            if (moment(req.body.date).isAfter(moment()) || dashboardsHelper.isWeekend(req.body.date)) {
+            const aggregateQuantities = (await Activity.query().select('action').sum('quantity as quantity')
+                                                        .where('date', '<=', activityDate)
+                                                        .andWhere("symbol", symbol)
+                                                        .andWhere("user_id", user_id)
+                                                        .groupBy('action'));
+
+            let availableQuantity = 0;
+
+           for (let q of aggregateQuantities) {
+               availableQuantity += parseInt(q.action == 'buy' ? (q.quantity) : (-1 * q.quantity))
+           }
+
+
+            if (moment(activityDate).isAfter(moment()) || dashboardsHelper.isWeekend(activityDate)) {
                 res.status(422).send({ message: helper.getInvalidDateMessage() });
+            } else if (action == 'sell' && (availableQuantity < quantity)) { 
+                res.status(422).send({ message: helper.getInvalidSellQuantityMessage() });
             } else {
-                req.body.symbol = req.body.symbol.toUpperCase(); // Capitalize symbol name
-                const quantity = req.body.quantity;
-                const action = req.body.action;
-                const user_id = req.body.user_id;
-                const symbol = req.body.symbol;
-                let validQuantity = true;
-
                 // update cache if outdated
                 let latestCachedDate = (await Symbol.query().max('date as date'))[0].date;
                 if (await helper.retrieveNewData(latestCachedDate)) {
