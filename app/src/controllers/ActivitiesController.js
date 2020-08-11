@@ -106,7 +106,6 @@ export default class ActivitiesController {
                         symbol: data[i][symbol],
                         price: parseFloat(data[i][price]),
                         date: data[i][date],
-                        // TODO find out if this is ok
                         action: 'buy',
                         commission: 0
                     };

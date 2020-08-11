@@ -54,15 +54,15 @@ const Navbar = () => {
         buttons = [<Button color="inherit" onClick={handleLogout} key={3}>Logout</Button>];
     }
 
-    // Display different buttons for navigation if user is logged in
-    if (user) {
-        const path = location.pathname;
-        if (path == '/') {
-            buttons.unshift(<Button color="inherit" onClick={() => history.push("/dashboard")} key={1}>Dashboard</Button>);
-            buttons.unshift(<Button color="inherit" onClick={() => history.push("/news")} key={2}>News</Button>);
-        } else {
-            buttons.unshift(<Button color="inherit" onClick={() => history.push("/")} key={1}>Home</Button>);
-        }
+    // Display different buttons depending on what page the user is on
+    const path = location.pathname;
+    // Add dashboard button if not on dashboard and user is logged in
+    if (path != '/dashboard' && user) {
+        buttons.unshift(<Button color="inherit" onClick={() => history.push("/dashboard")} key={4}>Dashboard</Button>);
+    }
+    // Add home button if not home
+    if (path != '/') {
+        buttons.unshift(<Button color="inherit" onClick={() => history.push("/")} key={5}>Home</Button>);
     }
 
     return (

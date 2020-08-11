@@ -16,7 +16,7 @@ function renderFullPage(html, css) {
         <!DOCTYPE html>
         <html lang="en">
             <head>
-                <title>My page</title>
+                <title>Trendline</title>
                 <style id="jss-server-side">${css}</style>
                 <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no" />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
@@ -102,13 +102,15 @@ app.use(`${endpoints_prefix}`, activities);
 app.use(`${endpoints_prefix}`, dashboards);
 app.use(`${endpoints_prefix}`, news);
 
+// For app favicon
+app.use('/favicon.ico', express.static('public/favicon.ico'));
 // This is fired every time the server-side receives a request.
 app.use(handleRender);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     // eslint-disable-next-line no-console
-    console.log(`Listening on ${PORT}`);
+    console.log(`Listening on ${PORT}. Nginx will run on 8080.`);
 });
 
 export default app;

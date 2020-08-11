@@ -15,7 +15,7 @@ export default class ActivitiesHelper {
         }
     };
 
-    getInvalidDateMessage = () => 'The date you entered is invalid. Please check the date and try again.';
+    getInvalidDateMessage = () => 'The date you entered is invalid. Please check that the market is open on that date and try again.';
 
     retrieveNewData(latestCachedDate) {
         return new Promise((resolve, reject) => {
