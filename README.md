@@ -46,7 +46,7 @@ add all of the investments they have made to their portfolio. It is here that th
 
 ## Demo CSV Integration:
 - Sample CSV file (sample_file.csv) is included and located at the root of this project. 
-- Click "Import CSV" from Dashboard to test
+- To utilize it, click "Import CSV" from the Dashboard page and upload this file.
 
 ## Testing: 
 - Tests are located in /app/tests
