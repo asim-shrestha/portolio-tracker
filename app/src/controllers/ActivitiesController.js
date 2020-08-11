@@ -34,7 +34,7 @@ export default class ActivitiesController {
 
             if (moment(activityDate).isAfter(moment()) || dashboardsHelper.isWeekend(activityDate)) {
                 res.status(422).send({ message: helper.getInvalidDateMessage() });
-            } else if (action = 'sell' && (availableQuantity < quantity)) { 
+            } else if (action == 'sell' && (availableQuantity < quantity)) { 
                 res.status(422).send({ message: helper.getInvalidSellQuantityMessage() });
             } else {
                 // update cache if outdated
