@@ -13,7 +13,6 @@ export default ({ open, onClose, resetHoldings, symbol }) => {
             title={dialogText}
             buttonText={dialogText}
             symbolValue={symbol}
-            dateValue={Moment(new Date()).format('YYYY-MM-DD')}
             actionValue={"buy"}
             resetHoldings={resetHoldings}
             snackBarText={snackBarText}

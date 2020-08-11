@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 // Dialog that deals with updating user holdings
 // If a symbolValue, dateValue, or actionValue is supplied, then the option to set these fields are not given
-export default ({ open, onClose, title, buttonText, symbolValue, dateValue, actionValue, snackBarText, resetHoldings }) => {
+export default ({ open, onClose, title, buttonText, symbolValue, actionValue, snackBarText, resetHoldings }) => {
     const [user, setUser] = useContext(UserContext);
     const [symbol, setSymbol] = useState('');
     const [price, setPrice] = useState('');
@@ -28,7 +28,7 @@ export default ({ open, onClose, title, buttonText, symbolValue, dateValue, acti
             action: actionValue || action,
             symbol: symbolValue || symbol,
             price: parseFloat(price),
-            date: dateValue || String(date),
+            date: String(date),
             commission: parseFloat(commission)
         }, {
             headers: {
@@ -55,12 +55,7 @@ export default ({ open, onClose, title, buttonText, symbolValue, dateValue, acti
             }
             <TextField variant="outlined" margin="dense" fullWidth onChange={e => setPrice(e.target.value)} label="Price" />
             <TextField variant="outlined" margin="dense" fullWidth onChange={e => setQuantity(e.target.value)} label="Quantity" />
-            {
-                // If default date is not provided, give date option
-                (!dateValue) ?
-                    <TextField variant="outlined" margin="dense" fullWidth onChange={e => setDate(e.target.value)} label="Date" type="date" defaultValue="" InputLabelProps={{ shrink: true }} /> :
-                    <></>
-            }
+            <TextField variant="outlined" margin="dense" fullWidth onChange={e => setDate(e.target.value)} label="Date" type="date" defaultValue="" InputLabelProps={{ shrink: true }} />
             <TextField variant="outlined" margin="dense" fullWidth onChange={e => setCommission(e.target.value)} label="Commission" />
             {
                 // If default action is not provided, give action option

@@ -8,8 +8,8 @@ export default ({ data }) => {
 
     // Change pie chart size if the window is too small 
     let sizePercentage = 1;
-    if (useMediaQuery('(max-width:1000px)')) {
-        sizePercentage = 0.75;
+    if (useMediaQuery('(max-width:1500px)')) {
+        sizePercentage = 0.6;
     }
 
     if (!data) {
@@ -62,7 +62,7 @@ export default ({ data }) => {
             const y = cy + radius * Math.sin(-midAngle * RADIAN);
             const percent = (100 * value / pieSum).toFixed(0);
             return (
-                <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+                <text x={x} y={y} fill="black" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" style={{ fontWeight: "bold", fontSize: 25 * sizePercentage }}>
                     {name} {percent}%
                 </text>
             );
@@ -71,7 +71,7 @@ export default ({ data }) => {
         return (
             <>
                 <Box style={{ marginTop: '25px' }}>
-                    <TextField fullWidth variant='outlined' label='Breakdown' select onChange={e => setPieChartBreakdown(e.target.value)} value={pieChartBreakdown}>
+                    <TextField fullWidth variant='outlined' label='Breakdown by:' select onChange={e => setPieChartBreakdown(e.target.value)} value={pieChartBreakdown}>
                         <MenuItem value='bookValue'>Book Value</MenuItem>
                         <MenuItem value='marketValue'>Market Value</MenuItem>
                         <MenuItem value='marketCap'>Market Cap</MenuItem>
@@ -83,14 +83,13 @@ export default ({ data }) => {
 
                 <Box align='center'>
                     <div style={{ fontSize: '16px' }}>
-                        <PieChart width={800 * sizePercentage} height={600 * sizePercentage} >
+                        <PieChart width={sizePercentage >= 1 ? 1200 : 550} height={600 * sizePercentage} >
                             <Pie
                                 // no animation because recharts sucks and cant render
                                 isAnimationActive={false}
                                 data={pieData}
                                 dataKey='value'
                                 startAngle={360} endAngle={0}
-                                cx={400 * sizePercentage} cy={300 * sizePercentage}
                                 outerRadius={250 * sizePercentage}
                                 fill="#39ab74"
                                 labelLine={false}

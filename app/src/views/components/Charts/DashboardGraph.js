@@ -2,7 +2,6 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import PerformanceGraph from './PerformanceGraph';
 
-// TODO share method with HoldingsTable
 // Format currency related strings to include commas and only two decimal places
 const currencyFormat = (n) => {
     if (n === null || n === undefined) { return 0; };
