@@ -40,7 +40,7 @@
 		"webpack-cli": "latest"
 	},
 	"scripts": {
-		"test": "env TESTING=true node_modules/.bin/mocha ./tests/*.js --require @babel/polyfill --require @babel/register --timeout 10000 --exit",
+		"test": "env TESTING=true node_modules/.bin/mocha ./tests/*.js --require @babel/polyfill --require @babel/register --timeout 600000 --exit",
 		"start": "npm-run-all -p build serve",
 		"devstart": "npm-run-all -p devbuild serve",
 		"build": "webpack",

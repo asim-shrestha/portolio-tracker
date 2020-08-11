@@ -48,6 +48,14 @@ add all of the investments they have made to their portfolio. It is here that th
 - Sample CSV file (sample_file.csv) is included and located at the root of this project. 
 - Click "Import CSV" from Dashboard to test
 
+## Testing: 
+- Tests are located in /app/tests
+- To run tests: 
+```
+cd app && npm run test 
+```
+- **NOTE:** there may be delay in retrieving symbol data from IEX, therefore the timeout is set to 1 minute
+ 
 ## Notes
 - If you ever get a "Error: Request failed with status code 400" in the dashboard page, this is beacuse our IEX account is getting too many requests. You probably just need to wait a couple of seconds before hitting refresh.
 - It is hard to see initially but the homepage scrolls down to reveal information about the app
@@ -66,11 +74,6 @@ add all of the investments they have made to their portfolio. It is here that th
 - Recharts for React charting and data visualization
 - Knex for data migration and seeding
 - Objection.js for an ORM
-<<<<<<< HEAD
-- Passport.js for authentication
-- Notistack for snackbars 
-=======
 - Passport.hs for authentication
 - Notistack for snackbars
 - Helmet for security through HTTP headers
->>>>>>> master
