@@ -90,7 +90,7 @@ export default class ActivitiesController {
                 const validSymbol = await helper.validateSymbol(data[i][symbol].toUpperCase(), symbolsList);
                 if (!validSymbol) {
                     console.log('Bad symbol:', data[i][symbol]);
-                    res.status(422).send({ message: `Invalid symbol: ${data[i][symbol]}` });
+                    res.status(422).send({ message: helper.getInvalidSymbolMessage(data[i][symbol]) });
                     return;
                 }
                 else {
