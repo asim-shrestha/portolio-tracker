@@ -10,7 +10,7 @@ export default class ActivitiesHelper {
 
     getInvalidDateMessage = () => 'The date you entered is invalid. Please check the date and try again.';
 
-    getInvalidSellDateMessage = () => 'You cannot sell the security before it was purchased. Please check the date and try again.';
+    getInvalidSellDateMessage = () => 'The selling quantity you entered is invalid. Please check the date or the quantity and try again.';
 
     retrieveNewData(latestCachedDate) {
         return new Promise((resolve, reject) => {

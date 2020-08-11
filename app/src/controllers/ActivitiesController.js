@@ -19,12 +19,23 @@ export default class ActivitiesController {
             const symbol = req.body.symbol;
             let validQuantity = true; 
 
-            const initialActivityDate = (await Activity.query().min('date as date'))[0].date;
+            const aggregateQuantities = (await Activity.query().select('action').sum('quantity as quantity')
+                                                        .where('date', '<=', activityDate)
+                                                        .andWhere("symbol", symbol)
+                                                        .andWhere("user_id", user_id)
+                                                        .groupBy('action'));
+
+            let availableQuantity = 0;
+
+           for (let q of aggregateQuantities) {
+               availableQuantity += parseInt(q.action == 'buy' ? (q.quantity) : (-1 * q.quantity))
+           }
+
 
             if (moment(activityDate).isAfter(moment()) || dashboardsHelper.isWeekend(activityDate)) {
                 res.status(422).send({ message: helper.getInvalidDateMessage() });
-            } else if (action = 'sell' && (!initialActivityDate || moment(activityDate).isAfter(moment(initialActivityDate)))) { 
-                res.status(422).send({ message: helper.getInvalidSellDateMessage() });
+            } else if (action = 'sell' && (availableQuantity < quantity)) { 
+                res.status(422).send({ message: helper.getInvalidSellQuantityMessage() });
             } else {
                 // update cache if outdated
                 let latestCachedDate = (await Symbol.query().max('date as date'))[0].date;
