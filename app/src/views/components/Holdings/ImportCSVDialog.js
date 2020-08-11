@@ -32,6 +32,12 @@ export default ({ open, onClose, resetHoldings }) => {
             const fileContent = event.target.result;
             const results = readString(fileContent);     // papaparse
             let safeToContinue = true;
+
+            // remove last line if empty
+            if(results.data[results.data.length - 1][0] === ''){
+                results.data.splice(-1)
+            }
+
             // check for empty cells
             results.data.map(row => {
                 if (row.indexOf('') !== -1) {
@@ -107,12 +113,20 @@ export default ({ open, onClose, resetHoldings }) => {
                 headers: { Authorization: `JWT ${token}` }
             })
                 .then(res => {
+                    setParsedFile([])
+                    setConfirmHeaders(false);
                     resetHoldings();
                     onClose();
-                    setConfirmHeaders(false);
+                    enqueueSnackbar('CSV file was imported successfully!', { variant: 'success' });
                 })
-                .catch(err => {
+                .catch((err) => {
+                    setParsedFile([])
+                    setConfirmHeaders(false);
                     enqueueSnackbar("Error parsing CSV data. Please ensure all data within your CSV file is valid", { variant: 'error' });
+                    // show which symbol is bad
+                    if(err.response.data){
+                        enqueueSnackbar(err.response.data.message, { variant: 'error' });
+                    }
                     resetHoldings();
                     onClose();
                 });

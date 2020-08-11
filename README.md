@@ -39,16 +39,23 @@ add all of the investments they have made to their portfolio. It is here that th
     > sudo docker-compose up
     Travel to http://localhost:8080/ in your web browser
     Register a new account or use the sample account below. (Sample account contains data)
-    A sample CSV file is also included in the root directory (data.csv)
-
+    
 ## Sample account:
     Email: test@sfu.ca
     Password: 123456
 
-## Future plans
-- Ability to import a CSV file of their stock data
-- More options for how the user wants to display their data
-- Other undecided features
+## Demo CSV Integration:
+- Sample CSV file (sample_file.csv) is included and located at the root of this project. 
+- To utilize it, click "Import CSV" from the Dashboard page and upload this file.
+
+## Testing: 
+- Tests are located in /app/tests
+- Tests utilize the db container, which is mapped to port 9999 on the host machine. Ensure the db container is running and port 9999 is free.
+- To run tests: 
+```
+cd app && npm run test 
+```
+- **NOTE:** there may be delay in retrieving symbol data from IEX, therefore the timeout is set to 1 minute
 
 ## Notes
 - If you ever get a "Error: Request failed with status code 400" in the dashboard page, this is beacuse our IEX account is getting too many requests. You probably just need to wait a couple of seconds before hitting refresh.
