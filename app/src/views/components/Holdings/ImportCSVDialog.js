@@ -113,11 +113,8 @@ export default ({ open, onClose, resetHoldings }) => {
                 headers: { Authorization: `JWT ${token}` }
             })
                 .then(res => {
-<<<<<<< HEAD
                     setParsedFile([])
                     setConfirmHeaders(false);
-=======
->>>>>>> master
                     resetHoldings();
                     onClose();
                     enqueueSnackbar('CSV file was imported successfully!', { variant: 'success' });
