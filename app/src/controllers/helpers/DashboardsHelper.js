@@ -43,7 +43,7 @@ export default class DashboardsHelper {
     generatePerformanceData(priceDataList, activitiesData) {
         return new Promise((resolve, reject) => {
             const startDate = moment.min(Object.keys(activitiesData).map(d => moment(d))).format('YYYY-MM-DD');
-            const endDate = moment().format('YYYY-MM-DD');
+            const endDate = moment.max(Object.keys(priceDataList[0]).map(d => moment(d))).format('YYYY-MM-DD');
 
             let quantity = {};
             let latest_price = {};
@@ -58,70 +58,77 @@ export default class DashboardsHelper {
             let performanceData = [];
             let d = startDate;
 
-            while (!(moment(d).isSame(moment(endDate)))) {
-                if (this.isWeekend(d)) {
+            // if there are only stocks purchased on the same date as the latest available date from the API, do not render graph
+            if(moment(startDate).isSame(endDate)) {
+                resolve(performanceData)
+            } else {
+                while (!(moment(d).isAfter(moment(endDate)))) {
+                    if (this.isWeekend(d)) {
+                        d = this.incrementDate(d);
+                        continue;
+                    }
+                    // extract all symbols required for calculation
+                    let symbols = Object.keys(quantity);
+                    // calculate current market value of all investments
+                    for (let p of priceDataList) {
+                        if (p[d]) {
+                            let data = p[d];
+                            if (quantity[data.symbol]) {
+                                curr_value += quantity[data.symbol] * data.price;
+                                this.removeElement(symbols, data.symbol);
+                                latest_price[data.symbol] = data.price;
+                            }
+                        }
+                    }
+    
+                    // calculate market value for all investment not traded on the day of
+                    // calculate using latest known closing price
+                    for (let s of symbols) {
+                        // skip update if latest price is unknown
+                        if (latest_price[s]) {
+                            curr_value += quantity[s] * latest_price[s];
+                        }
+                    }
+    
+                    // calculate return compared to yesterday's price
+                    if (prev_value == 0) {
+                        cumulative_return = 0;
+                    } else {
+                        gain += (parseFloat(curr_value) - prev_value);
+                        cumulative_return = gain / (book_value + cash) * 100;
+                    }
+    
+                    performanceData.push({
+                        x: d,
+                        y: cumulative_return
+                    });
+    
+                    if (activitiesData[d]) {
+                        for (let a of activitiesData[d]) {
+                            if (!quantity[a.symbol]) {
+                                quantity[a.symbol] = 0;
+                            }
+                            if (a.quantity < 0) {
+                                cash += a.quantity * a.price;
+                            }
+                            quantity[a.symbol] += a.quantity;
+                            // remove symbol, quantity if <= 0
+                            if (quantity[a.symbol] <= 0) {
+                                delete quantity[a.symbol];
+                            }
+                            let new_activity = parseFloat(a.quantity) * a.price;
+                            book_value += new_activity;
+                            curr_value += new_activity;
+                        }
+                    }
+                    prev_value = curr_value;
+                    curr_value = 0;
                     d = this.incrementDate(d);
-                    continue;
                 }
-                // extract all symbols required for calculation
-                let symbols = Object.keys(quantity);
-                // calculate current market value of all investments
-                for (let p of priceDataList) {
-                    if (p[d]) {
-                        let data = p[d];
-                        if (quantity[data.symbol]) {
-                            curr_value += quantity[data.symbol] * data.price;
-                            this.removeElement(symbols, data.symbol);
-                            latest_price[data.symbol] = data.price;
-                        }
-                    }
-                }
-
-                // calculate market value for all investment not traded on the day of
-                // calculate using latest known closing price
-                for (let s of symbols) {
-                    // skip update if latest price is unknown
-                    if (latest_price[s]) {
-                        curr_value += quantity[s] * latest_price[s];
-                    }
-                }
-
-                // calculate return compared to yesterday's price
-                if (prev_value == 0) {
-                    cumulative_return = 0;
-                } else {
-                    gain += (parseFloat(curr_value) - prev_value);
-                    cumulative_return = gain / (book_value + cash) * 100;
-                }
-
-                performanceData.push({
-                    x: d,
-                    y: cumulative_return
-                });
-
-                if (activitiesData[d]) {
-                    for (let a of activitiesData[d]) {
-                        if (!quantity[a.symbol]) {
-                            quantity[a.symbol] = 0;
-                        }
-                        if (a.quantity < 0) {
-                            cash += a.quantity * a.price;
-                        }
-                        quantity[a.symbol] += a.quantity;
-                        // remove symbol, quantity if <= 0
-                        if (quantity[a.symbol] <= 0) {
-                            delete quantity[a.symbol];
-                        }
-                        let new_activity = parseFloat(a.quantity) * a.price;
-                        book_value += new_activity;
-                        curr_value += new_activity;
-                    }
-                }
-                prev_value = curr_value;
-                curr_value = 0;
-                d = this.incrementDate(d);
+                resolve(performanceData);
             }
-            resolve(performanceData);
+
+
         });
     }
 
