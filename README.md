@@ -19,15 +19,14 @@ add all of the investments they have made to their portfolio. It is here that th
     > sudo docker-compose up
     Travel to http://localhost:8080/ in your web browser
     Register a new account or use the sample account below. (Sample account contains data)
-
+    
 ## Sample account:
     Email: test@sfu.ca
     Password: 123456
 
-## Future plans
-- Ability to import a CSV file of their stock data
-- More options for how the user wants to display their data
-- Other undecided features
+## Demo CSV Integration:
+- Sample CSV file (sample_file.csv) is included and located at the root of this project. 
+- Click "Import CSV" from Dashboard to test
 
 ## Notes
 - If you ever get a "Error: Request failed with status code 400" in the dashboard page, this is beacuse our IEX account is getting too many requests. You probably just need to wait a couple of seconds before hitting refresh.
@@ -47,5 +46,5 @@ add all of the investments they have made to their portfolio. It is here that th
 - Recharts for React charting and data visualization
 - Knex for data migration and seeding
 - Objection.js for an ORM
-- Passport.hs for authentication
+- Passport.js for authentication
 - Notistack for snackbars 
