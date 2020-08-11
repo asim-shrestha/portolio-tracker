@@ -17,7 +17,7 @@ export default class ActivitiesHelper {
 
     getInvalidDateMessage = () => 'The date you entered is invalid. Please check that the market is open on that date and try again.';
 
-    getInvalidSellQuantityMessage = () => 'The selling quantity you entered is invalid. Please check the date or the quantity and try again.';
+    getInvalidSellQuantityMessage = () => 'The selling quantity you entered is invalid. Please ensure that your portfolio contained the required quantity at the provided date.';
 
     retrieveNewData(latestCachedDate) {
         return new Promise((resolve, reject) => {

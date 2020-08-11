@@ -56,12 +56,10 @@ add all of the investments they have made to their portfolio. It is here that th
 ```
 cd app && npm run test 
 ```
-- **NOTE:** there may be delay in retrieving symbol data from IEX, therefore the timeout is set to 1 minute
+- **NOTE:** there may be delay in retrieving symbol data from IEX, therefore the timeout is set to 1 minute. Also note that you may need to run npm install locally prior to running the tests.
 
 ## Notes
 - If you ever get a "Error: Request failed with status code 400" in the dashboard page, this is beacuse our IEX account is getting too many requests. You probably just need to wait a couple of seconds before hitting refresh.
-- It is hard to see initially but the homepage scrolls down to reveal information about the app
-
 ## Technology Stack:
 - Express
 - React
