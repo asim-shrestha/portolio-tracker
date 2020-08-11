@@ -33,10 +33,9 @@ export default ({ open, onClose, resetHoldings }) => {
             const results = readString(fileContent);     // papaparse
             let safeToContinue = true;
 
-            console.log(results.data)
-            // remove last line if empty string
-            if (results.data[results.data.length - 1][0] === "") {
-                results.data.pop()
+            // remove last line if empty
+            if(results.data[results.data.length - 1][0] === ''){
+                results.data.splice(-1)
             }
 
             // check for empty cells
