@@ -31,6 +31,7 @@ add all of the investments they have made to their portfolio. It is here that th
 - Route authentication based on JWT token
 
 ## Current Constraints:
+- To render performance graph, please add stock(s) purchased on the day before yesterday (IEX Cloud's Chart API does not have data later than yesterday)
 - Only US Equity Data wil be tracked due to the limitations of the API
 - To limit the size of API messages, the performance graph only retrieves price data from **1 year** ending today. Issues will arise if you set the date for holdings to be anytime before 1 year from today.
 
