@@ -8,7 +8,7 @@ export default class ActivitiesHelper {
 
     getInvalidSymbolMessage = () => 'The symbol you entered is invalid. Please check the symbol and try again.';
 
-    getInvalidDateMessage = () => 'The date you entered is invalid. Please check the date and try again.';
+    getInvalidDateMessage = () => 'The date you entered is invalid. Please check that the market is open on that date and try again.';
 
     getInvalidSellQuantityMessage = () => 'The selling quantity you entered is invalid. Please check the date or the quantity and try again.';
 

@@ -11,7 +11,6 @@ export default () => {
         // Look for token
         const token = localStorage.getItem('token');
         if (!token) {
-            console.log("No user token found");
             return;
         }
         // Token found, get user 
