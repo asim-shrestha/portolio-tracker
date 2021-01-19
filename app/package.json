@@ -10,7 +10,7 @@
 		"@babel/preset-react": "latest",
 		"@material-ui/core": "latest",
 		"@material-ui/icons": "latest",
-		"axios": "latest",
+		"axios": ">=0.21.1",
 		"babel-loader": "latest",
 		"bcrypt": "^5.0.0",
 		"cors": "^2.8.5",
